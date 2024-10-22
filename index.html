@@ -44,6 +44,17 @@
             <a href="https://github.com/parthsareen" class="icon">GitHub</a>
             <a href="https://x.com/thanosthinking" class="icon">X</a>
             <a href="https://www.linkedin.com/in/parthsareen" class="icon">LinkedIn</a>
+            <a href="#" class="icon" id="email-copy">Email</a>
+            <script>
+                document.getElementById('email-copy').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    navigator.clipboard.writeText('me@parthsareen.com').then(function() {
+                        alert('Email address copied to clipboard!');
+                    }, function(err) {
+                        console.error('Could not copy text: ', err);
+                    });
+                });
+            </script>
         </footer>
     </div>
     <script src="particles.js"></script>
