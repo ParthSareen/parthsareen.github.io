@@ -50,8 +50,36 @@ function animateParticles() {
     requestAnimationFrame(animateParticles);
 }
 
+// Existing mouse event for desktop
 window.addEventListener('mousemove', function(event) {
     createParticles(event.x, event.y);
+});
+
+// New touch events for mobile
+let isCreatingParticles = false;
+let longPressTimer;
+
+canvas.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    longPressTimer = setTimeout(() => {
+        isCreatingParticles = true;
+        createParticles(touch.clientX, touch.clientY);
+    }, 100); // Start after 100ms of holding
+});
+
+canvas.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    if (isCreatingParticles) {
+        const touch = e.touches[0];
+        createParticles(touch.clientX, touch.clientY);
+    }
+});
+
+canvas.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    clearTimeout(longPressTimer);
+    isCreatingParticles = false;
 });
 
 window.addEventListener('resize', function() {
