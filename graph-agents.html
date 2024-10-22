@@ -27,7 +27,7 @@
         </header>
         <main>
             <article>
-                <h2>Learnings from building a Graph AI Agent Framework <span class="date">2024-11-21</span></h2>
+                <h2>Learnings from building a Graph AI Agent Framework <span class="date">2024-10-22</span></h2>
                 <p>When we started building reliability systems to grade how an AI agent was performing, we had a few goals:</p>
                 <ol>
                     <li>Understand how the agent is performing given a goal</li>
@@ -39,12 +39,12 @@
                 <p>There were a couple main issues we found when speaking with businesses who were interested in using agents:</p>
                 <ol>
                     Agents were too:
-                    <ul style="margin-left: 20px;">
+                    <ol style="margin-left: 20px;">
                         <li>Brittle and would often hallucinate or not perform as expected</li>
                         <li>Rigid and couldn't handle the nuances of real world tasks</li>
                         <li>Dumb and couldn't solve anything without explicit instructions</li>
                         <li>Expensive to build and maintain</li>
-                    </ul>
+                    </ol>
                 </ol>
                 <p>We found ourselves having to pitch building AI Agents before we could even pitch our system. This sucked.</p>
                 <p>So we started exploring different options. We had had this idea of structuring agents as a graph (this is pre-langgraph days), and thought that this might be a good way to address some of the issues above.</p>
@@ -55,7 +55,7 @@
                 <ol>
                     <li>Ability to structure workflows as graphs</li>
                     <li>Deal with all the annoying shit which comes with building agents like making json schemas for function calls for the agent. (idk why we had some of this in the first place)</li>
-                    <li>Pass necessary context to the agent so that it can make better decisions</li>
+                    <li>Pass necessary context to the agent so that it can make better decisions.</li>
                     <li>Don't overburden the user with setting up the framework and dealing with unnecessary jargon.</li>
                 </ol>
                 <h3>Learnings</h3>
@@ -67,7 +67,7 @@
                         <li style="margin-left: 20px;">First, I could not have cycles in the graph. While this is not actually enforced in the framework, the design makes it so that you don't have perpetual running agents.</li>
                         <li style="margin-left: 20px;">Second, I should have run the pattern of the framework a bit more with other people to see how it could be used in practice.</li>
                     </ul>
-                    <li><strong>Building a simple experience</strong> - I wasn't sure if I could build a simple experience while having strong opinions on the framework. I think I succeeded but it was a bit of a struggle to balance the abilities to give to the user, and the simplicity to use the framework. One of the reasons I go back to my own framework is because of how simple it is. I hated writing those JSON schemas for the agent functions and it is so simple to integrate those with the framework. <p>A big plus that langchain has right now is that they have a lot of code written already which make it easier to just get into building agents - things like markdown loaders, rag tools, etc. IMO these are great for prototyping and getting started, but less so for building production ready, and reliable systems. Another thing that</p> </li>
+                    <li><strong>Building a simple experience</strong> - I wasn't sure if I could build a simple experience while having strong opinions on the framework. I think I succeeded but it was a bit of a struggle to balance the abilities to give to the user, and the simplicity to use the framework. One of the reasons I go back to my own framework is because of how simple it is. I hated writing those JSON schemas for the agent functions and it is so simple to integrate those with the framework. <p>A big plus that langchain has right now is that they have a lot of code written already which make it easier to just get into building agents - things like markdown loaders, rag tools, etc. IMO these are great for prototyping and getting started, but less so for building production ready, and reliable systems.</p> <p>I gave langgraph a shot around the time of building this, and while it is a robust framework, for me, it was too much context and jargon to keep in mind while building a useable agent. I think it would be faster for me to just write all the code myself.</p></li>
                     <li><strong>Context Management</strong> - While this is something that I don't stress on a lot in the docs of the framework, there is enough ability to pass context to the agents that you can build some really powerful workflows with a high reliability rate. <p>I was able to get DAGent working for things like my calendar agent with a 90%+ success rate, < 100 lines of code, and with an 8B model running with Ollama. I keep coming back to this, but truly you can make use of smaller models to build some really powerful workflows when you have the right context. <p>Even with the entropix work <a href="https://github.com/xjdr-alt/entropix">Entropix Repo</a>, I strongly believe that we'd be able to reduce entropy and varentropy with improvements in context management (think RAG and system information passed in).</p></p></li>
                 </ol>
             </article>
