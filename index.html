@@ -4,54 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>parth (@thanosthinking)</title>
-    <link rel="icon" href="zukohere.png" type="image/png"> <!-- Added favicon -->
-    <style>
-        .profile-image {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            vertical-align: middle;
-            margin-right: 10px;
-        }
-    </style>
+    <link rel="icon" href="zukohere.png" type="image/png">
     <link rel="stylesheet" href="style.css">
     <script data-goatcounter="https://thanosthinking.goatcounter.com/count"
             async src="//gc.zgo.at/count.js"></script>
+    <script src="theme.js"></script>
 </head>
 <body>
-    <canvas id="particleCanvas"></canvas>
     <div class="container">
         <header>
             <a href="index.html">
                 <img src="zukohere.png" alt="Profile Image" class="profile-image">
             </a>
-            <h1>parth (@thanosthinking)</h1>
-            <p>building frameworks and systems for AI/ML</p>
+            <h1>parth sareen</h1>
+            <p>building frameworks and systems for LLMs</p>
         </header>
         <main>
             <section id="about">
-                <p>working on building systems at <a href="https://ollama.com">ollama</a></p>
+                <p>working on <a href="https://ollama.com">ollama</a></p>
+                <div class="command-line">
+                    <code class="command-text">ollama run parthsareen/me</code>
+                    <button class="copy-button copy-notification" id="copy-command" title="Copy to clipboard">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                        </svg>
+                    </button>
+                </div>
                 <p>used to work on distributed systems at tesla and autodesk with scala, go, and python. built on-device ml pipelines in c++ at apple. did some pm at some point at these places too.</p>
                 <p>interested in spirituality, muay thai, systems, and ml, and learning new things in different fields</p>
-            </section
+            </section>
             <section id="writings">
                 <h2>Writings</h2>
                 <ul>
+                    <li><a href="https://ollama.com/blog/structured-outputs">Structured outputs in ollama</a> <span class="date">2024-12-06</span></li>
+                    <li><a href="https://ollama.com/blog/functions-as-tools">Functions as tools in ollama</a> <span class="date">2024-11-25</span></li>
                     <li><a href="graph-agents.html">Learnings from building a Graph AI Agent Framework</a> <span class="date">2024-10-22</span></li>
                 </ul>
-                <!-- <a href="#" class="more">more »</a> -->
             </section>
         </main>
         <footer>
             <a href="https://github.com/parthsareen" class="icon">GitHub</a>
             <a href="https://x.com/thanosthinking" class="icon">X</a>
             <a href="https://www.linkedin.com/in/parthsareen" class="icon">LinkedIn</a>
-            <a href="#" class="icon" id="email-copy">Email</a>
+            <a href="#" class="icon copy-notification" id="email-copy">Email</a>
             <script>
                 document.getElementById('email-copy').addEventListener('click', function(e) {
                     e.preventDefault();
+                    const link = e.target;
                     navigator.clipboard.writeText('me@parthsareen.com').then(function() {
-                        alert('Email address copied to clipboard!');
+                        link.classList.add('show-notification');
+                        setTimeout(() => {
+                            link.classList.remove('show-notification');
+                        }, 2000);
+                    }, function(err) {
+                        console.error('Could not copy text: ', err);
+                    });
+                });
+
+                document.getElementById('copy-command').addEventListener('click', function(e) {
+                    const button = e.target.closest('.copy-button');
+                    navigator.clipboard.writeText('ollama run parthsareen/me').then(function() {
+                        const originalSVG = button.innerHTML;
+                        button.classList.add('show-notification');
+                        button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>';
+                        setTimeout(() => {
+                            button.classList.remove('show-notification');
+                            button.innerHTML = originalSVG;
+                        }, 2000);
                     }, function(err) {
                         console.error('Could not copy text: ', err);
                     });
@@ -59,7 +78,5 @@
             </script>
         </footer>
     </div>
-    <script src="particles.js"></script>
-</body>
 </body>
 </html>
