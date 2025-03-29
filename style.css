@@ -204,22 +204,23 @@ a:hover {
 }
 
 footer {
-    margin-top: 60px;
-    text-align: right;
+    margin-top: 40px;
+    padding: 20px 0;
     border-top: 1px solid var(--border-color);
-    padding-top: 30px;
+    text-align: center;
 }
 
-.icon {
-    margin-left: 20px;
-    color: var(--secondary-text);
-    font-size: 16px;
-    border-bottom: none;
+footer .icon {
+    margin: 0 10px;
+    color: var(--text-color);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s ease, border-bottom 0.2s ease;
 }
 
-.icon:hover {
+footer .icon:hover {
     color: var(--link-color);
-    border-bottom: none;
+    border-bottom: 1px solid var(--link-color);
 }
 
 .profile-image {
@@ -549,5 +550,207 @@ header a:hover {
     .copy-notification::after {
         font-size: 12px;
         padding: 3px 6px;
+    }
+}
+
+/* Table styles */
+.table-container {
+    margin: 30px 0;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    font-family: 'Spectral', serif;
+}
+
+tr:not(.notes-row) td:first-child {
+    position: relative;
+    padding-right: 30px;
+}
+
+tr:not(.notes-row) td:first-child::after {
+    content: '›';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    font-family: 'Spectral', serif;
+    color: var(--text-color);
+    opacity: 0.5;
+    font-size: 1.2em;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+tr.active td:first-child::after {
+    transform: translateY(-50%) rotate(-90deg);
+    opacity: 0.8;
+}
+
+tr:not(.notes-row):hover td:first-child::after {
+    opacity: 0.8;
+}
+
+th {
+    font-family: 'Merriweather', serif;
+    font-weight: 600;
+    color: var(--text-color);
+    cursor: pointer;
+    user-select: none;
+}
+
+th:hover {
+    color: var(--link-color);
+}
+
+.sort-icon {
+    margin-left: 5px;
+    font-size: 0.8em;
+    font-family: 'Spectral', serif;
+}
+
+tr {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+tr:hover {
+    background-color: var(--hover-color);
+}
+
+/* Notes row styles */
+.notes-row {
+    display: none;
+    cursor: default;
+    background-color: var(--hover-color);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.notes-row.expanded {
+    display: table-row;
+    opacity: 1;
+}
+
+.notes-row:hover {
+    background-color: var(--hover-color);
+}
+
+.notes-content {
+    padding: 0 20px 20px 40px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.expanded .notes-content {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.notes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.notes-column h4 {
+    font-family: 'Merriweather', serif;
+    font-size: 0.9em;
+    color: var(--header-color);
+    margin: 0 0 10px;
+}
+
+.notes-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.notes-list li {
+    padding: 4px 0;
+    border: none;
+    margin: 0;
+    font-size: 0.9em;
+    color: var(--text-color);
+}
+
+tr.active {
+    background-color: var(--hover-color);
+}
+
+@media (max-width: 768px) {
+    .notes-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .notes-content {
+        padding: 0 10px 15px;
+    }
+    
+    .notes-column h4 {
+        margin-bottom: 5px;
+    }
+}
+
+/* Fragrance Details Styles */
+.fragrance-details {
+    display: none;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin: 40px 0;
+    padding: 30px;
+    background-color: var(--hover-color);
+    border-radius: 8px;
+}
+
+.notes-section {
+    background-color: var(--bg-color);
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.notes-section h3 {
+    font-family: 'Merriweather', serif;
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    color: var(--header-color);
+}
+
+.notes-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.notes-section li {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-color);
+    font-family: 'Spectral', serif;
+}
+
+.notes-section li:last-child {
+    border-bottom: none;
+}
+
+@media (max-width: 768px) {
+    .fragrance-details {
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+    
+    th, td {
+        padding: 8px;
+        font-size: 0.9em;
     }
 }

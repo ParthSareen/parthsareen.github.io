@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fragrances - parth sareen</title>
+    <link rel="icon" href="zukohere.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <script data-goatcounter="https://thanosthinking.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+    <script src="theme.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html">
+                <img src="zukohere.png" alt="Profile Image" class="profile-image">
+            </a>
+            <h1>parth sareen</h1>
+            <p>building frameworks and systems for LLMs</p>
+        </header>
+        <main>
+            <article>
+                <h2>Fragrance Collection</h2>
+                <p>I got into perfumes back in 2020 and since then (after spending way too much money) I've built a small collection along with various samples. I find myself gravitating towards citrus and woody scents. While I like to switch up my fragrances often, lately I've been reaching for <a href="https://www.fragrantica.com/perfume/Creed/Aventus-Cologne-51692.html">Creed Aventus Cologne</a> the most.</p>
+                
+                <div class="table-container">
+                    <table id="fragrance-table">
+                        <thead>
+                            <tr>
+                                <th data-sort="name">Name <span class="sort-icon">↕</span></th>
+                                <th data-sort="company">Company <span class="sort-icon">↕</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-fragrance="aventus_cologne">
+                                <td>Aventus Cologne</td>
+                                <td>Creed</td>
+                            </tr>
+                            <tr data-fragrance="layton">
+                                <td>Layton</td>
+                                <td>Parfum de Marly</td>
+                            </tr>
+                            <tr data-fragrance="percival">
+                                <td>Percival</td>
+                                <td>Parfum de Marly</td>
+                            </tr>
+                            <tr data-fragrance="cedrat_boise">
+                                <td>Cedrat Boise</td>
+                                <td>Mancera</td>
+                            </tr>
+                            <tr data-fragrance="versace_pour_homme">
+                                <td>Versace Pour Homme</td>
+                                <td>Versace</td>
+                            </tr>
+                            <tr data-fragrance="versace_eros">
+                                <td>Versace Eros</td>
+                                <td>Versace</td>
+                            </tr>
+                            <tr data-fragrance="versace_dylan_blue">
+                                <td>Versace Dylan Blue</td>
+                                <td>Versace</td>
+                            </tr>
+                            <tr data-fragrance="another_13">
+                                <td>Another 13</td>
+                                <td>Le Labo</td>
+                            </tr>
+                            <tr data-fragrance="bergamote_22">
+                                <td>Bergamote 22</td>
+                                <td>Le Labo</td>
+                            </tr>
+                            <tr data-fragrance="noir_29">
+                                <td>Noir 29</td>
+                                <td>Le Labo</td>
+                            </tr>
+                            <tr data-fragrance="jpg_le_male_elixir">
+                                <td>JPG Le Male Elixir</td>
+                                <td>Jean Paul Gaultier</td>
+                            </tr>
+                            <tr data-fragrance="jazz_club">
+                                <td>Jazz Club</td>
+                                <td>Maison Margiela</td>
+                            </tr>
+                            <tr data-fragrance="prada_luna_rossa_ocean">
+                                <td>Prada Luna Rossa Ocean</td>
+                                <td>Prada</td>
+                            </tr>
+                            <tr data-fragrance="wood_sage_&_sea_salt">
+                                <td>Wood Sage & Sea Salt</td>
+                                <td>Jo Malone</td>
+                            </tr>
+                            <tr data-fragrance="dior_sauvage_elixir">
+                                <td>Dior Sauvage Elixir</td>
+                                <td>Dior</td>
+                            </tr>
+                            <tr data-fragrance="spicebomb_night_vision">
+                                <td>Spicebomb Night Vision</td>
+                                <td>Viktor & Rolf</td>
+                            </tr>
+                            <tr data-fragrance="dior_homme_intense_edp">
+                                <td>Dior Homme Intense EDP</td>
+                                <td>Dior</td>
+                            </tr>
+                            <tr data-fragrance="angels_share">
+                                <td>Angels Share</td>
+                                <td>Killian</td>
+                            </tr>
+                            <tr data-fragrance="dolce_&_gabbana_the_one_eau_de_parfum">
+                                <td>Dolce & Gabbana The One Eau de Parfum</td>
+                                <td>Dolce & Gabbana</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+        </main>
+        <footer>
+            <a href="https://github.com/parthsareen" class="icon">GitHub</a>
+            <a href="https://x.com/thanosthinking" class="icon">X</a>
+            <a href="https://www.linkedin.com/in/parthsareen" class="icon">LinkedIn</a>
+            <a href="#" class="icon copy-notification" id="email-copy">Email</a>
+            <script>
+                document.getElementById('email-copy').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const link = e.target;
+                    navigator.clipboard.writeText('me@parthsareen.com').then(function() {
+                        link.classList.add('show-notification');
+                        setTimeout(() => {
+                            link.classList.remove('show-notification');
+                        }, 2000);
+                    }, function(err) {
+                        console.error('Could not copy text: ', err);
+                    });
+                });
+            </script>
+        </footer>
+    </div>
+
+    <script>
+        const fragrances = {
+            "versace_pour_homme": {
+                "name": "Versace Pour Homme",
+                "top_notes": ["Bergamot", "Orange", "Lemon", "Neroli"],
+                "heart_notes": ["Jasmine", "Rose", "Cedar", "Clary Sage"],
+                "base_notes": ["Amber", "Musk", "Patchouli", "Tonka Bean"],
+                "company": "Versace"
+            },
+            "layton": {
+                "name": "Layton",
+                "top_notes": ["Apple", "Bergamot", "Lavender"],
+                "heart_notes": ["Jasmine", "Geranium", "Violet"],
+                "base_notes": ["Vanilla", "Sandalwood", "Amber"],
+                "company": "Parfum de Marly"
+            },
+            "percival": {
+                "name": "Percival",
+                "top_notes": ["Bergamot", "Grapefruit", "Lemon", "Mandarin", "Cardamom"],
+                "heart_notes": ["Jasmine", "Rose", "Coriander", "Geranium"],
+                "base_notes": ["Amber", "Musk", "Patchouli", "Woodsy Notes"],
+                "company": "Parfum de Marly"
+            },
+            "versace_eros": {
+                "name": "Versace Eros",
+                "top_notes": ["Mint", "Lemon", "Apple"],
+                "heart_notes": ["Tonka Bean", "Geranium", "Amber"],
+                "base_notes": ["Cedarwood", "Oakmoss", "Vanilla"],
+                "company": "Versace"
+            },
+            "another_13": {
+                "name": "Another 13",
+                "top_notes": ["Pear", "Ambroxan"],
+                "heart_notes": ["Musk", "Jasmine", "Amber"],
+                "base_notes": ["Sandalwood", "Iso E Super", "Musk"],
+                "company": "Le Labo"
+            },
+            "jpg_le_male_elixir": {
+                "name": "JPG Le Male Elixir",
+                "top_notes": ["Mint", "Grapefruit", "Bergamot"],
+                "heart_notes": ["Lavender", "Cinnamon", "Caraway"],
+                "base_notes": ["Vanilla", "Amber", "Cedarwood"],
+                "company": "Jean Paul Gaultier"
+            },
+            "jazz_club": {
+                "name": "Jazz Club",
+                "top_notes": ["Pink Pepper", "Bergamot", "Lemon"],
+                "heart_notes": ["Rum", "Cigare", "Vanilla", "Jasmine"],
+                "base_notes": ["Tonka Bean", "Benzoin", "Guaiac Wood", "Amber"],
+                "company": "Maison Margiela"
+            },
+            "prada_luna_rossa_ocean": {
+                "name": "Prada Luna Rossa Ocean",
+                "top_notes": ["Bergamot", "Grapefruit", "Orange", "Mandarin"],
+                "heart_notes": ["Lavender", "Sage", "Geranium"],
+                "base_notes": ["Amber", "Patchouli", "Tonka Bean", "Suede"],
+                "company": "Prada"
+            },
+            "bergamote_22": {
+                "name": "Bergamote 22",
+                "top_notes": ["Bergamot", "Grapefruit", "Lemon"],
+                "heart_notes": ["Cedarwood", "Violet", "Ambrette"],
+                "base_notes": ["Tonka Bean", "Musk", "Woods"],
+                "company": "Le Labo"
+            },
+            "noir_29": {
+                "name": "Noir 29",
+                "top_notes": ["Bergamot", "Bay Leaves", "Fig", "Tobacco"],
+                "heart_notes": ["Sandalwood", "Cedarwood", "Violet", "Leathery Notes"],
+                "base_notes": ["Musk", "Amber", "Patchouli", "Oakmoss"],
+                "company": "Le Labo"
+            },
+            "carlisle": {
+                "name": "Carlisle",
+                "top_notes": ["Bergamot", "Apple", "Nutmeg"],
+                "heart_notes": ["Oud", "Jasmine", "Gaiac Wood"],
+                "base_notes": ["Vanilla", "Patchouli", "Musk"],
+                "company": "Parfum de Marly"
+            },
+            "pegasus": {
+                "name": "Pegasus",
+                "top_notes": ["Bergamot", "Almond", "Cardamom"],
+                "heart_notes": ["Hedione", "Jasmine", "Lavender"],
+                "base_notes": ["Vanilla", "Amber", "Sandalwood", "Woodsy Notes"],
+                "company": "Parfum de Marly"
+            },
+            "oajan": {
+                "name": "Oajan",
+                "top_notes": ["Cinnamon", "Honey", "Bergamot"],
+                "heart_notes": ["Olibanum", "Rose", "Vanilla"],
+                "base_notes": ["Amber", "Gaiac Wood", "Labdanum"],
+                "company": "Parfum de Marly"
+            },
+            "versace_dylan_blue": {
+                "name": "Versace Dylan Blue",
+                "top_notes": ["Calabrian Bergamot", "Grapefruit", "Fig Leaf"],
+                "heart_notes": ["Violet Leaf", "Black Pepper", "Ambroxan"],
+                "base_notes": ["Papyrus", "Mineral Notes", "Musk", "Incense"],
+                "company": "Versace"
+            },
+            "wood_sage_&_sea_salt": {
+                "name": "Wood Sage & Sea Salt",
+                "top_notes": ["Ambrette Seed", "Sea Salt"],
+                "heart_notes": ["Wood Sage"],
+                "base_notes": ["Red Algae", "Musk"],
+                "company": "Jo Malone"
+            },
+            "dior_sauvage_elixir": {
+                "name": "Dior Sauvage Elixir",
+                "top_notes": ["Grapefruit", "Bergamot", "Citrus Notes"],
+                "heart_notes": ["Lavender", "Spicy Notes", "Fruity Notes"],
+                "base_notes": ["Cedar", "Amber", "Benzoin", "Patchouli"],
+                "company": "Dior"
+            },
+            "spicebomb_night_vision": {
+                "name": "Spicebomb Night Vision",
+                "top_notes": ["Grapefruit", "Green Apple", "Bergamot"],
+                "heart_notes": ["Spice", "Rose", "Black Pepper"],
+                "base_notes": ["Tonka Bean", "Vanilla", "Woody Notes"],
+                "company": "Viktor & Rolf"
+            },
+            "dior_homme_intense_edp": {
+                "name": "Dior Homme Intense EDP",
+                "top_notes": ["Bergamot", "Citrus notes"],
+                "heart_notes": ["Iris", "Cocoa", "Amber", "Leather"],
+                "base_notes": ["Vanilla", "Patchouli", "Vetiver", "Sandalwood"],
+                "company": "Dior"
+            },
+            "angels_share": {
+                "name": "Angels Share",
+                "top_notes": ["Bergamot", "Cinnamon", "Cognac"],
+                "heart_notes": ["Oak", "Honey", "Maple", "Praline"],
+                "base_notes": ["Vanilla", "Sandalwood", "Cedarwood", "Amber"],
+                "company": "Killian"
+            },
+            "dolce_&_gabbana_the_one_eau_de_parfum": {
+                "name": "Dolce & Gabbana The One Eau de Parfum",
+                "top_notes": ["Bergamot", "Peach", "Mandarin", "Lemon"],
+                "heart_notes": ["Lily", "Plum", "Jasmine", "Orange Blossom"],
+                "base_notes": ["Vanilla", "Amber", "Musk", "Cedarwood"],
+                "company": "Dolce & Gabbana"
+            },
+            "cedrat_boise": {
+                "name": "Cedrat Boise",
+                "top_notes": ["Citrus", "Bergamot", "Blackcurrant", "Spicy Notes"],
+                "heart_notes": ["Patchouli", "Jasmine", "Water Notes"],
+                "base_notes": ["Cedar", "Leather", "Vanilla", "White Musk"],
+                "company": "Mancera"
+            },
+            "aventus_cologne": {
+                "name": "Aventus Cologne",
+                "top_notes": ["Ginger", "Mandarin Orange", "Pink Pepper"],
+                "heart_notes": ["Vetiver", "Patchouli", "Sandalwood"],
+                "base_notes": ["Musk", "Birch", "Styrax"],
+                "company": "Creed"
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const table = document.getElementById('fragrance-table');
+            const tbody = table.querySelector('tbody');
+            const headers = table.querySelectorAll('th');
+            let currentSort = { column: null, direction: 'asc' };
+            let expandedRow = null;
+
+            // Remove any existing notes rows first
+            document.querySelectorAll('.notes-row').forEach(row => row.remove());
+
+            // Create notes rows for each fragrance
+            Object.keys(fragrances).forEach(fragranceId => {
+                const mainRow = table.querySelector(`tr[data-fragrance="${fragranceId}"]`);
+                if (!mainRow) return;
+
+                const notesRow = document.createElement('tr');
+                notesRow.className = 'notes-row';
+                notesRow.dataset.fragrance = `${fragranceId}-notes`;
+                
+                const notesCell = document.createElement('td');
+                notesCell.colSpan = 2;
+                notesCell.innerHTML = `
+                    <div class="notes-content">
+                        <div class="notes-grid">
+                            <div class="notes-column">
+                                <h4>Top Notes</h4>
+                                <ul class="notes-list"></ul>
+                            </div>
+                            <div class="notes-column">
+                                <h4>Heart Notes</h4>
+                                <ul class="notes-list"></ul>
+                            </div>
+                            <div class="notes-column">
+                                <h4>Base Notes</h4>
+                                <ul class="notes-list"></ul>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                notesRow.appendChild(notesCell);
+                mainRow.insertAdjacentElement('afterend', notesRow);
+            });
+
+            // Add click handlers to table rows
+            table.querySelectorAll('tbody tr:not(.notes-row)').forEach(row => {
+                row.addEventListener('click', () => {
+                    const fragranceId = row.dataset.fragrance;
+                    const notesRow = row.nextElementSibling;
+                    if (!notesRow || !fragranceId) return;
+                    
+                    const fragrance = fragrances[fragranceId];
+                    if (!fragrance) return;
+
+                    if (expandedRow && expandedRow !== notesRow) {
+                        expandedRow.classList.remove('expanded');
+                        expandedRow.previousElementSibling.classList.remove('active');
+                    }
+
+                    row.classList.toggle('active');
+                    notesRow.classList.toggle('expanded');
+                    
+                    if (notesRow.classList.contains('expanded')) {
+                        expandedRow = notesRow;
+                        const notesLists = notesRow.querySelectorAll('.notes-list');
+                        notesLists[0].innerHTML = fragrance.top_notes.map(note => `<li>${note}</li>`).join('');
+                        notesLists[1].innerHTML = fragrance.heart_notes.map(note => `<li>${note}</li>`).join('');
+                        notesLists[2].innerHTML = fragrance.base_notes.map(note => `<li>${note}</li>`).join('');
+                    } else {
+                        expandedRow = null;
+                    }
+                });
+            });
+
+            // Sort functionality
+            headers.forEach(header => {
+                header.addEventListener('click', () => {
+                    const column = header.dataset.sort;
+                    const direction = currentSort.column === column && currentSort.direction === 'asc' ? 'desc' : 'asc';
+                    sortTable(column, direction);
+                    currentSort = { column, direction };
+                });
+            });
+
+            function sortTable(column, direction) {
+                const rows = Array.from(tbody.querySelectorAll('tr:not(.notes-row)'));
+                
+                rows.sort((a, b) => {
+                    let aValue = a.querySelector(`td:nth-child(${getColumnIndex(column)})`).textContent;
+                    let bValue = b.querySelector(`td:nth-child(${getColumnIndex(column)})`).textContent;
+                    
+                    if (direction === 'asc') {
+                        return aValue.localeCompare(bValue);
+                    } else {
+                        return bValue.localeCompare(aValue);
+                    }
+                });
+                
+                // Clear the table body
+                tbody.innerHTML = '';
+                
+                // Reinsert rows in sorted order, along with their notes rows
+                rows.forEach(row => {
+                    const fragranceId = row.dataset.fragrance;
+                    const notesRow = document.querySelector(`tr[data-fragrance="${fragranceId}-notes"]`);
+                    tbody.appendChild(row);
+                    if (notesRow) {
+                        tbody.appendChild(notesRow);
+                    }
+                });
+
+                updateSortIcons(column, direction);
+            }
+
+            function getColumnIndex(column) {
+                switch(column) {
+                    case 'name': return 1;
+                    case 'company': return 2;
+                    default: return 1;
+                }
+            }
+
+            function updateSortIcons(column, direction) {
+                headers.forEach(header => {
+                    const icon = header.querySelector('.sort-icon');
+                    if (header.dataset.sort === column) {
+                        icon.textContent = direction === 'asc' ? '↑' : '↓';
+                    } else {
+                        icon.textContent = '↕';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html> 

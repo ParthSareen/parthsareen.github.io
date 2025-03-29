@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learnings from building a Graph AI Agent Framework - parth (@thanosthinking)</title>
+    <title>Learnings from building a Graph AI Agent Framework - parth sareen</title>
     <link rel="icon" href="zukohere.png" type="image/png">
     <style>
         .profile-image {
@@ -25,8 +25,8 @@
             <a href="index.html">
                 <img src="zukohere.png" alt="Profile Image" class="profile-image">
             </a>
-            <h1>parth (@thanosthinking)</h1>
-            <p>building frameworks and systems for AI/ML</p>
+            <h1>parth sareen</h1>
+            <p>building frameworks and systems for LLMs</p>
         </header>
         <main>
             <article>
@@ -84,6 +84,21 @@
             <a href="https://github.com/parthsareen" class="icon">GitHub</a>
             <a href="https://x.com/thanosthinking" class="icon">X</a>
             <a href="https://www.linkedin.com/in/parthsareen" class="icon">LinkedIn</a>
+            <a href="#" class="icon copy-notification" id="email-copy">Email</a>
+            <script>
+                document.getElementById('email-copy').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const link = e.target;
+                    navigator.clipboard.writeText('me@parthsareen.com').then(function() {
+                        link.classList.add('show-notification');
+                        setTimeout(() => {
+                            link.classList.remove('show-notification');
+                        }, 2000);
+                    }, function(err) {
+                        console.error('Could not copy text: ', err);
+                    });
+                });
+            </script>
         </footer>
     </div>
 </body>
