@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://parthsareen.github.io/sitemap.xml

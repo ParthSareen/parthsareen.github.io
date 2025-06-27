@@ -1,8 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,400;0,600;1,400&family=Merriweather:wght@300;400;700&display=swap');
 
 @keyframes matrix-bg {
-    0% { background-position: 0% 0%; }
-    100% { background-position: 100% 100%; }
+    0% {
+        background-position: 0% 0%;
+    }
+
+    100% {
+        background-position: 100% 100%;
+    }
 }
 
 :root {
@@ -14,7 +19,6 @@
     --border-color: #e2d9c9;
     --container-bg: #f6f2e8;
     --secondary-text: #6b5744;
-    --cursor-color: rgba(92, 75, 55, 0.8);
 }
 
 body {
@@ -177,7 +181,7 @@ article li {
     padding-bottom: 0;
 }
 
-article ol > li {
+article ol>li {
     list-style-type: decimal;
 }
 
@@ -233,26 +237,13 @@ footer .icon:hover {
 }
 
 /* Hide default cursor */
-* {
-    cursor: none !important;
-}
-
 /* Custom cursor */
 .custom-cursor {
-    width: 20px;
-    height: 20px;
-    background: var(--cursor-color);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: width 0.2s, height 0.2s, background-color 0.2s;
+    display: none;
 }
 
-/* Cursor size change on hover */
-a:hover ~ .custom-cursor,
-button:hover ~ .custom-cursor {
+a:hover~.custom-cursor,
+button:hover~.custom-cursor {
     width: 24px;
     height: 24px;
     opacity: 0.9;
@@ -262,23 +253,23 @@ button:hover ~ .custom-cursor {
     body {
         font-size: 16px;
     }
-    
+
     .container {
         padding: 30px 16px;
     }
-    
+
     h1 {
         font-size: 28px;
     }
-    
+
     h2 {
         font-size: 24px;
     }
-    
+
     header p {
         font-size: 18px;
     }
-    
+
     li {
         flex-direction: column;
         align-items: flex-start;
@@ -302,7 +293,7 @@ button:hover ~ .custom-cursor {
         margin-top: 10px;
         font-size: 16px;
     }
-    
+
     .profile-image {
         width: 50px;
         height: 50px;
@@ -505,7 +496,7 @@ header a:hover {
         font-size: 14px;
         padding: 10px 12px;
     }
-    
+
     .copy-button svg {
         width: 16px;
         height: 16px;
@@ -564,7 +555,8 @@ table {
     border-collapse: collapse;
 }
 
-th, td {
+th,
+td {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid var(--border-color);
@@ -691,11 +683,11 @@ tr.active {
         grid-template-columns: 1fr;
         gap: 15px;
     }
-    
+
     .notes-content {
         padding: 0 10px 15px;
     }
-    
+
     .notes-column h4 {
         margin-bottom: 5px;
     }
@@ -748,8 +740,9 @@ tr.active {
         grid-template-columns: 1fr;
         padding: 20px;
     }
-    
-    th, td {
+
+    th,
+    td {
         padding: 8px;
         font-size: 0.9em;
     }
