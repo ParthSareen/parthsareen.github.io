@@ -509,7 +509,7 @@ header a:hover {
 }
 
 .copy-notification::after {
-    content: 'Copied!';
+    content: 'copied!';
     position: absolute;
     bottom: 100%;
     left: 50%;
