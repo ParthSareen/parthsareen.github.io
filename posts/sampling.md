@@ -29,18 +29,23 @@ tokens = topP(tokens, s.topP)
 tokens = minP(tokens, s.minP)
 ```
 
-`greedy` selects the token with the highest score.
+`greedy` selects the token with the highest score:
+$$\text{token} = \arg\max_i \text{logits}_i$$
 
-`topK` selects the top k tokens with the highest score, this is mostly an optimization to reduce the number of tokens to sample from. Since sampling is happening on the CPU, this is often a `topK` of 40 tokens vs the full vocabulary – often 128k tokens.
+`topK` selects the top k tokens with the highest score, this is mostly an optimization to reduce the number of tokens to sample from. Since sampling is happening on the CPU, this is often a `topK` of 40 tokens vs the full vocabulary – often 128k tokens:
+$$\text{topK}(\text{logits}, k) = \{\text{logits}_i : \text{logits}_i \text{ is among top } k \text{ values}\}$$
 
-`temperature` scales and normalizes the tokens by `1/temperature`. A higher temperature value flattens the probability distribution which results in more creativity from the model but also more randomness.
+`temperature` scales and normalizes the tokens by `1/temperature`. A higher temperature value flattens the probability distribution which results in more creativity from the model but also more randomness:
+$$\text{logits}_i = \frac{\text{logits}_i}{\tau}$$
 
-`softmax` normalizes the raw scores of the tokens to a probability distribution.
+`softmax` normalizes the raw scores of the tokens to a probability distribution:
+$$P(x_i) = \frac{e^{\text{logits}_i}}{\sum_{j} e^{\text{logits}_j}}$$
 
-`topP` (nucleus sampling) keeps the smallest set of tokens whose cumulative probability exceeds p (e.g. 0.95). This allows us to quickly reject low probability tokens and improve efficiency and quality.
+`topP` (nucleus sampling) keeps the smallest set of tokens whose cumulative probability exceeds p (e.g. 0.95). This allows us to quickly reject low probability tokens and improve efficiency and quality:
+$$\text{topP}(P, p) = \{x_i : \sum_{j \in \text{sorted indices}} P(x_j) \leq p\}$$
 
-`minP` discards tokens whose probability is below `maxProbability * minP`. MinP is said to improve "text quality and creativity" as it uses the max probability to act as a scaling factor on the minimum threshold [Turning up the heat: min-p sampling for creative and coherent llm outputs](https://arxiv.org/pdf/2407.01082)
-
+`minP` discards tokens whose probability is below `maxProbability * minP`. MinP is said to improve "text quality and creativity" as it uses the max probability to act as a scaling factor on the minimum threshold [Turning up the heat: min-p sampling for creative and coherent llm outputs](https://arxiv.org/pdf/2407.01082):
+$$\text{minP}(P, m) = \{x_i : P(x_i) \geq m \cdot \max_j P(x_j)\}$$
 
 After the transformations are applied, a token is randomly sampled from the remaining tokens.
 
