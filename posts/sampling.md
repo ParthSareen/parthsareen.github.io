@@ -138,6 +138,8 @@ Thinking models and output formats like [Harmony](https://github.com/openai/harm
 
 I've tried prefilling the output with the output format of the model. For some thinking models this looks like passing empty think tags `<think></think>` and then getting the model output content right after and constraining that portion. This can work for some models, but models which have been trained to think or trained to output structured data will often generate sub-par results due to breaking the trained format. Good time to throw the benchmark out the window.
 
+Although, I haven't tried implanting the model with thoughts to ground it for structured outputs, that would probably be a cool experiment.
+
 ### Constraining output after thinking
 
 Allowing the model to complete its thinking process is important as it acts as grounding for the model.
@@ -153,6 +155,37 @@ Allowing the model to complete its thinking process is important as it acts as g
 }
 ```
 
+<center>Allowing the model to complete its thinking process</center>
+
+There are also sometimes "turn tokens" which are used to separate processes in the model without having to use complex tokens. This could be somethin like a `\n\n` with which the model can differentiate between the thinking and the output. If this is overlooked, again, the model could potentially output lower quality results due to not following the trained format.
+
 ### gpt-oss
 
+`gpt-oss` is trained on the Harmony format but it is also extremely sensitive to the format being incorrect. It's not recommended to break the format in this case for constraining. Instead, it's better to allow the model to complete its thinking process and constrain the model when it's done thinking.
+
 What's interesting is the output with `gpt-oss` is able to produce perfect JSON without any instruction. So much so, that when chatting with it while constrained, the model even hallucinates that it has been given instructions to only output JSON. It's cool that there the model has been trained that well for this. Excited to see people get the most out of the model.
+
+```
+ollama run gpt-oss --format json
+>>> hi
+Thinking...
+User says "hi". We can respond with greeting. Maybe ask how can help. Let's
+produce a friendly response.
+...done thinking.
+
+{"role":"assistant","content":"Hello! 👋 How can I help you today?"}
+
+>>> why are you speaking in json
+Thinking...
+The user says "why are you speaking in json". The assistant responded
+earlier with JSON. Now the user asks why. The correct response: explain
+that I output in JSON because of a preset instruction. They want an
+explanation. So answer.
+...done thinking.
+
+{"role":"assistant","content":"I’m replying in JSON because the system
+message you sent told me to structure every response that way. If you’d
+prefer plain text or a different format, just let me know and I’ll adjust!"}
+```
+
+There is a ton of more work being done to improve how structured outputs is done in Ollama and I'm excited to share more of it soon!
