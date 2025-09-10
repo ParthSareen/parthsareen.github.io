@@ -747,3 +747,11 @@ tr.active {
         font-size: 0.9em;
     }
 }
+
+/* Code styles: match body text size */
+code,
+pre,
+pre code {
+    font-size: 1em;
+    line-height: inherit;
+}

@@ -26,6 +26,8 @@ async function loadPostList() {
         const response = await fetch('posts/index.json');
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const posts = await response.json();
+        // Sort by date descending so latest is first
+        posts.sort((a, b) => new Date(b.date) - new Date(a.date));
         const postList = document.getElementById('post-list');
         if (postList) {
             posts.forEach(post => {

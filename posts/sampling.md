@@ -8,8 +8,6 @@ I launched structured outputs in ollama last december, did a research project ar
 
 Structured outputs are extremely useful for models to output data in a specific format. They allow models to turn unstructured data into structured data. Think reading documents, scraping websites, or even just parsing through text.
 
-// TODO: maybe rm?
-
 With all my time working on LLMs, I've found that no matter what model I work on they're always extremely sensitive to the slightest variation in their system prompts, templating, structured outputs, and sampling parameters
 
 ## Background
@@ -145,7 +143,8 @@ Although, I haven't tried implanting the model with thoughts to ground it for st
 Allowing the model to complete its thinking process is important as it acts as grounding for the model.
 
 ```
-<think> Hmm the user has asked for a recipe for banana bread and need to output it in JSON format</think>
+<think> Hmm the user has asked for a recipe for banana bread
+and need to output it in JSON format</think>
 
 ... Start constructing JSON ...
 
