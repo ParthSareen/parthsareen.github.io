@@ -4,7 +4,18 @@ async function loadPost(filename) {
         const response = await fetch(`posts/${filename}`);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const markdown = await response.text();
-        const html = marked.parse(markdown);
+        // Protect math segments from Markdown parsing (underscores/emphasis splitting)
+        const placeholders = [];
+        const protectedMd = markdown.replace(/(\$\$[\s\S]+?\$\$|\\\[[\s\S]+?\\\]|\\\([\s\S]+?\\\))/g, (match) => {
+            const id = `§§MATH${placeholders.length}§§`;
+            placeholders.push({ id, content: match });
+            return id;
+        });
+        let html = marked.parse(protectedMd);
+        // Restore math segments so MathJax can process them
+        placeholders.forEach(({ id, content }) => {
+            html = html.split(id).join(content);
+        });
         container.innerHTML = html;
     } catch (err) {
         console.error('Error loading post:', err);

@@ -1,10 +1,10 @@
 # Sampling and structured outputs in LLMs
 
-Sampling and structured outputs are tied together as they are both determine what the model's next chosen token will be.
+Sampling and structured outputs are tied together as they both determine the model's next chosen token.
 
 Sampling is the process of selecting a token from the model's vocabulary based on the probability distribution.
 
-I launched structured outputs in ollama last december, did a research project around on-the-fly structured outputs using finite state machines with pre-computed graphs, and am currently working on supporting structured outputs for thinking models. I also built the sampler along for Ollama's engine back in March 2025 to launch Gemma3. I wanted to write a bit about these as there weren't a lot of resources around them.
+I launched structured outputs in ollama last december, did a research project around on-the-fly structured outputs using finite state machines with pre-computed graphs, and am currently working on supporting structured outputs for thinking models. I also built the sampler for Ollama's engine back in March 2025 to launch Gemma3. I wanted to write a bit about these as there weren't a lot of resources around them.
 
 Structured outputs are extremely useful for models to output data in a specific format. They allow models to turn unstructured data into structured data. Think reading documents, scraping websites, or even just parsing through text.
 
@@ -42,7 +42,7 @@ $$\text{topK}(\text{logits}, k) = \{\text{logits}_i : \text{logits}_i \text{ is 
 $$\text{logits}_i = \frac{\text{logits}_i}{\tau}$$
 
 `softmax` normalizes the raw scores of the tokens to a probability distribution:
-$$P(x_i) = \frac{e^{\text{logits}_i}}{\sum_{j} e^{\text{logits}_j}}$$
+$$\text{softmax}(P(x_i)) = \frac{e^{\text{logits}_i}}{\sum_{j} e^{\text{logits}_j}}$$
 
 `topP` (nucleus sampling) keeps the smallest set of tokens whose cumulative probability exceeds p (e.g. 0.95). This allows us to quickly reject low probability tokens and improve efficiency and quality:
 $$\text{topP}(P, p) = \{x_i : \sum_{j \in \text{sorted indices}} P(x_j) \leq p\}$$
@@ -162,7 +162,7 @@ There are also sometimes "turn tokens" which are used to separate processes in t
 
 `gpt-oss` is trained on the Harmony format but it is also extremely sensitive to the format being incorrect. It's not recommended to break the format in this case for constraining. Instead, it's better to allow the model to complete its thinking process and constrain the model when it's done thinking.
 
-What's interesting is the output with `gpt-oss` is able to produce perfect JSON without any instruction. So much so, that when chatting with it while constrained, the model even hallucinates that it has been given instructions to only output JSON. It's cool that there the model has been trained that well for this. Excited to see people get the most out of the model.
+What's interesting is the output with `gpt-oss` is able to produce perfect JSON without any instruction. So much so, that when chatting with it while constrained, the model even hallucinates that it has been given instructions to only output JSON. It's cool that the model has been trained that well for this.
 
 ```
 ollama run gpt-oss --format json
@@ -187,4 +187,10 @@ message you sent told me to structure every response that way. If you’d
 prefer plain text or a different format, just let me know and I’ll adjust!"}
 ```
 
-There is a ton of more work being done to improve how structured outputs is done in Ollama and I'm excited to share more of it soon!
+<center>gpt-oss with structured outputs hallucinating that it has been given instructions to only output JSON</center>
+
+## Final thoughts
+
+Sampling will continue to remain a critical step in the model's output, but I think structured outputs and how we can have models which better output structured data without the need for constraining will continue to improve. I see formats evolve alongside model capabilities. I see structured outputs as a model capability and think that there will be improvements to how structured data can be outputted by the model without the need of masking tokens.
+
+I'm excited to share more of my work on structured outputs in Ollama soon!

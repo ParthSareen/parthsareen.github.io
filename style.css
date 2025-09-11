@@ -755,3 +755,17 @@ pre code {
     font-size: 1em;
     line-height: inherit;
 }
+
+/* Constrain code blocks to feel like part of the article */
+article pre {
+    padding: 16px 20px;
+    margin: 20px 0;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: var(--container-bg);
+    overflow-x: auto;
+}
+
+article pre code {
+    display: block;
+}
