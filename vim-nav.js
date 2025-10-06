@@ -72,21 +72,22 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const searchContainer = searchOverlay.querySelector('#search-container');
     searchContainer.style.backgroundColor = 'var(--bg-color)';
-    searchContainer.style.padding = '20px';
+    searchContainer.style.padding = '15px';
     searchContainer.style.borderRadius = '8px';
     searchContainer.style.width = '90%';
-    searchContainer.style.maxWidth = '600px';
+    searchContainer.style.maxWidth = '400px';
     searchContainer.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.3)';
     
     const searchInput = searchOverlay.querySelector('#search-input');
     searchInput.style.width = '100%';
-    searchInput.style.padding = '6px';
-    searchInput.style.fontSize = '16px';
+    searchInput.style.padding = '3px';
+    searchInput.style.fontSize = '12px';
     searchInput.style.border = '1px solid var(--border-color)';
     searchInput.style.borderRadius = '4px';
     searchInput.style.backgroundColor = 'var(--container-bg)';
     searchInput.style.color = 'var(--text-color)';
     searchInput.style.fontFamily = "'Spectral', serif";
+    searchInput.style.textAlign = 'center';
     
     const searchResults = searchOverlay.querySelector('#search-results');
     searchResults.style.maxHeight = '400px';
@@ -172,16 +173,16 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get all text elements on the page
         const textElements = document.querySelectorAll('h1, h2, h3, p, li, a, .date, .command-text');
         const results = [];
-        const seenTexts = new Set(); // To deduplicate results
+        const seenElements = new Set(); // To deduplicate results based on elements
         
         textElements.forEach(element => {
             const text = element.textContent.toLowerCase();
             if (text.includes(query.toLowerCase())) {
-                // Skip if we've already seen this text content
-                if (seenTexts.has(element.textContent)) {
+                // Skip if we've already seen this element
+                if (seenElements.has(element)) {
                     return;
                 }
-                seenTexts.add(element.textContent);
+                seenElements.add(element);
                 
                 // Get the parent section or article
                 let parent = element.closest('section, article');
@@ -212,11 +213,23 @@ document.addEventListener('DOMContentLoaded', function() {
         // Sort results by priority (links first)
         results.sort((a, b) => a.priority - b.priority);
         
+        // Further deduplication based on text content and parent section
+        const uniqueResults = [];
+        const seenCombinations = new Set();
+        
+        for (const result of results) {
+            const combinationKey = `${result.text}|${result.parentTitle}`;
+            if (!seenCombinations.has(combinationKey)) {
+                seenCombinations.add(combinationKey);
+                uniqueResults.push(result);
+            }
+        }
+        
         // Display results
-        currentSearchResults = results;
-        if (results.length > 0) {
-            searchResults.innerHTML = `<p style="margin: 0 0 10px 0; color: var(--secondary-text);">${results.length} result${results.length > 1 ? 's' : ''} found</p>`;
-            results.slice(0, 10).forEach(result => {
+        currentSearchResults = uniqueResults;
+        if (uniqueResults.length > 0) {
+            searchResults.innerHTML = `<p style="margin: 0 0 10px 0; color: var(--secondary-text);">${uniqueResults.length} result${uniqueResults.length > 1 ? 's' : ''} found</p>`;
+            uniqueResults.slice(0, 10).forEach(result => {
                 const resultItem = document.createElement('div');
                 resultItem.style.padding = '10px';
                 resultItem.style.margin = '5px 0';
