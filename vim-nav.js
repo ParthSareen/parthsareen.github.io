@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function() {
         'reading.html',
         'latte-art.html',
         'fragrances.html',
-        'graph-agents.html'
     ];
     
     // Get current page

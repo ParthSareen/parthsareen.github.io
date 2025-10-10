@@ -1,10 +1,5 @@
 [
   {
-    "filename": "graph-agents.md",
-    "title": "Learnings from building a Graph AI Agent Framework",
-    "date": "2024-11-21"
-  },
-  {
     "filename": "sampling.md",
     "title": "Sampling and structured outputs in LLMs",
     "date": "2025-09-10"
