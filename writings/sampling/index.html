@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sampling and structured outputs in LLMs | Writings</title>
+  <meta name="description" content="Sampling and structured outputs are tied together as they both determine the model’s next chosen token." />
+  <link rel="icon" href="/zukohere.png" type="image/png" />
+  <link rel="stylesheet" href="/style.css" />
+  <script src="/theme.js"></script>
+  <script src="/vim-nav.js"></script>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\(', '\)']],
+        displayMath: [['$$','$$'], ['\[','\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/index.html">
+        <img src="/zukohere.png" alt="Profile Image" class="profile-image" />
+      </a>
+      <h1><a href="/blog.html">Writings</a></h1>
+      <p class="post-meta"><time datetime="2025-09-29">2025-09-29</time></p>
+    </header>
+    <main>
+      <article class="post-content">
+<h1 id="sampling-and-structured-outputs-in-llms" tabindex="-1">Sampling and structured outputs in LLMs</h1>
+<p>Sampling and structured outputs are tied together as they both determine the model’s next chosen token.</p>
+<p>Sampling is the process of selecting a token from the model’s vocabulary based on the probability distribution.</p>
+<p>I launched structured outputs in ollama last december, did a research project around on-the-fly structured outputs using finite state machines with pre-computed graphs, and am currently working on supporting structured outputs for thinking models. I also built the sampler for Ollama’s engine back in March 2025 to launch Gemma3. I wanted to write a bit about these as there weren’t a lot of resources around them.</p>
+<p>Structured outputs are extremely useful for models to output data in a specific format. They allow models to turn unstructured data into structured data. Think reading documents, scraping websites, or even just parsing through text.</p>
+<p>With all my time working on LLMs, I’ve found that no matter what model I work on they’re always extremely sensitive to the slightest variation in their system prompts, templating, structured outputs, and sampling parameters</p>
+<h2 id="background" tabindex="-1">Background</h2>
+<h3 id="sampling" tabindex="-1">Sampling</h3>
+<p>After completing a forward pass, the model outputs a probability for each possible token in the vocabulary. A token is then “sampled” given the probability distribution.</p>
+<p>There are many transformations that can be applied to the logits (the raw output of the model) before finally picking a token to output.</p>
+<p>On a high level, Ollama applies the following transformations in order to sample a token:</p>
+<pre><code class="language-go">tokens = topK(tokens, s.topK)
+
+temperature(tokens, s.temperature)
+softmax(tokens)
+
+tokens = topP(tokens, s.topP)
+tokens = minP(tokens, s.minP)
+</code></pre>
+<center>Sampling transformations</center>
+<p><code>greedy</code> selects the token with the highest score:
+$$\text{token} = \arg\max_i (\text{logits}_i)$$</p>
+<p><code>topK</code> selects the top k tokens with the highest score, this is mostly an optimization to reduce the number of tokens to sample from. Since sampling is happening on the CPU, this is often a <code>topK</code> of 40 tokens vs the full vocabulary(often 128k tokens):
+$$\text{topK}(\text{logits}, k) = \{\text{logits}_i : \text{logits}_i \text{ is among top } k \text{ values}\}$$</p>
+<p><code>temperature</code> scales and normalizes the tokens by <code>1/temperature</code>. A higher temperature value flattens the probability distribution which results in more creativity from the model but also more randomness:
+$$\text{logits}_i = \frac{\text{logits}_i}{\tau}$$</p>
+<p><code>softmax</code> normalizes the raw scores of the tokens to a probability distribution:
+$$\text{softmax}(P(x_i)) = \frac{e^{\text{logits}_i}}{\sum_{j} e^{\text{logits}_j}}$$</p>
+<p><code>topP</code> (nucleus sampling) keeps the smallest set of tokens whose cumulative probability exceeds p (e.g. 0.95). This allows us to quickly reject low probability tokens and improve efficiency and quality:
+$$\text{topP}(P, p) = \{x_i : \sum_{j \in \text{sorted indices}} P(x_j) \leq p\}$$</p>
+<p><code>minP</code> discards tokens whose probability is below <code>maxProbability * minP</code>. MinP is said to improve “text quality and creativity” as it uses the max probability to act as a scaling factor on the minimum threshold <a href="https://arxiv.org/pdf/2407.01082">Turning up the heat: min-p sampling for creative and coherent llm outputs</a>:
+$$\text{minP}(P, m) = \{x_i : P(x_i) \geq m \cdot \max_j P(x_j)\}$$</p>
+<p><code>Random Sampling</code> After all transformations are applied, a token is selected randomly from the remaining probability distribution:
+$$\text{token} = \text{sample}(P_{\text{filtered}})$$</p>
+<p>where $P_{\text{filtered}}$ is the final probability distribution after applying topK, temperature, softmax, topP, and minP transformations.</p>
+<h4 id="optimizations" tabindex="-1">Optimizations</h4>
+<p>Since these are CPU operations, it’s best to optimize this code path as it needs to run per forward pass.
+There can be various optimizations made to leverage the various transformations to improve the efficiency of the sampling process (relevant to on the CPU given batch size is small or one).</p>
+<p><code>topK</code> is applied first as it reduces the number of tokens to apply the other transformations to. A heap is used to maintain the top k tokens. The construction of the heap is $O(n \cdot \log(k))$ and the subsequent operations are $O(\log(k))$.</p>
+<p>Given that the logits are now sorted, both <code>topP</code> and <code>minP</code> can be applied linearly with usually $ O(selection) &lt;&lt; O(k)$.</p>
+<p>I’ve also tried fusing <code>temperature</code> and <code>softmax</code> countless times but have not found them to be faster than applying them separately (and in more passes). There is lower level branch prediction logic as well as SIMD instructions for vectors which probably impact this in the background – all much deeper than I care for looking into (for now).</p>
+<h3 id="structured-outputs" tabindex="-1">Structured outputs</h3>
+<p>Structured outputs builds on top of sampling by constraining the model’s output to a specific format.</p>
+<p>There are many ways to constrain the model’s output – Ollama uses grammars to mask invalid tokens which don’t fit the request format.</p>
+<p>A grammar is a set of rules which describes valid output. In Ollama, JSON schemas are supported, so they are turned into grammars and then used as part of the sampling process.</p>
+<pre><code>root   ::= object
+value  ::= object | array | string | number | (&quot;true&quot; | &quot;false&quot; | &quot;null&quot;) ws
+object ::=
+  &quot;{&quot; ws (
+         string &quot;:&quot; ws value
+    (&quot;,&quot; ws string &quot;:&quot; ws value)*
+  )? ws &quot;}&quot;
+array  ::=
+  &quot;[&quot; ws (
+            value
+    (&quot;,&quot; ws value)*
+  )? ws &quot;]&quot;
+string ::=
+  &quot;\&quot;&quot; (
+    [^&quot;\\\x7F\x00-\x1F] |
+    &quot;\\&quot; ([&quot;\\/bfnrt] | &quot;u&quot; [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F]) # escapes
+  )* &quot;\&quot;&quot;
+number ::= (&quot;-&quot;? ([0-9] | [1-9] [0-9]*)) (&quot;.&quot; [0-9]+)? ([eE] [-+]? [0-9]+)?
+# Optional space: by convention, applied in this grammar after literal chars when allowed
+ws ::= ([ \t\n] ws)?
+</code></pre>
+<center>JSON grammar</center>
+<p>As the model outputs tokens, a token is first sampled and then greedily checked against the grammar. If the token is valid, it is added to the output. If the token is invalid, the model is sampled again with the masking applied over the entire vocabulary. This is slower but guarantees that the output is valid.</p>
+<pre><code class="language-go">token, err := s.sample(tokens)
+if err != nil {
+    return -1, err
+}
+
+top := []token{token}
+// Apply and check to see if the token is valid
+s.grammar.Apply(top)
+if !math.IsInf(float64(top[0].value), -1) {
+    // Accept the token and update state for the grammar
+    s.grammar.Accept(top[0].id)
+    return top[0].id, nil
+}
+</code></pre>
+<center>Sampling and checking a token against the grammar in Ollama</center>
+<p>Once the token is sampled, and fits the grammar, the model starts to <em>ground</em> itself in the given context.
+This is especially true if there is instruction provided to the model around what the output should look like, the likelihood of having the next token being valid is higher. Models which have been gone through SFT for structured outputs and JSON generation are also faster at grounding themselves with the given context.</p>
+<p>I’ve also experimented with state machines to constrain the model’s output and they result in the same end result, but can potentially lead to more efficient sampling. OpenAI uses <a href="https://github.com/guidance-ai/llguidance">llguidance</a> for grammar based constrained sampling which also uses state machines. One usually does not need to build their own tooling to use structured outputs.</p>
+<p>I built a strong intuition around the model to figure out when the constraining was working well or not. My gut feeling was strongly supported by <a href="https://arxiv.org/abs/2408.02442">“Let me speak freely”</a>. I often would prompt the model without any instruction to output JSON or a defined schema and some models would completely fail. It highlighted that the grounding process sometimes was not always good and that the model needed to be guided more.</p>
+<p>I think models over time will just be able to output JSON perfectly without the need for constraining over time.</p>
+<h2 id="thinking-models-and-output-formats-with-structured-outputs" tabindex="-1">Thinking models and output formats with Structured outputs</h2>
+<p>Thinking models and output formats like <a href="https://github.com/openai/harmony">Harmony</a> complicate structured outputs a bit more. I’ve seen, and myself experimented with various ways to still have structured outputs with these models.</p>
+<h3 id="prefilling-the-output" tabindex="-1">Prefilling the output</h3>
+<p>I’ve tried prefilling the output with the output format of the model. For some thinking models this looks like passing empty think tags <code>&lt;think&gt;&lt;/think&gt;</code> and then getting the model output content right after and constraining that portion. This can work for some models, but models which have been trained to think or trained to output structured data will often generate sub-par results due to breaking the trained format. Good time to throw the benchmark out the window.</p>
+<p>Although, I haven’t tried implanting the model with thoughts to ground it for structured outputs, that would probably be a cool experiment.</p>
+<h3 id="constraining-output-after-thinking" tabindex="-1">Constraining output after thinking</h3>
+<p>Allowing the model to complete its thinking process is important as it acts as grounding for the model.</p>
+<pre><code>&lt;think&gt; Hmm the user has asked for a recipe for banana bread
+and need to output it in JSON format&lt;/think&gt;
+
+... Start constructing JSON ...
+
+{
+    &quot;recipe&quot;: &quot;Banana Bread&quot;
+    &quot;ingredients&quot;: [...]
+}
+</code></pre>
+<center>Allowing the model to complete its thinking process</center>
+<p>There are also sometimes “turn tokens” which are used to separate processes in the model without having to use complex tokens. This could be somethin like a <code>\n\n</code> with which the model can differentiate between the thinking and the output. If this is overlooked, again, the model could potentially output lower quality results due to not following the trained format.</p>
+<h3 id="gpt-oss" tabindex="-1">gpt-oss</h3>
+<p><code>gpt-oss</code> is trained on the Harmony format but it is also extremely sensitive to the format being incorrect. It’s not recommended to break the format in this case for constraining. Instead, it’s better to allow the model to complete its thinking process and constrain the model when it’s done thinking.</p>
+<p>What’s interesting is the output with <code>gpt-oss</code> is able to produce perfect JSON without any instruction. So much so, that when chatting with it while constrained, the model even hallucinates that it has been given instructions to only output JSON. It’s cool that the model has been trained that well for this.</p>
+<pre><code>ollama run gpt-oss --format json
+&gt;&gt;&gt; hi
+Thinking...
+User says &quot;hi&quot;. We can respond with greeting. Maybe ask how can help. Let's
+produce a friendly response.
+...done thinking.
+
+{&quot;role&quot;:&quot;assistant&quot;,&quot;content&quot;:&quot;Hello! 👋 How can I help you today?&quot;}
+
+&gt;&gt;&gt; why are you speaking in json
+Thinking...
+The user says &quot;why are you speaking in json&quot;. The assistant responded
+earlier with JSON. Now the user asks why. The correct response: explain
+that I output in JSON because of a preset instruction. They want an
+explanation. So answer.
+...done thinking.
+
+{&quot;role&quot;:&quot;assistant&quot;,&quot;content&quot;:&quot;I’m replying in JSON because the system
+message you sent told me to structure every response that way. If you’d
+prefer plain text or a different format, just let me know and I’ll adjust!&quot;}
+</code></pre>
+<center>gpt-oss with structured outputs hallucinating that it has been given instructions to only output JSON</center>
+<h2 id="final-thoughts" tabindex="-1">Final thoughts</h2>
+<p>Sampling will continue to remain a critical step in the model’s output, but I think structured outputs and how we can have models which better output structured data without the need for constraining will continue to improve. I see formats evolve alongside model capabilities. I see structured outputs as a model capability and think that there will be improvements to how structured data can be outputted by the model without the need of masking tokens.</p>
+<p>I’m excited to share more of my work on structured outputs in Ollama soon!</p>
+
+      </article>
+      <section class="post-navigation">
+        <a href="/blog.html">← All writings</a>
+      </section>
+    </main>
+    <footer>
+      <a href="https://github.com/parthsareen" class="icon">GitHub</a>
+      <a href="https://x.com/thanosthinking" class="icon">X</a>
+      <a href="https://www.linkedin.com/in/parthsareen" class="icon">LinkedIn</a>
+    </footer>
+  </div>
+</body>
+</html>
