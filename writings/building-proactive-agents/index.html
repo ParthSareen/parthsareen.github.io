@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Why are proactive agents different | Writings</title>
+  <meta name="description" content="[Potentially a different blog?]" />
+  <link rel="icon" href="/zukohere.png" type="image/png" />
+  <link rel="stylesheet" href="/style.css" />
+  <script src="/theme.js"></script>
+  <script src="/vim-nav.js"></script>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\(', '\)']],
+        displayMath: [['$$','$$'], ['\[','\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+  <style>
+    .password-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-color, #fff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    .password-box {
+      text-align: center;
+      padding: 2rem;
+    }
+    .password-box input {
+      padding: 0.5rem;
+      font-size: 1rem;
+      margin: 1rem 0;
+      border: 1px solid var(--text-color, #333);
+      background: var(--bg-color, #fff);
+      color: var(--text-color, #333);
+    }
+    .password-box button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      cursor: pointer;
+      background: var(--text-color, #333);
+      color: var(--bg-color, #fff);
+      border: none;
+    }
+    .error {
+      color: #e74c3c;
+      margin-top: 0.5rem;
+    }
+    .content-hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="password-overlay" class="password-overlay">
+    <div class="password-box">
+      <h2>This post is password protected</h2>
+      <input type="password" id="password-input" placeholder="Enter password" />
+      <br />
+      <button onclick="checkPassword()">Submit</button>
+      <div id="error" class="error"></div>
+    </div>
+  </div>
+  <div id="content" class="content-hidden">
+    <div class="container">
+      <header>
+        <a href="/index.html">
+          <img src="/zukohere.png" alt="Profile Image" class="profile-image" />
+        </a>
+        <h1><a href="/index.html">Writings</a></h1>
+        <p class="post-meta"><time datetime="2025-12-24">2025-12-24</time></p>
+      </header>
+      <main>
+        <article class="post-content">
+<p>[Potentially a different blog?]</p>
+<h1 id="why-are-proactive-agents-different" tabindex="-1">Why are proactive agents different</h1>
+<h1 id="building-poke-at-home" tabindex="-1">Building “Poke At Home”</h1>
+<h2 id="idea" tabindex="-1">idea</h2>
+<h2 id="tool-design" tabindex="-1">tool design</h2>
+<h2 id="testing-the-agent" tabindex="-1">testing the agent</h2>
+<h2 id="emergent-behaviors" tabindex="-1">emergent behaviors</h2>
+<h2 id="polling-vs-notifications" tabindex="-1">polling vs notifications</h2>
+<h3 id="cdc" tabindex="-1">cdc</h3>
+<h3 id="webhooks" tabindex="-1">webhooks</h3>
+<h1 id="context-engineering-for-agents" tabindex="-1">context engineering for agents</h1>
+<h2 id="proactive-agents" tabindex="-1">proactive agents</h2>
+
+        </article>
+        <section class="post-navigation">
+          <a href="/index.html#writings">← All writings</a>
+        </section>
+      </main>
+      <footer>
+        <a href="https://github.com/parthsareen" class="icon">GitHub</a>
+        <a href="https://x.com/thanosthinking" class="icon">X</a>
+        <a href="https://www.linkedin.com/in/parthsareen" class="icon">LinkedIn</a>
+      </footer>
+    </div>
+  </div>
+  <script>
+    const PASSWORD = 'wip2024';
+    function checkPassword() {
+      const input = document.getElementById('password-input').value;
+      if (input === PASSWORD) {
+        document.getElementById('password-overlay').style.display = 'none';
+        document.getElementById('content').classList.remove('content-hidden');
+        localStorage.setItem('wip-auth', 'true');
+      } else {
+        document.getElementById('error').textContent = 'Incorrect password';
+      }
+    }
+    if (localStorage.getItem('wip-auth') === 'true') {
+      document.getElementById('password-overlay').style.display = 'none';
+      document.getElementById('content').classList.remove('content-hidden');
+    }
+    document.getElementById('password-input').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        checkPassword();
+      }
+    });
+  </script>
+</body>
+</html>
