@@ -289,96 +289,87 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Handle keydown events
     document.addEventListener('keydown', function(event) {
-        // Handle Escape key to close search
+        // ---------------------------------------------------------------------
+        // 1. Global shortcuts that should work regardless of focus
+        // ---------------------------------------------------------------------
+        // Escape always closes the search overlay
         if (event.key === 'Escape' && searchOverlay.style.display === 'flex') {
             closeSearch();
             event.preventDefault();
             return;
         }
-        
-        // Only handle vim keys when not in an input field (except when search is open and not navigating results)
-        if ((event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA' || event.target.isContentEditable) && 
-            event.target !== searchInput) {
+
+        // '/' toggles the search overlay (open if closed, close if open)
+        if (event.key === '/') {
+            if (searchOverlay.style.display === 'flex') {
+                closeSearch();
+            } else {
+                openSearch();
+            }
+            // Show the VIM indicator for visual feedback
+            showVimIndicator();
+            event.preventDefault();
             return;
         }
-        
-        // Handle search result navigation mode (after Enter is pressed in search)
+
+        // ---------------------------------------------------------------------
+        // 2. Ignore vim keys when typing in regular inputs (except the search box)
+        // ---------------------------------------------------------------------
+        if ((event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA' || event.target.isContentEditable) &&
+            event.target !== searchInput) {
+            return; // let the user type normally
+        }
+
+        // ---------------------------------------------------------------------
+        // 3. Search result navigation mode (after pressing Enter in the search box)
+        // ---------------------------------------------------------------------
         if (searchOverlay.style.display === 'flex' && searchResultsNavigating) {
             const resultItems = searchResults.querySelectorAll('div[style*="cursor: pointer"]');
-            
             if (resultItems.length > 0) {
                 if (event.key === 'j') {
-                    // Move down in search results
-                    if (typeof currentResultIndex === 'undefined' || currentResultIndex === null) {
+                    // Move down
+                    if (currentResultIndex == null) {
                         currentResultIndex = 0;
                     } else {
-                        // Remove highlight from current item
-                        if (resultItems[currentResultIndex]) {
-                            resultItems[currentResultIndex].style.backgroundColor = '';
-                        }
+                        resultItems[currentResultIndex].style.backgroundColor = '';
                         currentResultIndex = (currentResultIndex + 1) % resultItems.length;
                     }
-                    // Highlight new item
-                    if (resultItems[currentResultIndex]) {
-                        resultItems[currentResultIndex].style.backgroundColor = 'var(--border-color)';
-                        resultItems[currentResultIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                    }
+                    resultItems[currentResultIndex].style.backgroundColor = 'var(--border-color)';
+                    resultItems[currentResultIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                     event.preventDefault();
                     return;
                 } else if (event.key === 'k') {
-                    // Move up in search results
-                    if (typeof currentResultIndex === 'undefined' || currentResultIndex === null) {
+                    // Move up
+                    if (currentResultIndex == null) {
                         currentResultIndex = resultItems.length - 1;
                     } else {
-                        // Remove highlight from current item
-                        if (resultItems[currentResultIndex]) {
-                            resultItems[currentResultIndex].style.backgroundColor = '';
-                        }
+                        resultItems[currentResultIndex].style.backgroundColor = '';
                         currentResultIndex = (currentResultIndex - 1 + resultItems.length) % resultItems.length;
                     }
-                    // Highlight new item
-                    if (resultItems[currentResultIndex]) {
-                        resultItems[currentResultIndex].style.backgroundColor = 'var(--border-color)';
-                        resultItems[currentResultIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                    }
+                    resultItems[currentResultIndex].style.backgroundColor = 'var(--border-color)';
+                    resultItems[currentResultIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                     event.preventDefault();
                     return;
                 } else if (event.key === 'Enter') {
-                    // Select highlighted result
-                    if (typeof currentResultIndex !== 'undefined' && currentResultIndex !== null && resultItems[currentResultIndex]) {
-                        const resultData = currentSearchResults.find(r => r.element === resultItems[currentResultIndex].element);
-                        if (resultData && resultData.linkElement) {
-                            // If it's a link, open in current page
-                            window.location.href = resultData.linkElement.href;
-                        } else {
-                            // Otherwise, click the element to scroll to it
-                            resultItems[currentResultIndex].click();
-                        }
-                        closeSearch();
-                    } else if (resultItems[0]) {
-                        // If no item is highlighted, select the first one
-                        const resultData = currentSearchResults.find(r => r.element === resultItems[0].element);
-                        if (resultData && resultData.linkElement) {
-                            // If it's a link, open in current page
-                            window.location.href = resultData.linkElement.href;
-                        } else {
-                            // Otherwise, click the element to scroll to it
-                            resultItems[0].click();
-                        }
-                        closeSearch();
+                    // Activate selected result
+                    const selectedItem = resultItems[currentResultIndex != null ? currentResultIndex : 0];
+                    if (selectedItem) {
+                        selectedItem.click();
                     }
+                    closeSearch();
                     event.preventDefault();
                     return;
-                }
-                // Disable h and l during search result navigation
-                else if (event.key === 'h' || event.key === 'l') {
+                } else if (event.key === 'h' || event.key === 'l') {
+                    // Prevent page navigation while in result mode
                     event.preventDefault();
                     return;
                 }
             }
         }
-        
-        // Handle Enter key in search to start navigation mode
+
+        // ---------------------------------------------------------------------
+        // 4. Enter key in the search input starts navigation mode
+        // ---------------------------------------------------------------------
         if (event.key === 'Enter' && searchOverlay.style.display === 'flex' && event.target === searchInput) {
             searchResultsNavigating = true;
             const resultItems = searchResults.querySelectorAll('div[style*="cursor: pointer"]');
@@ -390,38 +381,34 @@ document.addEventListener('DOMContentLoaded', function() {
             event.preventDefault();
             return;
         }
-        
-        // Show vim indicator when any of the vim keys are pressed
-        if (['h', 'j', 'k', 'l', '/'].includes(event.key)) {
+
+        // ---------------------------------------------------------------------
+        // 5. Show VIM indicator for any vim key press (excluding the '/' which is handled above)
+        // ---------------------------------------------------------------------
+        if (['h', 'j', 'k', 'l'].includes(event.key)) {
             showVimIndicator();
         }
-        
-        // Handle normal navigation (when search is not open)
+
+        // ---------------------------------------------------------------------
+        // 6. Normal navigation when search overlay is not visible
+        // ---------------------------------------------------------------------
         if (searchOverlay.style.display !== 'flex') {
             switch (event.key) {
                 case 'h':
-                    // Navigate to previous page
                     prevPage();
                     break;
                 case 'l':
-                    // Navigate to next page
                     nextPage();
                     break;
                 case 'j':
-                    // Scroll to next section
                     nextSection();
                     event.preventDefault();
                     break;
                 case 'k':
-                    // Scroll to previous section
                     prevSection();
                     event.preventDefault();
                     break;
-                case '/':
-                    // Open search
-                    openSearch();
-                    event.preventDefault();
-                    break;
+                // '/' is already handled at the top of this listener
             }
         }
     });

@@ -225,7 +225,7 @@ ${html}
 </html>`;
 
 const wipTemplate = ({ slug, title, date, html, excerpt }) => {
-  const password = process.env.WIP_PASSWORD || 'wip2024';
+  const password = process.env.WIP_PASSWORD || 'BleuSph!nxC0y234#';
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
