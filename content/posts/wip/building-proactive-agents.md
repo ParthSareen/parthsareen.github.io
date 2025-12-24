@@ -1,3 +1,7 @@
+---
+protected: true
+---
+
 [Potentially a different blog?]
 # Why are proactive agents different
 

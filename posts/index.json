@@ -3,7 +3,7 @@
     "slug": "sampling",
     "filename": "sampling.html",
     "title": "Sampling and structured outputs in LLMs",
-    "date": "2025-09-29",
+    "date": "2025-10-28",
     "excerpt": "Sampling and structured outputs are tied together as they both determine the model’s next chosen token."
   }
 ]
