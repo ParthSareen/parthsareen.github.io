@@ -314,6 +314,16 @@ button:hover~.custom-cursor {
         margin-right: 0;
         margin-bottom: 8px;
     }
+
+    code,
+    pre,
+    pre code {
+        font-size: 12px;
+    }
+
+    article center {
+        font-size: 12px;
+    }
 }
 
 /* New section for articles */
@@ -748,11 +758,11 @@ tr.active {
     }
 }
 
-/* Code styles: match body text size */
+/* Code styles: 3-4pts smaller than body text */
 code,
 pre,
 pre code {
-    font-size: 1em;
+    font-size: 14px;
     line-height: inherit;
 }
 
@@ -768,4 +778,36 @@ article pre {
 
 article pre code {
     display: block;
+}
+
+/* Image styles - fit within text width */
+article img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 30px auto;
+    border-radius: 4px;
+}
+
+/* Center caption styles */
+article center {
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    color: var(--secondary-text);
+    font-style: italic;
+    margin-top: -20px;
+    margin-bottom: 30px;
+}
+
+/* Citation links - keep them inline */
+article a[href^="#ref"] {
+    white-space: nowrap;
+    display: inline-block;
+}
+
+/* Prevent text wrapping around citations - keep word + citation together */
+article p {
+    word-break: normal;
+    overflow-wrap: break-word;
 }
