@@ -201,7 +201,6 @@ const writingTemplate = ({ slug, title, date, html, excerpt }) => `<!DOCTYPE htm
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${title} | Writings</title>
   <meta name="description" content="${escapeAttribute(excerpt)}" />
-  <link rel="icon" href="/zukohere.png" type="image/png" />
   <link rel="stylesheet" href="/style.css" />
   <script src="/theme.js"></script>
   <script src="/vim-nav.js"></script>
@@ -248,9 +247,6 @@ const writingTemplate = ({ slug, title, date, html, excerpt }) => `<!DOCTYPE htm
 <body>
   <div class="container">
     <header>
-      <a href="/index.html">
-        <img src="/zukohere.png" alt="Profile Image" class="profile-image" />
-      </a>
       <h1><a href="/index.html">Writings</a></h1>
       ${date ? `<p class="post-meta"><time datetime="${date}">${date}</time></p>` : ''}
     </header>
@@ -272,6 +268,7 @@ ${html}
 </html>`;
 
 const wipTemplate = ({ slug, title, date, html, excerpt }) => {
+  // YOU FOUND ME AHHHHH!
   const password = process.env.WIP_PASSWORD || 'BleuSph!nxC0y234#';
   return `<!DOCTYPE html>
 <html lang="en">
@@ -280,7 +277,6 @@ const wipTemplate = ({ slug, title, date, html, excerpt }) => {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${title} | Writings</title>
   <meta name="description" content="${escapeAttribute(excerpt)}" />
-  <link rel="icon" href="/zukohere.png" type="image/png" />
   <link rel="stylesheet" href="/style.css" />
   <script src="/theme.js"></script>
   <script src="/vim-nav.js"></script>
@@ -378,9 +374,6 @@ const wipTemplate = ({ slug, title, date, html, excerpt }) => {
   <div id="content" class="content-hidden">
     <div class="container">
       <header>
-        <a href="/index.html">
-          <img src="/zukohere.png" alt="Profile Image" class="profile-image" />
-        </a>
         <h1><a href="/index.html">Writings</a></h1>
         ${date ? `<p class="post-meta"><time datetime="${date}">${date}</time></p>` : ''}
       </header>
