@@ -295,6 +295,34 @@ const wipTemplate = ({ slug, title, date, html, excerpt }) => {
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    // Pre-configure Mermaid before content loads
+    if (typeof mermaid !== 'undefined') {
+      mermaid.initialize({ 
+        startOnLoad: false,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: '#e2d9c9',
+          primaryTextColor: '#463a2e',
+          primaryBorderColor: '#744c24',
+          lineColor: '#463a2e',
+          secondaryColor: '#f6f2e8',
+          tertiaryColor: '#e2d9c9',
+          mainBkg: '#e2d9c9',
+          secondBkg: '#f6f2e8',
+          tertiaryBkg: '#e2d9c9',
+          nodeBorder: '#744c24',
+          clusterBkg: '#f6f2e8',
+          clusterBorder: '#744c24',
+          defaultLinkColor: '#463a2e',
+          titleColor: '#463a2e',
+          edgeLabelBackground: '#f6f2e8',
+          fontSize: '15px',
+          fontFamily: 'Spectral, serif'
+        }
+      });
+    }
+  </script>
   <style>
     .password-overlay {
       position: fixed;
