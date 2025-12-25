@@ -19,6 +19,35 @@
     };
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      mermaid.initialize({ 
+        startOnLoad: false,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: '#e2d9c9',
+          primaryTextColor: '#463a2e',
+          primaryBorderColor: '#744c24',
+          lineColor: '#463a2e',
+          secondaryColor: '#f6f2e8',
+          tertiaryColor: '#e2d9c9',
+          mainBkg: '#e2d9c9',
+          secondBkg: '#f6f2e8',
+          tertiaryBkg: '#e2d9c9',
+          nodeBorder: '#744c24',
+          clusterBkg: '#f6f2e8',
+          clusterBorder: '#744c24',
+          defaultLinkColor: '#463a2e',
+          titleColor: '#463a2e',
+          edgeLabelBackground: '#f6f2e8',
+          fontSize: '15px',
+          fontFamily: 'Spectral, serif'
+        }
+      });
+      mermaid.run();
+    });
+  </script>
 </head>
 <body>
   <div class="container">
@@ -27,7 +56,7 @@
         <img src="/zukohere.png" alt="Profile Image" class="profile-image" />
       </a>
       <h1><a href="/index.html">Writings</a></h1>
-      <p class="post-meta"><time datetime="2025-12-24">2025-12-24</time></p>
+      <p class="post-meta"><time datetime="2025-10-28">2025-10-28</time></p>
     </header>
     <main>
       <article class="post-content">

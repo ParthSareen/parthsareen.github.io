@@ -1,3 +1,7 @@
+---
+date: "2025-10-28"
+---
+
 # Sampling and structured outputs in LLMs
 
 Sampling and structured outputs are tied together as they both determine the model's next chosen token.
