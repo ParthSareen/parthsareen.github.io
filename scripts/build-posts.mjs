@@ -112,6 +112,23 @@ function restoreMathSegments(html, placeholders) {
   return result;
 }
 
+function convertMermaidBlocks(html) {
+  // Convert <pre><code class="language-mermaid">...</code></pre> to <pre class="mermaid">...</pre>
+  return html.replace(
+    /<pre><code class="language-mermaid">([\s\S]*?)<\/code><\/pre>/g,
+    (match, content) => {
+      // Decode HTML entities
+      const decoded = content
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&amp;/g, '&')
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, "'");
+      return `<pre class="mermaid">${decoded}</pre>`;
+    }
+  );
+}
+
 async function renderPost(filename, isWip = false) {
   const sourcePath = isWip ? join(WIP_CONTENT_DIR, filename) : join(CONTENT_DIR, filename);
   const raw = await fs.readFile(sourcePath, 'utf8');
@@ -128,7 +145,8 @@ async function renderPost(filename, isWip = false) {
 
   const { protectedSource, placeholders } = protectMathSegments(content);
   const htmlWithPlaceholders = md.render(protectedSource);
-  const html = restoreMathSegments(htmlWithPlaceholders, placeholders);
+  let html = restoreMathSegments(htmlWithPlaceholders, placeholders);
+  html = convertMermaidBlocks(html);
 
   const stat = await fs.stat(sourcePath);
   const title = (typeof data.title === 'string' && data.title.trim())
@@ -197,6 +215,35 @@ const writingTemplate = ({ slug, title, date, html, excerpt }) => `<!DOCTYPE htm
     };
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      mermaid.initialize({ 
+        startOnLoad: false,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: '#e2d9c9',
+          primaryTextColor: '#463a2e',
+          primaryBorderColor: '#744c24',
+          lineColor: '#463a2e',
+          secondaryColor: '#f6f2e8',
+          tertiaryColor: '#e2d9c9',
+          mainBkg: '#e2d9c9',
+          secondBkg: '#f6f2e8',
+          tertiaryBkg: '#e2d9c9',
+          nodeBorder: '#744c24',
+          clusterBkg: '#f6f2e8',
+          clusterBorder: '#744c24',
+          defaultLinkColor: '#463a2e',
+          titleColor: '#463a2e',
+          edgeLabelBackground: '#f6f2e8',
+          fontSize: '15px',
+          fontFamily: 'Spectral, serif'
+        }
+      });
+      mermaid.run();
+    });
+  </script>
 </head>
 <body>
   <div class="container">
@@ -247,6 +294,7 @@ const wipTemplate = ({ slug, title, date, html, excerpt }) => {
     };
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
   <style>
     .password-overlay {
       position: fixed;
@@ -325,20 +373,54 @@ ${html}
   </div>
   <script>
     const PASSWORD = '${password}';
+    
+    function initMermaid() {
+      if (typeof mermaid !== 'undefined') {
+        mermaid.initialize({ 
+          startOnLoad: false,
+          theme: 'base',
+          themeVariables: {
+            primaryColor: '#e2d9c9',
+            primaryTextColor: '#463a2e',
+            primaryBorderColor: '#744c24',
+            lineColor: '#463a2e',
+            secondaryColor: '#f6f2e8',
+            tertiaryColor: '#e2d9c9',
+            mainBkg: '#e2d9c9',
+            secondBkg: '#f6f2e8',
+            tertiaryBkg: '#e2d9c9',
+            nodeBorder: '#744c24',
+            clusterBkg: '#f6f2e8',
+            clusterBorder: '#744c24',
+            defaultLinkColor: '#463a2e',
+            titleColor: '#463a2e',
+            edgeLabelBackground: '#f6f2e8',
+            fontSize: '15px',
+            fontFamily: 'Spectral, serif'
+          }
+        });
+        mermaid.run();
+      }
+    }
+    
     function checkPassword() {
       const input = document.getElementById('password-input').value;
       if (input === PASSWORD) {
         document.getElementById('password-overlay').style.display = 'none';
         document.getElementById('content').classList.remove('content-hidden');
         localStorage.setItem('wip-auth', 'true');
+        setTimeout(initMermaid, 100);
       } else {
         document.getElementById('error').textContent = 'Incorrect password';
       }
     }
+    
     if (localStorage.getItem('wip-auth') === 'true') {
       document.getElementById('password-overlay').style.display = 'none';
       document.getElementById('content').classList.remove('content-hidden');
+      setTimeout(initMermaid, 100);
     }
+    
     document.getElementById('password-input').addEventListener('keypress', function(e) {
       if (e.key === 'Enter') {
         checkPassword();
