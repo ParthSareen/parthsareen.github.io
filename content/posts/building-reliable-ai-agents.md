@@ -1,9 +1,8 @@
 ---
-protected: true
-date: "2025-12-26"
+date: "2025-12-25"
 ---
 
-# Basics of building AI Agents
+# Building Reliable AI Agents
 
 AI agents accomplish a task in a mostly unstructured manner – where they are able to reason and conduct actions to achieve a goal. The key is in providing just enough structure through tool design, harness design, and context engineering to guide the agent effectively. 
 
@@ -33,9 +32,11 @@ Depending on your use case, some open source models might even be better picks t
 
 ## Anatomy of an agent
 
-Models like `Kimi-K2`, `Minimax M2.1`, `GLM-4.7`, and `Qwen3-coder` tend to perform well in an agent loop. These models have an understanding of how to use tools they are provided and are able to go from a provided goal to conducting actions to reach that goal.
+Models like `Kimi-K2`, `Minimax M2.1`, `GLM-4.7`, and `Qwen3-coder` tend to perform well in an agent loop. These models have an understanding of how to use tools they are provided and are able to go from a provided goal to conducting actions to reach that goal
 
-The simplest way to build an agent with capable models is to throw it into a loop with a goal and a set of tools. The following is an agent execution loop:
+The simplest way to build an agent with capable models is to throw it into a loop with a goal and a set of tools. The following diagram shows the agent execution loop:
+
+**Diagram: Agent execution flow - the model continuously generates responses and executes tools until the goal is reached.**
 
 ```mermaid
 graph TD
@@ -56,13 +57,15 @@ graph TD
     style F fill:#f6f2e8
 ```
 
+**Code: Minimal agent loop pseudocode** - this shows the core pattern: generate response, check for tool calls, execute tools, repeat until done.
+
 ```python
 goal = "do x for me"
 message_history = [goal]
 while true:
     response = model.generate(message_history, available_tools)
     message_history.append(response)
-    if tool_calls:
+    if response.tool_calls:
         result = execute_tool(tool_calls)
         message_history.append(result)
     else:
@@ -119,6 +122,9 @@ As models get better, we're seeing more targeted post-training for specific harn
 ## Building a simple agent
 
 Here is a simple agent which uses a tool to search the web and then summarize the results:
+
+**Code: Complete web search agent** - a working example with comments showing initialization, the main loop, tool execution, and result handling.
+Main callout here is that the tool outputs are truncated to 2000 tokens for context window management.
 
 ```python
 # Define the goal
@@ -197,7 +203,7 @@ This has been done through Jinja templates or Go templates for Ollama for the la
 
 The below is an example of tools JSON schema being passed into gpt-oss and the rendered prompt that the model actually sees.
 
-Input tool schema:
+**Input tool schema:** usually inputted as JSON, or some tools allow for direclty passing in the function definition.
 ```json
 {
     "type": "object",
@@ -268,7 +274,8 @@ Input tool schema:
 
 ```
 
-Rendered tool prompt:
+**Rendered tool prompt:** What gpt-oss actually sees - TypeScript-style function definitions in OpenAI's Harmony format, showing how JSON schemas get transformed.
+
 ```
 <|start|>system<|message|>You are ChatGPT, a large language model trained by OpenAI.
 Knowledge cutoff: 2024-06
@@ -319,6 +326,7 @@ Models have probably seen less nested JSON and fewer custom types in the trainin
 This also gets more complicated when there are custom formats that a model was trained on. 
 The more layers of abstraction we add, the higher the likelihood that something is not getting rendered correctly. 
 I've spent way too much time debugging whitespaces in a rendered prompt, trust me, you want to keep tool schemas simple.
+A single whitespace or newline can change the activations for a model; when it is part of the template the model was trained on, having it incorrect can change the model's outputs drastically. 
 
 Similarly the tool output also needs to be parsed back into a JSON schema, and different providers may choose to parse in their own way depending on the inference engine they are using. Poor parsing by the provider can have two negative effects: it slowly degrades the model's tool calling capabilities, and it breaks the [KV cache](https://huggingface.co/blog/not-lain/kv-caching) since the re-rendered prompt would not match the original prompt + generated tokens. 
 
@@ -390,7 +398,7 @@ Information is either retrieved in some manner - Database, API, Web Search, File
 
 For example, if a user wants to continue planning a project, the agent needs:
 - Memory of what was previously discussed
-- Access to the project's current state (via tools with their own state management)
+- Access to the project's current state – via tools with their own state management
 
 You can provide this context by either injecting it at conversation start, or by instructing the model through the system message to retrieve it from persistent storage.
 

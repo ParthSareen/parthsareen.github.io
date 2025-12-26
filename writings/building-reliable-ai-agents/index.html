@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Basics of building AI Agents | Writings</title>
+  <title>Building Reliable AI Agents | Writings</title>
   <meta name="description" content="AI agents accomplish a task in a mostly unstructured manner – where they are able to reason and conduct actions to achieve a goal. The key is in providing just enough structure through tool design, harness design, and context engineering to guide the agent effectively." />
   <link rel="stylesheet" href="/style.css" />
   <script src="/theme.js"></script>
@@ -18,96 +18,16 @@
     };
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
-  <script>
-    // Pre-configure Mermaid before content loads
-    if (typeof mermaid !== 'undefined') {
-      mermaid.initialize({ 
-        startOnLoad: false,
-        theme: 'base',
-        themeVariables: {
-          primaryColor: '#e2d9c9',
-          primaryTextColor: '#463a2e',
-          primaryBorderColor: '#744c24',
-          lineColor: '#463a2e',
-          secondaryColor: '#f6f2e8',
-          tertiaryColor: '#e2d9c9',
-          mainBkg: '#e2d9c9',
-          secondBkg: '#f6f2e8',
-          tertiaryBkg: '#e2d9c9',
-          nodeBorder: '#744c24',
-          clusterBkg: '#f6f2e8',
-          clusterBorder: '#744c24',
-          defaultLinkColor: '#463a2e',
-          titleColor: '#463a2e',
-          edgeLabelBackground: '#f6f2e8',
-          fontSize: '15px',
-          fontFamily: 'Spectral, serif'
-        }
-      });
-    }
-  </script>
-  <style>
-    .password-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: var(--bg-color, #fff);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    }
-    .password-box {
-      text-align: center;
-      padding: 2rem;
-    }
-    .password-box input {
-      padding: 0.5rem;
-      font-size: 1rem;
-      margin: 1rem 0;
-      border: 1px solid var(--text-color, #333);
-      background: var(--bg-color, #fff);
-      color: var(--text-color, #333);
-    }
-    .password-box button {
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-      cursor: pointer;
-      background: var(--text-color, #333);
-      color: var(--bg-color, #fff);
-      border: none;
-    }
-    .error {
-      color: #e74c3c;
-      margin-top: 0.5rem;
-    }
-    .content-hidden {
-      display: none;
-    }
-  </style>
 </head>
 <body>
-  <div id="password-overlay" class="password-overlay">
-    <div class="password-box">
-      <h2>This post is password protected</h2>
-      <input type="password" id="password-input" placeholder="Enter password" />
-      <br />
-      <button onclick="checkPassword()">Submit</button>
-      <div id="error" class="error"></div>
-    </div>
-  </div>
-  <div id="content" class="content-hidden">
-    <div class="container">
-      <header>
-        <h1><a href="/index.html">Writings</a></h1>
-        <p class="post-meta"><time datetime="2025-12-26">2025-12-26</time></p>
-      </header>
-      <main>
-        <article class="post-content">
-<h1 id="basics-of-building-ai-agents" tabindex="-1">Basics of building AI Agents</h1>
+  <div class="container">
+    <header>
+      <h1><a href="/index.html">Writings</a></h1>
+      <p class="post-meta"><time datetime="2025-12-25">2025-12-25</time></p>
+    </header>
+    <main>
+      <article class="post-content">
+<h1 id="building-reliable-ai-agents" tabindex="-1">Building Reliable AI Agents</h1>
 <p>AI agents accomplish a task in a mostly unstructured manner – where they are able to reason and conduct actions to achieve a goal. The key is in providing just enough structure through tool design, harness design, and context engineering to guide the agent effectively.</p>
 <p>I got interested in agents around September 2023 and started by prototyping with gpt-3.5 and gpt-4.
 We’ve come a long way since then, but the fundamentals remain the same.
@@ -126,8 +46,9 @@ Depending on your use case, some open source models might even be better picks t
 <p><img src="/images/open-vs-closed-models.png" alt="Open vs Closed Models Performance"></p>
 <center>Open vs cloud models performance from Artificial Analysis.</center>
 <h2 id="anatomy-of-an-agent" tabindex="-1">Anatomy of an agent</h2>
-<p>Models like <code>Kimi-K2</code>, <code>Minimax M2.1</code>, <code>GLM-4.7</code>, and <code>Qwen3-coder</code> tend to perform well in an agent loop. These models have an understanding of how to use tools they are provided and are able to go from a provided goal to conducting actions to reach that goal.</p>
-<p>The simplest way to build an agent with capable models is to throw it into a loop with a goal and a set of tools. The following is an agent execution loop:</p>
+<p>Models like <code>Kimi-K2</code>, <code>Minimax M2.1</code>, <code>GLM-4.7</code>, and <code>Qwen3-coder</code> tend to perform well in an agent loop. These models have an understanding of how to use tools they are provided and are able to go from a provided goal to conducting actions to reach that goal</p>
+<p>The simplest way to build an agent with capable models is to throw it into a loop with a goal and a set of tools. The following diagram shows the agent execution loop:</p>
+<p><strong>Diagram: Agent execution flow - the model continuously generates responses and executes tools until the goal is reached.</strong></p>
 <pre class="mermaid">graph TD
     A[Start: Goal + Message History] --> B[Model generates response]
     B --> C{Tool calls?}
@@ -145,17 +66,18 @@ Depending on your use case, some open source models might even be better picks t
     style E fill:#f6f2e8
     style F fill:#f6f2e8
 </pre>
-<pre><code class="language-python">goal = &quot;do x for me&quot;
+<p><strong>Code: Minimal agent loop pseudocode</strong> - this shows the core pattern: generate response, check for tool calls, execute tools, repeat until done.</p>
+<pre class="hljs"><code class="language-python">goal = <span class="hljs-string">&quot;do x for me&quot;</span>
 message_history = [goal]
-while true:
+<span class="hljs-keyword">while</span> true:
     response = model.generate(message_history, available_tools)
     message_history.append(response)
-    if tool_calls:
+    <span class="hljs-keyword">if</span> response.tool_calls:
         result = execute_tool(tool_calls)
         message_history.append(result)
-    else:
-        print(response)
-        break
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-built_in">print</span>(response)
+        <span class="hljs-keyword">break</span>
 </code></pre>
 <p>Under the hood, the model is in a feedback loop, much like a controls system. The model is trying to reach a set goal by conducting actions, and trying to minimize the error between the goal and the action.</p>
 <h3 id="agents-as-control-systems-and-policies" tabindex="-1">Agents as control systems and policies</h3>
@@ -195,55 +117,57 @@ A model trained on a Codex-style harness will naturally exhibit different tool-c
 <p>As models get better, we’re seeing more targeted post-training for specific harnesses. GPT-5.2-Codex is optimized for the Cursor/Codex CLI environment. Claude is optimized for MCP and their code environment. The harness is now a critical part of the model’s learned behaviours.</p>
 <h2 id="building-a-simple-agent" tabindex="-1">Building a simple agent</h2>
 <p>Here is a simple agent which uses a tool to search the web and then summarize the results:</p>
-<pre><code class="language-python"># Define the goal
-query = &quot;who is parth sareen&quot;
-print('Query:', query)
+<p><strong>Code: Complete web search agent</strong> - a working example with comments showing initialization, the main loop, tool execution, and result handling.
+Main callout here is that the tool outputs are truncated to 2000 tokens for context window management.</p>
+<pre class="hljs"><code class="language-python"><span class="hljs-comment"># Define the goal</span>
+query = <span class="hljs-string">&quot;who is parth sareen&quot;</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Query:&#x27;</span>, query)
 
-# Initialize message history with system prompt and user goal
-# System prompt defines agent behaviour and success criteria
+<span class="hljs-comment"># Initialize message history with system prompt and user goal</span>
+<span class="hljs-comment"># System prompt defines agent behaviour and success criteria</span>
 messages = [
-    {'role': 'system', 'content': 'You are a pro at making web searches. You are free to make as many searches until you satisfy [x constraints]'},
-    {'role': 'user', 'content': query}
+    {<span class="hljs-string">&#x27;role&#x27;</span>: <span class="hljs-string">&#x27;system&#x27;</span>, <span class="hljs-string">&#x27;content&#x27;</span>: <span class="hljs-string">&#x27;You are a pro at making web searches. You are free to make as many searches until you satisfy [x constraints]&#x27;</span>},
+    {<span class="hljs-string">&#x27;role&#x27;</span>: <span class="hljs-string">&#x27;user&#x27;</span>, <span class="hljs-string">&#x27;content&#x27;</span>: query}
     ]
 
-# Main agent loop
-while True:
-    # Model generates response based on message history and available tools
-    response = chat(model='qwen3', messages=messages, tools=[web_search, web_fetch], think=True)
+<span class="hljs-comment"># Main agent loop</span>
+<span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:
+    <span class="hljs-comment"># Model generates response based on message history and available tools</span>
+    response = chat(model=<span class="hljs-string">&#x27;qwen3&#x27;</span>, messages=messages, tools=[web_search, web_fetch], think=<span class="hljs-literal">True</span>)
     
-    # Some models support thinking/reasoning before acting
-    if response.message.thinking:
-        print('Thinking:')
-        print(response.message.thinking + '\n\n')
+    <span class="hljs-comment"># Some models support thinking/reasoning before acting</span>
+    <span class="hljs-keyword">if</span> response.message.thinking:
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Thinking:&#x27;</span>)
+        <span class="hljs-built_in">print</span>(response.message.thinking + <span class="hljs-string">&#x27;\n\n&#x27;</span>)
     
-    if response.message.content:
-        print('Content:')
-        print(response.message.content + '\n')
+    <span class="hljs-keyword">if</span> response.message.content:
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Content:&#x27;</span>)
+        <span class="hljs-built_in">print</span>(response.message.content + <span class="hljs-string">&#x27;\n&#x27;</span>)
     
-    # Add model's response to message history for context
+    <span class="hljs-comment"># Add model&#x27;s response to message history for context</span>
     messages.append(response.message)
 
-    # Check if model wants to use tools
-    if response.message.tool_calls:
-        for tool_call in response.message.tool_calls:
+    <span class="hljs-comment"># Check if model wants to use tools</span>
+    <span class="hljs-keyword">if</span> response.message.tool_calls:
+        <span class="hljs-keyword">for</span> tool_call <span class="hljs-keyword">in</span> response.message.tool_calls:
             function_to_call = available_tools.get(tool_call.function.name)
-            if function_to_call:
-                # Execute the tool with model's arguments
+            <span class="hljs-keyword">if</span> function_to_call:
+                <span class="hljs-comment"># Execute the tool with model&#x27;s arguments</span>
                 args = tool_call.function.arguments
                 result = function_to_call(**args)
-                print('Result from tool call:', tool_call.function.name)
-                print(args)
-                print(result)
-                print()
+                <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Result from tool call:&#x27;</span>, tool_call.function.name)
+                <span class="hljs-built_in">print</span>(args)
+                <span class="hljs-built_in">print</span>(result)
+                <span class="hljs-built_in">print</span>()
                 
-                # Add tool result to history (truncated to ~2000 tokens for efficiency)
-                messages.append({'role': 'tool', 'content': result[:2000 * 4], 'tool_name': tool_call.function.name})
-            else:
-                print(f'Tool {tool_call.function.name} not found')
-                messages.append({'role': 'tool', 'content': f'Tool {tool_call.function.name} not found', 'tool_name': tool_call.function.name})
-    else:
-        # Model is satisfied and provided final answer without requesting tools
-        break
+                <span class="hljs-comment"># Add tool result to history (truncated to ~2000 tokens for efficiency)</span>
+                messages.append({<span class="hljs-string">&#x27;role&#x27;</span>: <span class="hljs-string">&#x27;tool&#x27;</span>, <span class="hljs-string">&#x27;content&#x27;</span>: result[:<span class="hljs-number">2000</span> * <span class="hljs-number">4</span>], <span class="hljs-string">&#x27;tool_name&#x27;</span>: tool_call.function.name})
+            <span class="hljs-keyword">else</span>:
+                <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;Tool <span class="hljs-subst">{tool_call.function.name}</span> not found&#x27;</span>)
+                messages.append({<span class="hljs-string">&#x27;role&#x27;</span>: <span class="hljs-string">&#x27;tool&#x27;</span>, <span class="hljs-string">&#x27;content&#x27;</span>: <span class="hljs-string">f&#x27;Tool <span class="hljs-subst">{tool_call.function.name}</span> not found&#x27;</span>, <span class="hljs-string">&#x27;tool_name&#x27;</span>: tool_call.function.name})
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-comment"># Model is satisfied and provided final answer without requesting tools</span>
+        <span class="hljs-keyword">break</span>
 </code></pre>
 <p>This example demonstrates the agent anatomy from earlier in practice. The agent loops until it’s satisfied with the search results, then provides a final answer.</p>
 <h3 id="system-prompts" tabindex="-1">System prompts</h3>
@@ -262,77 +186,77 @@ Engineers often add tools without considering what the model actually sees and r
 While the input to most SDKs/APIs is a JSON schema for a tool, these are usually getting transformed into a different format which the model is trained on.
 This has been done through Jinja templates or Go templates for Ollama for the last couple years but it seems the industry is moving more towards renderers with code - see <a href="https://tinker-docs.thinkingmachines.ai/rendering#the-renderer-class">Thinky’s Tinker docs</a> or <a href="https://github.com/ollama/ollama/blob/18fdcc94e55d8ca393be9d01b30246dbbca6f6af/model/renderers/renderer.go">Ollama’s renderers</a> for examples.</p>
 <p>The below is an example of tools JSON schema being passed into gpt-oss and the rendered prompt that the model actually sees.</p>
-<p>Input tool schema:</p>
-<pre><code class="language-json">{
-    &quot;type&quot;: &quot;object&quot;,
-    &quot;properties&quot;: {
-        &quot;get_location&quot;: {
-            &quot;type&quot;: &quot;function&quot;,
-            &quot;function&quot;: {
-                &quot;name&quot;: &quot;get_location&quot;,
-                &quot;description&quot;: &quot;Gets the location of the user.&quot;,
-                &quot;parameters&quot;: {
-                    &quot;type&quot;: &quot;object&quot;,
-                    &quot;properties&quot;: {},
-                    &quot;required&quot;: []
-                }
-            }
-        },
-        &quot;get_current_weather&quot;: {
-            &quot;type&quot;: &quot;function&quot;,
-            &quot;function&quot;: {
-                &quot;name&quot;: &quot;get_current_weather&quot;,
-                &quot;description&quot;: &quot;Gets the current weather in the provided location.&quot;,
-                &quot;parameters&quot;: {
-                    &quot;type&quot;: &quot;object&quot;,
-                    &quot;properties&quot;: {
-                        &quot;location&quot;: {
-                            &quot;type&quot;: &quot;string&quot;,
-                            &quot;description&quot;: &quot;The city and state, e.g. San Francisco, CA&quot;
-                        },
-                        &quot;format&quot;: {
-                            &quot;type&quot;: &quot;string&quot;,
-                            &quot;enum&quot;: [&quot;celsius&quot;, &quot;fahrenheit&quot;],
-                            &quot;description&quot;: &quot;Temperature format&quot;,
-                            &quot;default&quot;: &quot;celsius&quot;
-                        }
-                    },
-                    &quot;required&quot;: [&quot;location&quot;]
-                }
-            }
-        },
-        &quot;get_multiple_weathers&quot;: {
-            &quot;type&quot;: &quot;function&quot;,
-            &quot;function&quot;: {
-                &quot;name&quot;: &quot;get_multiple_weathers&quot;,
-                &quot;description&quot;: &quot;Gets the current weather in the provided list of locations.&quot;,
-                &quot;parameters&quot;: {
-                    &quot;type&quot;: &quot;object&quot;,
-                    &quot;properties&quot;: {
-                        &quot;locations&quot;: {
-                            &quot;type&quot;: &quot;array&quot;,
-                            &quot;items&quot;: {
-                                &quot;type&quot;: &quot;string&quot;
-                            },
-                            &quot;description&quot;: &quot;List of city and state, e.g. [\&quot;San Francisco, CA\&quot;, \&quot;New York, NY\&quot;]&quot;
-                        },
-                        &quot;format&quot;: {
-                            &quot;type&quot;: &quot;string&quot;,
-                            &quot;enum&quot;: [&quot;celsius&quot;, &quot;fahrenheit&quot;],
-                            &quot;description&quot;: &quot;Temperature format&quot;,
-                            &quot;default&quot;: &quot;celsius&quot;
-                        }
-                    },
-                    &quot;required&quot;: [&quot;locations&quot;]
-                }
-            }
-        }
-    }
-}
+<p><strong>Input tool schema:</strong> usually inputted as JSON, or some tools allow for direclty passing in the function definition.</p>
+<pre class="hljs"><code class="language-json"><span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;object&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;properties&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">&quot;get_location&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+            <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;function&quot;</span><span class="hljs-punctuation">,</span>
+            <span class="hljs-attr">&quot;function&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+                <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;get_location&quot;</span><span class="hljs-punctuation">,</span>
+                <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Gets the location of the user.&quot;</span><span class="hljs-punctuation">,</span>
+                <span class="hljs-attr">&quot;parameters&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+                    <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;object&quot;</span><span class="hljs-punctuation">,</span>
+                    <span class="hljs-attr">&quot;properties&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+                    <span class="hljs-attr">&quot;required&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span>
+                <span class="hljs-punctuation">}</span>
+            <span class="hljs-punctuation">}</span>
+        <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;get_current_weather&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+            <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;function&quot;</span><span class="hljs-punctuation">,</span>
+            <span class="hljs-attr">&quot;function&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+                <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;get_current_weather&quot;</span><span class="hljs-punctuation">,</span>
+                <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Gets the current weather in the provided location.&quot;</span><span class="hljs-punctuation">,</span>
+                <span class="hljs-attr">&quot;parameters&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+                    <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;object&quot;</span><span class="hljs-punctuation">,</span>
+                    <span class="hljs-attr">&quot;properties&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+                        <span class="hljs-attr">&quot;location&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+                            <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;string&quot;</span><span class="hljs-punctuation">,</span>
+                            <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;The city and state, e.g. San Francisco, CA&quot;</span>
+                        <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+                        <span class="hljs-attr">&quot;format&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+                            <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;string&quot;</span><span class="hljs-punctuation">,</span>
+                            <span class="hljs-attr">&quot;enum&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;celsius&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;fahrenheit&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+                            <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Temperature format&quot;</span><span class="hljs-punctuation">,</span>
+                            <span class="hljs-attr">&quot;default&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;celsius&quot;</span>
+                        <span class="hljs-punctuation">}</span>
+                    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+                    <span class="hljs-attr">&quot;required&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;location&quot;</span><span class="hljs-punctuation">]</span>
+                <span class="hljs-punctuation">}</span>
+            <span class="hljs-punctuation">}</span>
+        <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;get_multiple_weathers&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+            <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;function&quot;</span><span class="hljs-punctuation">,</span>
+            <span class="hljs-attr">&quot;function&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+                <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;get_multiple_weathers&quot;</span><span class="hljs-punctuation">,</span>
+                <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Gets the current weather in the provided list of locations.&quot;</span><span class="hljs-punctuation">,</span>
+                <span class="hljs-attr">&quot;parameters&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+                    <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;object&quot;</span><span class="hljs-punctuation">,</span>
+                    <span class="hljs-attr">&quot;properties&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+                        <span class="hljs-attr">&quot;locations&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+                            <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;array&quot;</span><span class="hljs-punctuation">,</span>
+                            <span class="hljs-attr">&quot;items&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+                                <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;string&quot;</span>
+                            <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+                            <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;List of city and state, e.g. [\&quot;San Francisco, CA\&quot;, \&quot;New York, NY\&quot;]&quot;</span>
+                        <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+                        <span class="hljs-attr">&quot;format&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+                            <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;string&quot;</span><span class="hljs-punctuation">,</span>
+                            <span class="hljs-attr">&quot;enum&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;celsius&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;fahrenheit&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+                            <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Temperature format&quot;</span><span class="hljs-punctuation">,</span>
+                            <span class="hljs-attr">&quot;default&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;celsius&quot;</span>
+                        <span class="hljs-punctuation">}</span>
+                    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+                    <span class="hljs-attr">&quot;required&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;locations&quot;</span><span class="hljs-punctuation">]</span>
+                <span class="hljs-punctuation">}</span>
+            <span class="hljs-punctuation">}</span>
+        <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
 
 </code></pre>
-<p>Rendered tool prompt:</p>
-<pre><code>&lt;|start|&gt;system&lt;|message|&gt;You are ChatGPT, a large language model trained by OpenAI.
+<p><strong>Rendered tool prompt:</strong> What gpt-oss actually sees - TypeScript-style function definitions in OpenAI’s Harmony format, showing how JSON schemas get transformed.</p>
+<pre class="hljs"><code>&lt;|start|&gt;system&lt;|message|&gt;You are ChatGPT, a large language model trained by OpenAI.
 Knowledge cutoff: 2024-06
 Current date: 2025-06-28
 
@@ -376,7 +300,8 @@ It also helps to think about the pre-training and post-training of a model.
 Models have probably seen less nested JSON and fewer custom types in the training corpus than non-nested JSON.
 This also gets more complicated when there are custom formats that a model was trained on.
 The more layers of abstraction we add, the higher the likelihood that something is not getting rendered correctly.
-I’ve spent way too much time debugging whitespaces in a rendered prompt, trust me, you want to keep tool schemas simple.</p>
+I’ve spent way too much time debugging whitespaces in a rendered prompt, trust me, you want to keep tool schemas simple.
+A single whitespace or newline can change the activations for a model; when it is part of the template the model was trained on, having it incorrect can change the model’s outputs drastically.</p>
 <p>Similarly the tool output also needs to be parsed back into a JSON schema, and different providers may choose to parse in their own way depending on the inference engine they are using. Poor parsing by the provider can have two negative effects: it slowly degrades the model’s tool calling capabilities, and it breaks the <a href="https://huggingface.co/blog/not-lain/kv-caching">KV cache</a> since the re-rendered prompt would not match the original prompt + generated tokens.</p>
 <p>Certain tools you build will require their own state management and storage – think updating memory about a user, project management, long-running tasks, etc. Providing these tools to the model while keeping their interface to the model simple is crucial to not overwhelm it.</p>
 <h3 id="tool-outputs" tabindex="-1">Tool outputs</h3>
@@ -422,7 +347,7 @@ Based on how tool use is trained for the model, what kind of tools are provided 
 <p>For example, if a user wants to continue planning a project, the agent needs:</p>
 <ul>
 <li>Memory of what was previously discussed</li>
-<li>Access to the project’s current state (via tools with their own state management)</li>
+<li>Access to the project’s current state – via tools with their own state management</li>
 </ul>
 <p>You can provide this context by either injecting it at conversation start, or by instructing the model through the system message to retrieve it from persistent storage.</p>
 <h3 id="context-compression" tabindex="-1">Context compression</h3>
@@ -458,73 +383,45 @@ E.g. GPT-5.2-Codex focusing on tools built around Codex CLI and Cursor, and Clau
 You can also see that harnesses impact overall model output quite a bit. See <a href="https://factory.ai/news/terminal-bench">Factory AI’s Droid</a>.</p>
 <p>I have some fun agent-heavy stuff in the works – both for Ollama and my own tools. Hope to share these soon :)</p>
 
-        </article>
-        <section class="post-navigation">
-          <a href="/index.html#writings">← All writings</a>
-        </section>
-      </main>
-      <footer>
-        <a href="https://github.com/parthsareen" class="icon">GitHub</a>
-        <a href="https://x.com/thanosthinking" class="icon">X</a>
-        <a href="https://www.linkedin.com/in/parthsareen" class="icon">LinkedIn</a>
-      </footer>
-    </div>
+      </article>
+      <section class="post-navigation">
+        <a href="/index.html#writings">← All writings</a>
+      </section>
+    </main>
+    <footer>
+      <a href="https://github.com/parthsareen" class="icon">GitHub</a>
+      <a href="https://x.com/thanosthinking" class="icon">X</a>
+      <a href="https://www.linkedin.com/in/parthsareen" class="icon">LinkedIn</a>
+    </footer>
   </div>
-  <script>
-    const PASSWORD = 'wip2024';
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
     
-    function initMermaid() {
-      if (typeof mermaid !== 'undefined') {
-        mermaid.initialize({ 
-          startOnLoad: false,
-          theme: 'base',
-          themeVariables: {
-            primaryColor: '#e2d9c9',
-            primaryTextColor: '#463a2e',
-            primaryBorderColor: '#744c24',
-            lineColor: '#463a2e',
-            secondaryColor: '#f6f2e8',
-            tertiaryColor: '#e2d9c9',
-            mainBkg: '#e2d9c9',
-            secondBkg: '#f6f2e8',
-            tertiaryBkg: '#e2d9c9',
-            nodeBorder: '#744c24',
-            clusterBkg: '#f6f2e8',
-            clusterBorder: '#744c24',
-            defaultLinkColor: '#463a2e',
-            titleColor: '#463a2e',
-            edgeLabelBackground: '#f6f2e8',
-            fontSize: '15px',
-            fontFamily: 'Spectral, serif'
-          }
-        });
-        mermaid.run();
-      }
-    }
-    
-    function checkPassword() {
-      const input = document.getElementById('password-input').value;
-      if (input === PASSWORD) {
-        document.getElementById('password-overlay').style.display = 'none';
-        document.getElementById('content').classList.remove('content-hidden');
-        localStorage.setItem('wip-auth', 'true');
-        setTimeout(initMermaid, 100);
-      } else {
-        document.getElementById('error').textContent = 'Incorrect password';
-      }
-    }
-    
-    if (localStorage.getItem('wip-auth') === 'true') {
-      document.getElementById('password-overlay').style.display = 'none';
-      document.getElementById('content').classList.remove('content-hidden');
-      setTimeout(initMermaid, 100);
-    }
-    
-    document.getElementById('password-input').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        checkPassword();
+    mermaid.initialize({ 
+      startOnLoad: false,
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#e2d9c9',
+        primaryTextColor: '#463a2e',
+        primaryBorderColor: '#744c24',
+        lineColor: '#463a2e',
+        secondaryColor: '#f6f2e8',
+        tertiaryColor: '#e2d9c9',
+        mainBkg: '#e2d9c9',
+        secondBkg: '#f6f2e8',
+        tertiaryBkg: '#e2d9c9',
+        nodeBorder: '#744c24',
+        clusterBkg: '#f6f2e8',
+        clusterBorder: '#744c24',
+        defaultLinkColor: '#463a2e',
+        titleColor: '#463a2e',
+        edgeLabelBackground: '#f6f2e8',
+        fontSize: '15px',
+        fontFamily: 'Spectral, serif'
       }
     });
+    
+    await mermaid.run({nodes: [...document.querySelectorAll('pre[class~="mermaid"]')]});
   </script>
 </body>
 </html>

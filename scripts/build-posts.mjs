@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import matter from 'gray-matter';
 import MarkdownIt from 'markdown-it';
 import markdownItAnchor from 'markdown-it-anchor';
+import hljs from 'highlight.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -20,7 +21,22 @@ const INDEX_PATH = join(OUTPUT_DIR, 'index.json');
 const md = new MarkdownIt({
   html: true,
   linkify: true,
-  typographer: true
+  typographer: true,
+  highlight: function (str, lang) {
+    // Skip mermaid blocks - they need special handling
+    if (lang === 'mermaid') {
+      return '<pre><code class="language-mermaid">' + md.utils.escapeHtml(str) + '</code></pre>';
+    }
+    // Apply syntax highlighting for all other code blocks
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return '<pre class="hljs"><code class="language-' + lang + '">' +
+               hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
+               '</code></pre>';
+      } catch (__) {}
+    }
+    return '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>';
+  }
 }).use(markdownItAnchor, {
   slugify: (s) =>
     s
@@ -214,35 +230,6 @@ const writingTemplate = ({ slug, title, date, html, excerpt }) => `<!DOCTYPE htm
     };
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
-  <script>
-    window.addEventListener('DOMContentLoaded', function() {
-      mermaid.initialize({ 
-        startOnLoad: false,
-        theme: 'base',
-        themeVariables: {
-          primaryColor: '#e2d9c9',
-          primaryTextColor: '#463a2e',
-          primaryBorderColor: '#744c24',
-          lineColor: '#463a2e',
-          secondaryColor: '#f6f2e8',
-          tertiaryColor: '#e2d9c9',
-          mainBkg: '#e2d9c9',
-          secondBkg: '#f6f2e8',
-          tertiaryBkg: '#e2d9c9',
-          nodeBorder: '#744c24',
-          clusterBkg: '#f6f2e8',
-          clusterBorder: '#744c24',
-          defaultLinkColor: '#463a2e',
-          titleColor: '#463a2e',
-          edgeLabelBackground: '#f6f2e8',
-          fontSize: '15px',
-          fontFamily: 'Spectral, serif'
-        }
-      });
-      mermaid.run();
-    });
-  </script>
 </head>
 <body>
   <div class="container">
@@ -264,6 +251,35 @@ ${html}
       <a href="https://www.linkedin.com/in/parthsareen" class="icon">LinkedIn</a>
     </footer>
   </div>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    
+    mermaid.initialize({ 
+      startOnLoad: false,
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#e2d9c9',
+        primaryTextColor: '#463a2e',
+        primaryBorderColor: '#744c24',
+        lineColor: '#463a2e',
+        secondaryColor: '#f6f2e8',
+        tertiaryColor: '#e2d9c9',
+        mainBkg: '#e2d9c9',
+        secondBkg: '#f6f2e8',
+        tertiaryBkg: '#e2d9c9',
+        nodeBorder: '#744c24',
+        clusterBkg: '#f6f2e8',
+        clusterBorder: '#744c24',
+        defaultLinkColor: '#463a2e',
+        titleColor: '#463a2e',
+        edgeLabelBackground: '#f6f2e8',
+        fontSize: '15px',
+        fontFamily: 'Spectral, serif'
+      }
+    });
+    
+    await mermaid.run({nodes: [...document.querySelectorAll('pre[class~="mermaid"]')]});
+  </script>
 </body>
 </html>`;
 
@@ -290,35 +306,6 @@ const wipTemplate = ({ slug, title, date, html, excerpt }) => {
     };
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
-  <script>
-    // Pre-configure Mermaid before content loads
-    if (typeof mermaid !== 'undefined') {
-      mermaid.initialize({ 
-        startOnLoad: false,
-        theme: 'base',
-        themeVariables: {
-          primaryColor: '#e2d9c9',
-          primaryTextColor: '#463a2e',
-          primaryBorderColor: '#744c24',
-          lineColor: '#463a2e',
-          secondaryColor: '#f6f2e8',
-          tertiaryColor: '#e2d9c9',
-          mainBkg: '#e2d9c9',
-          secondBkg: '#f6f2e8',
-          tertiaryBkg: '#e2d9c9',
-          nodeBorder: '#744c24',
-          clusterBkg: '#f6f2e8',
-          clusterBorder: '#744c24',
-          defaultLinkColor: '#463a2e',
-          titleColor: '#463a2e',
-          edgeLabelBackground: '#f6f2e8',
-          fontSize: '15px',
-          fontFamily: 'Spectral, serif'
-        }
-      });
-    }
-  </script>
   <style>
     .password-overlay {
       position: fixed;
@@ -392,36 +379,35 @@ ${html}
       </footer>
     </div>
   </div>
-  <script>
+  <script type="module">
     const PASSWORD = '${password}';
     
-    function initMermaid() {
-      if (typeof mermaid !== 'undefined') {
-        mermaid.initialize({ 
-          startOnLoad: false,
-          theme: 'base',
-          themeVariables: {
-            primaryColor: '#e2d9c9',
-            primaryTextColor: '#463a2e',
-            primaryBorderColor: '#744c24',
-            lineColor: '#463a2e',
-            secondaryColor: '#f6f2e8',
-            tertiaryColor: '#e2d9c9',
-            mainBkg: '#e2d9c9',
-            secondBkg: '#f6f2e8',
-            tertiaryBkg: '#e2d9c9',
-            nodeBorder: '#744c24',
-            clusterBkg: '#f6f2e8',
-            clusterBorder: '#744c24',
-            defaultLinkColor: '#463a2e',
-            titleColor: '#463a2e',
-            edgeLabelBackground: '#f6f2e8',
-            fontSize: '15px',
-            fontFamily: 'Spectral, serif'
-          }
-        });
-        mermaid.run();
-      }
+    async function initMermaid() {
+      const mermaid = await import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs');
+      mermaid.default.initialize({ 
+        startOnLoad: false,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: '#e2d9c9',
+          primaryTextColor: '#463a2e',
+          primaryBorderColor: '#744c24',
+          lineColor: '#463a2e',
+          secondaryColor: '#f6f2e8',
+          tertiaryColor: '#e2d9c9',
+          mainBkg: '#e2d9c9',
+          secondBkg: '#f6f2e8',
+          tertiaryBkg: '#e2d9c9',
+          nodeBorder: '#744c24',
+          clusterBkg: '#f6f2e8',
+          clusterBorder: '#744c24',
+          defaultLinkColor: '#463a2e',
+          titleColor: '#463a2e',
+          edgeLabelBackground: '#f6f2e8',
+          fontSize: '15px',
+          fontFamily: 'Spectral, serif'
+        }
+      });
+      await mermaid.default.run({nodes: [...document.querySelectorAll('pre[class~="mermaid"]')]});
     }
     
     function checkPassword() {

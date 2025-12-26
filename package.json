@@ -10,6 +10,7 @@
   "dependencies": {
     "dotenv": "^16.4.5",
     "gray-matter": "^4.0.3",
+    "highlight.js": "^11.11.1",
     "markdown-it": "^14.1.0",
     "markdown-it-anchor": "^8.6.7"
   }

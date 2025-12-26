@@ -812,19 +812,80 @@ article p {
     overflow-wrap: break-word;
 }
 
-/* Mermaid diagram styles */
-article .mermaid {
-    display: flex;
-    justify-content: center;
-    margin: 30px auto;
-    max-width: 100%;
+/* Syntax highlighting - visible colors that match site theme */
+.hljs {
+    background: #f6f2e8;
+    color: #2d2416;
+    padding: 1em;
+    border-radius: 4px;
+    overflow-x: auto;
+    line-height: 1.5;
 }
 
-article .mermaid svg {
-    max-width: 100%;
-    height: auto;
+.hljs-comment,
+.hljs-quote {
+    color: #8b7355;
+    font-style: italic;
 }
 
-article div.mermaid {
-    text-align: center;
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-addition {
+    color: #a0522d;
+    font-weight: bold;
+}
+
+.hljs-number,
+.hljs-string,
+.hljs-meta .hljs-string,
+.hljs-literal,
+.hljs-doctag,
+.hljs-regexp {
+    color: #6b5234;
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class {
+    color: #8b4513;
+    font-weight: bold;
+}
+
+.hljs-attribute,
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-class .hljs-title,
+.hljs-type {
+    color: #9d6b3f;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-subst,
+.hljs-meta,
+.hljs-meta .hljs-keyword,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-link {
+    color: #a0522d;
+}
+
+.hljs-built_in,
+.hljs-builtin-name {
+    color: #8b4513;
+}
+
+.hljs-deletion {
+    color: #a0522d;
+}
+
+.hljs-emphasis {
+    font-style: italic;
+}
+
+.hljs-strong {
+    font-weight: bold;
 }
