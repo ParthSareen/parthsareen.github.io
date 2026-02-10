@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23f6f2e8'/><text x='16' y='22' font-family='serif' font-size='18' font-weight='700' fill='%232c2420' text-anchor='middle'>ps</text></svg>">
   <title>Sampling and structured outputs in LLMs | Writings</title>
   <meta name="description" content="Sampling and structured outputs are tied together as they both determine the model’s next chosen token." />
   <link rel="stylesheet" href="/style.css" />
@@ -18,35 +19,6 @@
     };
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
-  <script>
-    window.addEventListener('DOMContentLoaded', function() {
-      mermaid.initialize({ 
-        startOnLoad: false,
-        theme: 'base',
-        themeVariables: {
-          primaryColor: '#e2d9c9',
-          primaryTextColor: '#463a2e',
-          primaryBorderColor: '#744c24',
-          lineColor: '#463a2e',
-          secondaryColor: '#f6f2e8',
-          tertiaryColor: '#e2d9c9',
-          mainBkg: '#e2d9c9',
-          secondBkg: '#f6f2e8',
-          tertiaryBkg: '#e2d9c9',
-          nodeBorder: '#744c24',
-          clusterBkg: '#f6f2e8',
-          clusterBorder: '#744c24',
-          defaultLinkColor: '#463a2e',
-          titleColor: '#463a2e',
-          edgeLabelBackground: '#f6f2e8',
-          fontSize: '15px',
-          fontFamily: 'Spectral, serif'
-        }
-      });
-      mermaid.run();
-    });
-  </script>
 </head>
 <body>
   <div class="container">
@@ -67,7 +39,7 @@
 <p>After completing a forward pass, the model outputs a probability for each possible token in the vocabulary. A token is then “sampled” given the probability distribution.</p>
 <p>There are many transformations that can be applied to the logits (the raw output of the model) before finally picking a token to output.</p>
 <p>On a high level, Ollama applies the following transformations in order to sample a token:</p>
-<pre><code class="language-go">tokens = topK(tokens, s.topK)
+<pre class="hljs"><code class="language-go">tokens = topK(tokens, s.topK)
 
 temperature(tokens, s.temperature)
 softmax(tokens)
@@ -101,7 +73,7 @@ There can be various optimizations made to leverage the various transformations 
 <p>Structured outputs builds on top of sampling by constraining the model’s output to a specific format.</p>
 <p>There are many ways to constrain the model’s output – Ollama uses grammars to mask invalid tokens which don’t fit the request format.</p>
 <p>A grammar is a set of rules which describes valid output. In Ollama, JSON schemas are supported, so they are turned into grammars and then used as part of the sampling process.</p>
-<pre><code>root   ::= object
+<pre class="hljs"><code>root   ::= object
 value  ::= object | array | string | number | (&quot;true&quot; | &quot;false&quot; | &quot;null&quot;) ws
 object ::=
   &quot;{&quot; ws (
@@ -124,18 +96,18 @@ ws ::= ([ \t\n] ws)?
 </code></pre>
 <center>JSON grammar</center>
 <p>As the model outputs tokens, a token is first sampled and then greedily checked against the grammar. If the token is valid, it is added to the output. If the token is invalid, the model is sampled again with the masking applied over the entire vocabulary. This is slower but guarantees that the output is valid.</p>
-<pre><code class="language-go">token, err := s.sample(tokens)
-if err != nil {
-    return -1, err
+<pre class="hljs"><code class="language-go">token, err := s.sample(tokens)
+<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>, err
 }
 
 top := []token{token}
-// Apply and check to see if the token is valid
+<span class="hljs-comment">// Apply and check to see if the token is valid</span>
 s.grammar.Apply(top)
-if !math.IsInf(float64(top[0].value), -1) {
-    // Accept the token and update state for the grammar
-    s.grammar.Accept(top[0].id)
-    return top[0].id, nil
+<span class="hljs-keyword">if</span> !math.IsInf(<span class="hljs-type">float64</span>(top[<span class="hljs-number">0</span>].value), <span class="hljs-number">-1</span>) {
+    <span class="hljs-comment">// Accept the token and update state for the grammar</span>
+    s.grammar.Accept(top[<span class="hljs-number">0</span>].id)
+    <span class="hljs-keyword">return</span> top[<span class="hljs-number">0</span>].id, <span class="hljs-literal">nil</span>
 }
 </code></pre>
 <center>Sampling and checking a token against the grammar in Ollama</center>
@@ -151,7 +123,7 @@ This is especially true if there is instruction provided to the model around wha
 <p>Although, I haven’t tried implanting the model with thoughts to ground it for structured outputs, that would probably be a cool experiment.</p>
 <h3 id="constraining-output-after-thinking" tabindex="-1">Constraining output after thinking</h3>
 <p>Allowing the model to complete its thinking process is important as it acts as grounding for the model.</p>
-<pre><code>&lt;think&gt; Hmm the user has asked for a recipe for banana bread
+<pre class="hljs"><code>&lt;think&gt; Hmm the user has asked for a recipe for banana bread
 and need to output it in JSON format&lt;/think&gt;
 
 ... Start constructing JSON ...
@@ -166,7 +138,7 @@ and need to output it in JSON format&lt;/think&gt;
 <h3 id="gpt-oss" tabindex="-1">gpt-oss</h3>
 <p><code>gpt-oss</code> is trained on the Harmony format but it is also extremely sensitive to the format being incorrect. It’s not recommended to break the format in this case for constraining. Instead, it’s better to allow the model to complete its thinking process and constrain the model when it’s done thinking.</p>
 <p>What’s interesting is the output with <code>gpt-oss</code> is able to produce perfect JSON without any instruction. So much so, that when chatting with it while constrained, the model even hallucinates that it has been given instructions to only output JSON. It’s cool that the model has been trained that well for this.</p>
-<pre><code>ollama run gpt-oss --format json
+<pre class="hljs"><code>ollama run gpt-oss --format json
 &gt;&gt;&gt; hi
 Thinking...
 User says &quot;hi&quot;. We can respond with greeting. Maybe ask how can help. Let's
@@ -203,5 +175,34 @@ prefer plain text or a different format, just let me know and I’ll adjust!&quo
       <a href="https://www.linkedin.com/in/parthsareen" class="icon">LinkedIn</a>
     </footer>
   </div>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    
+    mermaid.initialize({ 
+      startOnLoad: false,
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#e2d9c9',
+        primaryTextColor: '#463a2e',
+        primaryBorderColor: '#744c24',
+        lineColor: '#463a2e',
+        secondaryColor: '#f6f2e8',
+        tertiaryColor: '#e2d9c9',
+        mainBkg: '#e2d9c9',
+        secondBkg: '#f6f2e8',
+        tertiaryBkg: '#e2d9c9',
+        nodeBorder: '#744c24',
+        clusterBkg: '#f6f2e8',
+        clusterBorder: '#744c24',
+        defaultLinkColor: '#463a2e',
+        titleColor: '#463a2e',
+        edgeLabelBackground: '#f6f2e8',
+        fontSize: '15px',
+        fontFamily: 'Spectral, serif'
+      }
+    });
+    
+    await mermaid.run({nodes: [...document.querySelectorAll('pre[class~="mermaid"]')]});
+  </script>
 </body>
 </html>
