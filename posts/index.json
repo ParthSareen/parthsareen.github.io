@@ -2,7 +2,7 @@
   {
     "slug": "ollama-openclaw",
     "filename": "ollama-openclaw.html",
-    "title": "Running Use OpenClaw for free with Ollama",
+    "title": "Use OpenClaw for free with Ollama",
     "date": "2026-02-12",
     "excerpt": "I recently released ollama launch and a new TUI to make Ollama more usable."
   },

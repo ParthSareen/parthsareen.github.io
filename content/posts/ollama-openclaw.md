@@ -2,7 +2,7 @@
 date: "2026-02-12"
 ---
 
-# Running Use OpenClaw for free with Ollama
+# Use OpenClaw for free with Ollama
 
 I recently released `ollama launch` and a new TUI to make Ollama more usable.
 
