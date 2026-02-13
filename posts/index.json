@@ -1,5 +1,12 @@
 [
   {
+    "slug": "ollama-openclaw",
+    "filename": "ollama-openclaw.html",
+    "title": "Running Use OpenClaw for free with Ollama",
+    "date": "2026-02-12",
+    "excerpt": "I recently released ollama launch and a new TUI to make Ollama more usable."
+  },
+  {
     "slug": "building-reliable-ai-agents",
     "filename": "building-reliable-ai-agents.html",
     "title": "Building Reliable AI Agents",

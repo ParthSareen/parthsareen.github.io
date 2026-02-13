@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Running Use OpenClaw for free with Ollama | Writings</title>
+  <meta name="description" content="I recently released ollama launch and a new TUI to make Ollama more usable." />
+  <link rel="stylesheet" href="/style.css" />
+  <script src="/theme.js"></script>
+  <script src="/vim-nav.js"></script>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\(', '\)']],
+        displayMath: [['$$','$$'], ['\[','\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><a href="/index.html">Writings</a></h1>
+      <p class="post-meta"><time datetime="2026-02-12">2026-02-12</time></p>
+    </header>
+    <main>
+      <article class="post-content">
+<h1 id="running-use-openclaw-for-free-with-ollama" tabindex="-1">Running Use OpenClaw for free with Ollama</h1>
+<p>I recently released <code>ollama launch</code> and a new TUI to make Ollama more usable.</p>
+<p>OpenClaw is an AI agent/personal assistant which can take actions on your behalf and manage different things in your life.</p>
+<ul>
+<li>Control your computer</li>
+<li>Browse the web</li>
+<li>Analyze data and documents</li>
+</ul>
+<h1 id="setup-guide" tabindex="-1">Setup Guide</h1>
+<p>The simplest and completely free option.</p>
+<p><strong>Requirements:</strong></p>
+<ul>
+<li>24GB VRAM minimum - 64GB+ recommended</li>
+<li>32GB+ free disk space</li>
+<li>macOS, Linux, or Windows with WSL2</li>
+</ul>
+<p><strong>Steps:</strong></p>
+<ol>
+<li><strong>Install Ollama</strong></li>
+</ol>
+<pre class="hljs"><code class="language-bash">curl -fsSL https://ollama.com/install.sh | sh
+</code></pre>
+<ol start="2">
+<li><strong>Install OpenClaw</strong></li>
+</ol>
+<pre class="hljs"><code class="language-bash">curl -fsSL https://openclaw.ai/install.sh | bash
+</code></pre>
+<ol start="3">
+<li>Run Ollama</li>
+</ol>
+<pre class="hljs"><code class="language-bash">ollama
+</code></pre>
+<p>This will drop you into a TUI like this:</p>
+<p><img src="/images/openclaw1.png" alt="Ollama TUI"></p>
+<p>Make sure to use the existing values after configuring which models to use. I’d recommend using the models recommended through Ollama as they’re updated regularly.</p>
+<p>Go through the openclaw onboarding process to set up your agent.</p>
+<p><img src="/images/openclaw2.png" alt="OpenClaw Configuration"></p>
+<p>After finishing onboarding you can start using OpenClaw to control your computer and browse the web.</p>
+<p><img src="/images/openclaw3.png" alt="OpenClaw Onboarding"></p>
+<h1 id="context-length" tabindex="-1">Context Length</h1>
+<p>If you cannot fit at least 64k of context length  which is how much a model can see at once - either you’ll have to upgrade your machine, use a less capable model. I don’t recommend using a less capable model as it will be on your computer and make more mistakes. Only do it if your risk tolerance is high. You can also use a cloud model through Ollama offers some usage for free.</p>
+<p>I recommend using Kimi-K2.5, GLM-5, and Minimax M2.5 at the time of writing this.</p>
+<p>If you run into issues with any part of this, other integrations feel free to reach out to me on <a href="https://x.com/parthsareen">X</a> or <a href="https://www.linkedin.com/in/parthsareen/">LinkedIn</a>.</p>
+
+      </article>
+      <section class="post-navigation">
+        <a href="/index.html#writings">← All writings</a>
+      </section>
+    </main>
+    <footer>
+      <a href="https://github.com/parthsareen" class="icon">GitHub</a>
+      <a href="https://x.com/thanosthinking" class="icon">X</a>
+      <a href="https://www.linkedin.com/in/parthsareen" class="icon">LinkedIn</a>
+    </footer>
+  </div>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    
+    mermaid.initialize({ 
+      startOnLoad: false,
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#e2d9c9',
+        primaryTextColor: '#463a2e',
+        primaryBorderColor: '#744c24',
+        lineColor: '#463a2e',
+        secondaryColor: '#f6f2e8',
+        tertiaryColor: '#e2d9c9',
+        mainBkg: '#e2d9c9',
+        secondBkg: '#f6f2e8',
+        tertiaryBkg: '#e2d9c9',
+        nodeBorder: '#744c24',
+        clusterBkg: '#f6f2e8',
+        clusterBorder: '#744c24',
+        defaultLinkColor: '#463a2e',
+        titleColor: '#463a2e',
+        edgeLabelBackground: '#f6f2e8',
+        fontSize: '15px',
+        fontFamily: 'Spectral, serif'
+      }
+    });
+    
+    await mermaid.run({nodes: [...document.querySelectorAll('pre[class~="mermaid"]')]});
+  </script>
+</body>
+</html>
