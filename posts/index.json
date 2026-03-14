@@ -1,5 +1,19 @@
 [
   {
+    "slug": "era-of-generalists",
+    "filename": "era-of-generalists.html",
+    "title": "The era of generalists",
+    "date": "2026-03-14",
+    "excerpt": "Going to be a slightly different post today with me recounting some of my past experiences and analyzing some of my newer ones. It’s going to be very casual and it might even leave you with nothing. This one is really just a brain dump of some of the thoughts I’ve been having recently. Every em-dash is written by yours truly."
+  },
+  {
+    "slug": "web-search-subagents",
+    "filename": "web-search-subagents.html",
+    "title": "Subagents and web search in Claude Code",
+    "date": "2026-02-17",
+    "excerpt": "I recently built out ollama launch to make it easier to use Ollama with different integrations like Claude Code, OpenClaw, OpenCode, and more. I also just released subagents and web search support for Ollama’s Claude Code integration. Both now work out of the box – no MCP servers or API keys needed."
+  },
+  {
     "slug": "ollama-openclaw",
     "filename": "ollama-openclaw.html",
     "title": "Use OpenClaw for free with Ollama",
