@@ -78,7 +78,8 @@ header p {
     font-weight: 400;
 }
 
-#writings {
+#writings,
+#ollama-writings {
     margin-top: 60px;
 }
 
@@ -305,12 +306,14 @@ button:hover~.custom-cursor {
         margin-bottom: 15px;
     }
 
-    #writings li {
+    #writings li,
+    #ollama-writings li {
         flex-direction: column;
         align-items: flex-start;
     }
 
-    #writings li a {
+    #writings li a,
+    #ollama-writings li a {
         margin-right: 0;
         margin-bottom: 8px;
     }
