@@ -33,6 +33,9 @@ This will:
 - Process protected/WIP markdown files from `content/posts/wip/`
 - Generate HTML files in `writings/`
 - Update `posts/index.json` with public posts only
+- Write `feed.xml` (Atom) and `sitemap.xml` at the site root (public posts only)
+
+Optional: set `SITE_URL` in the environment if your canonical domain is not `https://parthsareen.com`.
 
 ### Preview locally
 ```bash
@@ -99,6 +102,7 @@ posts/
 
 ## Notes
 
+- `scripts/build-posts.mjs` keeps legacy `writings/<slug>/` folders listed in `PRESERVE_WRITING_SLUGS` even when there is no matching markdown file.
 - Images go in `/images/` and are referenced as `/images/filename.png`
 - The password is embedded in the generated HTML at build time
 - Protected posts use client-side password protection (not highly secure, but keeps casual visitors out)

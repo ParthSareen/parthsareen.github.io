@@ -33,7 +33,11 @@ One of my mentors at Tesla during my last internship told me that I had two opti
 
 2. Be good at doing many different things and work at a startup
 
-His points actually held a lot of merit. And still do to this day – to an extent. But just over my experience of first doing agentic coding, vibe coding, vibe engineering – whatever you wanna call it –  since ~ Oct 2023 which is when I started using Cursor (and also Ollama – which is crazy cause I work here now). Even back then I quickly found out that there was a stepwise change in how I'd be able to learn. I first felt that with ChatGPT in Nov 2022, and then when I tried Cursor, and again when I built agents on top of llama3.1:8b which is a bad idea now but it felt so cool to even get a tool call out of something running fully locally. I knew a lot of these things were going to go far ![Cursor](/images/cursor.png)
+His points actually held a lot of merit. And still do to this day – to an extent. But just over my experience of first doing agentic coding, vibe coding, vibe engineering – whatever you wanna call it –  since ~ Oct 2023 which is when I started using Cursor (and also Ollama – which is crazy cause I work here now). Even back then I quickly found out that there was a stepwise change in how I'd be able to learn. I first felt that with ChatGPT in Nov 2022, and then when I tried Cursor, and again when I built agents on top of llama3.1:8b which is a bad idea now but it felt so cool to even get a tool call out of something running fully locally. I knew a lot of these things were going to go far 
+
+![Email from Cursor](/images/cursor.png)
+
+<center>An email from Cursor I found in my inbox from Oct '23</center>
 
 In a way it felt like the playing field had evened out a bit. Especially if you got started early with trying out these tools. If you had done enough reps of actually learning programming and engineering, then AI was a tool which could change how you work. I've felt this change again more recently back in November 2025 when I was able to put agents in a loop to not just write code, but be able to verify correctness (a.k.a verification loops) of what you're building. In my head a bunch of concepts like RL reward design, and verification loops collapse into one – where it's about optimizing the model or an agent to achieve a certain task. Eno has a great talk on verification loops for agents. <u>[1]</u> This verification loop lets you build out more autonomous agents which can take a task closer to completion if not completion.
 

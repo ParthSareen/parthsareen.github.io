@@ -25,5 +25,8 @@ jobs:
       env:
         WIP_PASSWORD: ${{ secrets.WIP_PASSWORD }}
       run: npm run build:posts
-    
+
+    - name: Verify generated output is committed
+      run: |
+        git diff --exit-code || (echo "Run npm run build:posts and commit the output (writings/, posts/, feed.xml, sitemap.xml)." && exit 1)
 

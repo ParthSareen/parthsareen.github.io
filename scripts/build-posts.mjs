@@ -11,12 +11,19 @@ dotenv.config();
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
+const SITE_URL = (process.env.SITE_URL || 'https://parthsareen.com').replace(/\/$/, '');
+
+const FONT_HEAD = `  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,400;0,600;1,400&family=Merriweather:wght@300;400;700&display=swap" />`;
 const CONTENT_DIR = resolve(ROOT, 'content', 'posts');
 const WIP_CONTENT_DIR = resolve(ROOT, 'content', 'posts', 'wip');
 const OUTPUT_DIR = resolve(ROOT, 'posts');
 const WRITINGS_DIR = resolve(ROOT, 'writings');
 const WIP_WRITINGS_DIR = resolve(ROOT, 'writings', 'wip');
 const INDEX_PATH = join(OUTPUT_DIR, 'index.json');
+const FEED_PATH = join(ROOT, 'feed.xml');
+const SITEMAP_PATH = join(ROOT, 'sitemap.xml');
 
 const md = new MarkdownIt({
   html: true,
@@ -57,6 +64,59 @@ const escapeAttribute = (value = '') =>
     .replace(/"/g, '&quot;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
+
+const escapeXml = (value = '') =>
+  String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+
+const toAtomDate = (dateStr) => {
+  if (!dateStr) return new Date().toISOString();
+  const d = new Date(`${dateStr}T12:00:00.000Z`);
+  return Number.isNaN(d.getTime()) ? new Date().toISOString() : d.toISOString();
+};
+
+function articleHeadBlock({ slug, title, date, excerpt, isProtected, includeJsonLd }) {
+  const pageUrl = `${SITE_URL}/writings/${slug}/`;
+  const published = date ? `${date}T12:00:00.000Z` : null;
+  const ogDesc = escapeAttribute(excerpt);
+  const lines = [
+    ...(isProtected ? ['  <meta name="robots" content="noindex,nofollow" />'] : []),
+    `  <link rel="canonical" href="${escapeAttribute(pageUrl)}" />`,
+    `  <meta property="og:type" content="article" />`,
+    `  <meta property="og:title" content="${escapeAttribute(title)}" />`,
+    `  <meta property="og:description" content="${ogDesc}" />`,
+    `  <meta property="og:url" content="${escapeAttribute(pageUrl)}" />`,
+    `  <meta property="og:site_name" content="Parth Sareen" />`,
+    ...(published
+      ? [`  <meta property="article:published_time" content="${escapeAttribute(published)}" />`]
+      : []),
+    `  <meta name="twitter:card" content="summary" />`,
+    `  <meta name="twitter:title" content="${escapeAttribute(title)}" />`,
+    `  <meta name="twitter:description" content="${ogDesc}" />`
+  ];
+  if (includeJsonLd && published) {
+    const jsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: title,
+      datePublished: published,
+      author: {
+        '@type': 'Person',
+        name: 'Parth Sareen',
+        url: `${SITE_URL}/`
+      },
+      url: pageUrl,
+      description: excerpt
+    };
+    const raw = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
+    lines.push(`  <script type="application/ld+json">${raw}</script>`);
+  }
+  return lines.join('\n');
+}
 
 const toISODate = (value) => {
   if (!value) return null;
@@ -200,9 +260,12 @@ async function removeStaleFiles(validFilenames) {
   );
 }
 
+/** writings/<slug>/ kept without a matching markdown file (legacy). */
+const PRESERVE_WRITING_SLUGS = new Set(['the-feeling-of-the-thing']);
+
 async function removeStaleWritings(validSlugs) {
   const entries = await fs.readdir(WRITINGS_DIR, { withFileTypes: true });
-  const keep = new Set(validSlugs);
+  const keep = new Set([...validSlugs, ...PRESERVE_WRITING_SLUGS]);
   await Promise.all(
     entries
       .filter((entry) => entry.isDirectory() && !keep.has(entry.name))
@@ -217,14 +280,17 @@ const writingTemplate = ({ slug, title, date, html, excerpt }) => `<!DOCTYPE htm
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${title} | Writings</title>
   <meta name="description" content="${escapeAttribute(excerpt)}" />
+${FONT_HEAD}
+${articleHeadBlock({ slug, title, date, excerpt, isProtected: false, includeJsonLd: true })}
+  <link rel="alternate" type="application/atom+xml" title="Parth Sareen" href="/feed.xml" />
   <link rel="stylesheet" href="/style.css" />
   <script src="/theme.js"></script>
   <script src="/vim-nav.js"></script>
   <script>
     window.MathJax = {
       tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']],
-        displayMath: [['$$','$$'], ['\\[','\\]']]
+        inlineMath: [['$', '$'], ['\\\\(', '\\\\)']],
+        displayMath: [['$$','$$'], ['\\\\[','\\\\]']]
       },
       svg: { fontCache: 'global' }
     };
@@ -247,7 +313,7 @@ ${html}
     </main>
     <footer>
       <a href="https://github.com/parthsareen" class="icon">GitHub</a>
-      <a href="https://x.com/thanosthinking" class="icon">X</a>
+      <a href="https://x.com/parthsareen" class="icon">X</a>
       <a href="https://www.linkedin.com/in/parthsareen" class="icon">LinkedIn</a>
     </footer>
   </div>
@@ -293,14 +359,17 @@ const wipTemplate = ({ slug, title, date, html, excerpt }) => {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${title} | Writings</title>
   <meta name="description" content="${escapeAttribute(excerpt)}" />
+${FONT_HEAD}
+${articleHeadBlock({ slug, title, date, excerpt, isProtected: true, includeJsonLd: false })}
+  <link rel="alternate" type="application/atom+xml" title="Parth Sareen" href="/feed.xml" />
   <link rel="stylesheet" href="/style.css" />
   <script src="/theme.js"></script>
   <script src="/vim-nav.js"></script>
   <script>
     window.MathJax = {
       tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']],
-        displayMath: [['$$','$$'], ['\\[','\\]']]
+        inlineMath: [['$', '$'], ['\\\\(', '\\\\)']],
+        displayMath: [['$$','$$'], ['\\\\[','\\\\]']]
       },
       svg: { fontCache: 'global' }
     };
@@ -374,7 +443,7 @@ ${html}
       </main>
       <footer>
         <a href="https://github.com/parthsareen" class="icon">GitHub</a>
-        <a href="https://x.com/thanosthinking" class="icon">X</a>
+        <a href="https://x.com/parthsareen" class="icon">X</a>
         <a href="https://www.linkedin.com/in/parthsareen" class="icon">LinkedIn</a>
       </footer>
     </div>
@@ -455,7 +524,61 @@ async function writeIndex(entries) {
     })
     .map(({ slug, filename, title, date, excerpt }) => ({ slug, filename, title, date, excerpt }));
   await fs.writeFile(INDEX_PATH, `${JSON.stringify(sorted, null, 2)}\n`, 'utf8');
-  return sorted.map((entry) => entry.filename);
+  return sorted;
+}
+
+async function writeFeedAtom(sortedPublic) {
+  // Deterministic updated time so `npm run build:posts` is idempotent (CI checks git diff).
+  const feedUpdated =
+    sortedPublic[0]?.date != null ? toAtomDate(sortedPublic[0].date) : '2020-01-01T12:00:00.000Z';
+  const entryXml = sortedPublic
+    .map((post) => {
+      const url = `${SITE_URL}/writings/${post.slug}/`;
+      const updated = post.date ? toAtomDate(post.date) : feedUpdated;
+      return `  <entry>
+    <title>${escapeXml(post.title)}</title>
+    <link href="${escapeXml(url)}" rel="alternate" />
+    <id>${escapeXml(url)}</id>
+    <updated>${escapeXml(updated)}</updated>
+    <summary>${escapeXml(post.excerpt)}</summary>
+  </entry>`;
+    })
+    .join('\n');
+
+  const xml = `<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Parth Sareen — Writings</title>
+  <link href="${escapeXml(`${SITE_URL}/feed.xml`)}" rel="self" />
+  <link href="${escapeXml(`${SITE_URL}/`)}" />
+  <id>${escapeXml(`${SITE_URL}/`)}</id>
+  <updated>${escapeXml(feedUpdated)}</updated>
+${entryXml}
+</feed>
+`;
+  await fs.writeFile(FEED_PATH, xml, 'utf8');
+}
+
+async function writeSitemap(sortedPublic) {
+  const staticPaths = ['/', '/blog.html', '/latte-art.html', '/fragrances.html', '/reading.html', '/glossary.html'];
+  const staticLastMod = sortedPublic[0]?.date ?? '2020-01-01';
+  const urlLines = [
+    ...staticPaths.map(
+      (path) =>
+        `  <url><loc>${escapeXml(`${SITE_URL}${path === '/' ? '/' : path}`)}</loc><lastmod>${escapeXml(staticLastMod)}</lastmod></url>`
+    ),
+    ...sortedPublic.map((post) => {
+      const loc = `${SITE_URL}/writings/${post.slug}/`;
+      const mod = post.date ?? staticLastMod;
+      return `  <url><loc>${escapeXml(loc)}</loc><lastmod>${escapeXml(mod)}</lastmod></url>`;
+    })
+  ].join('\n');
+
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urlLines}
+</urlset>
+`;
+  await fs.writeFile(SITEMAP_PATH, xml, 'utf8');
 }
 
 async function main() {
@@ -465,6 +588,8 @@ async function main() {
   
   if (markdownFiles.length === 0 && wipMarkdownFiles.length === 0) {
     await fs.writeFile(INDEX_PATH, '[]\n', 'utf8');
+    await writeFeedAtom([]);
+    await writeSitemap([]);
     console.warn('⚠️  No markdown files found.');
     return;
   }
@@ -495,7 +620,10 @@ async function main() {
   }
 
   // Only add public posts to the index
-  const filenames = await writeIndex(publicPosts);
+  const sortedPublic = await writeIndex(publicPosts);
+  const filenames = sortedPublic.map((entry) => entry.filename);
+  await writeFeedAtom(sortedPublic);
+  await writeSitemap(sortedPublic);
   await removeStaleFiles(filenames);
   await removeStaleWritings([...publicPosts, ...protectedPosts].map((entry) => entry.slug));
   

@@ -1,5 +1,12 @@
 [
   {
+    "slug": "era-of-generalists",
+    "filename": "era-of-generalists.html",
+    "title": "The era of generalists",
+    "date": "2026-03-14",
+    "excerpt": "Going to be a slightly different post today with me recounting some of my past experiences and analyzing some of my newer ones. It’s going to be very casual and it might even leave you with nothing. This one is really just a brain dump of some of the thoughts I’ve been having recently. Every em-dash is written by yours truly."
+  },
+  {
     "slug": "ollama-openclaw",
     "filename": "ollama-openclaw.html",
     "title": "Use OpenClaw for free with Ollama",

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Parth Sareen — Writings</title>
+  <link href="https://parthsareen.com/feed.xml" rel="self" />
+  <link href="https://parthsareen.com/" />
+  <id>https://parthsareen.com/</id>
+  <updated>2026-03-14T12:00:00.000Z</updated>
+  <entry>
+    <title>The era of generalists</title>
+    <link href="https://parthsareen.com/writings/era-of-generalists/" rel="alternate" />
+    <id>https://parthsareen.com/writings/era-of-generalists/</id>
+    <updated>2026-03-14T12:00:00.000Z</updated>
+    <summary>Going to be a slightly different post today with me recounting some of my past experiences and analyzing some of my newer ones. It’s going to be very casual and it might even leave you with nothing. This one is really just a brain dump of some of the thoughts I’ve been having recently. Every em-dash is written by yours truly.</summary>
+  </entry>
+  <entry>
+    <title>Use OpenClaw for free with Ollama</title>
+    <link href="https://parthsareen.com/writings/ollama-openclaw/" rel="alternate" />
+    <id>https://parthsareen.com/writings/ollama-openclaw/</id>
+    <updated>2026-02-12T12:00:00.000Z</updated>
+    <summary>I recently released ollama launch and a new TUI to make Ollama more usable.</summary>
+  </entry>
+  <entry>
+    <title>Building Reliable AI Agents</title>
+    <link href="https://parthsareen.com/writings/building-reliable-ai-agents/" rel="alternate" />
+    <id>https://parthsareen.com/writings/building-reliable-ai-agents/</id>
+    <updated>2025-12-25T12:00:00.000Z</updated>
+    <summary>AI agents accomplish a task in a mostly unstructured manner – where they are able to reason and conduct actions to achieve a goal. The key is in providing just enough structure through tool design, harness design, and context engineering to guide the agent effectively.</summary>
+  </entry>
+  <entry>
+    <title>Sampling and structured outputs in LLMs</title>
+    <link href="https://parthsareen.com/writings/sampling/" rel="alternate" />
+    <id>https://parthsareen.com/writings/sampling/</id>
+    <updated>2025-10-28T12:00:00.000Z</updated>
+    <summary>Sampling and structured outputs are tied together as they both determine the model’s next chosen token.</summary>
+  </entry>
+</feed>

@@ -1,6 +1,11 @@
-// Cursor management
+// Custom cursor (skipped when reduced motion or touch-primary — better for a11y)
 document.addEventListener('DOMContentLoaded', () => {
-    // Custom cursor
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
+    if (reduceMotion || coarsePointer) {
+        return;
+    }
+
     const cursor = document.createElement('div');
     cursor.className = 'custom-cursor';
     document.body.appendChild(cursor);
@@ -19,4 +24,4 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('mouseenter', () => {
         cursor.style.display = 'block';
     });
-}); 
+});

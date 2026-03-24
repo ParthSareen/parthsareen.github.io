@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://parthsareen.github.io/sitemap.xml
+
+Sitemap: https://parthsareen.com/sitemap.xml

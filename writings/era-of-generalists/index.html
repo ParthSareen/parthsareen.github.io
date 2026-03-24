@@ -5,10 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The era of generalists | Writings</title>
   <meta name="description" content="Going to be a slightly different post today with me recounting some of my past experiences and analyzing some of my newer ones. It’s going to be very casual and it might even leave you with nothing. This one is really just a brain dump of some of the thoughts I’ve been having recently. Every em-dash is written by yours truly." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,400;0,600;1,400&family=Merriweather:wght@300;400;700&display=swap" />
+  <link rel="canonical" href="https://parthsareen.com/writings/era-of-generalists/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="The era of generalists" />
+  <meta property="og:description" content="Going to be a slightly different post today with me recounting some of my past experiences and analyzing some of my newer ones. It’s going to be very casual and it might even leave you with nothing. This one is really just a brain dump of some of the thoughts I’ve been having recently. Every em-dash is written by yours truly." />
+  <meta property="og:url" content="https://parthsareen.com/writings/era-of-generalists/" />
+  <meta property="og:site_name" content="Parth Sareen" />
+  <meta property="article:published_time" content="2026-03-14T12:00:00.000Z" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="The era of generalists" />
+  <meta name="twitter:description" content="Going to be a slightly different post today with me recounting some of my past experiences and analyzing some of my newer ones. It’s going to be very casual and it might even leave you with nothing. This one is really just a brain dump of some of the thoughts I’ve been having recently. Every em-dash is written by yours truly." />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"The era of generalists","datePublished":"2026-03-14T12:00:00.000Z","author":{"@type":"Person","name":"Parth Sareen","url":"https://parthsareen.com/"},"url":"https://parthsareen.com/writings/era-of-generalists/","description":"Going to be a slightly different post today with me recounting some of my past experiences and analyzing some of my newer ones. It’s going to be very casual and it might even leave you with nothing. This one is really just a brain dump of some of the thoughts I’ve been having recently. Every em-dash is written by yours truly."}</script>
+  <link rel="alternate" type="application/atom+xml" title="Parth Sareen" href="/feed.xml" />
   <link rel="stylesheet" href="/style.css" />
   <script src="/theme.js"></script>
   <script src="/vim-nav.js"></script>
-
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
   <div class="container">
@@ -47,7 +71,9 @@ And when you can learn anything pretty quick, (I’m talking getting 70-80% good
 <ol start="2">
 <li>Be good at doing many different things and work at a startup</li>
 </ol>
-<p>His points actually held a lot of merit. And still do to this day – to an extent. But just over my experience of first doing agentic coding, vibe coding, vibe engineering – whatever you wanna call it –  since ~ Oct 2023 which is when I started using Cursor (and also Ollama – which is crazy cause I work here now). Even back then I quickly found out that there was a stepwise change in how I’d be able to learn. I first felt that with ChatGPT in Nov 2022, and then when I tried Cursor, and again when I built agents on top of llama3.1:8b which is a bad idea now but it felt so cool to even get a tool call out of something running fully locally. I knew a lot of these things were going to go far <img src="/images/cursor.png" alt="Cursor"></p>
+<p>His points actually held a lot of merit. And still do to this day – to an extent. But just over my experience of first doing agentic coding, vibe coding, vibe engineering – whatever you wanna call it –  since ~ Oct 2023 which is when I started using Cursor (and also Ollama – which is crazy cause I work here now). Even back then I quickly found out that there was a stepwise change in how I’d be able to learn. I first felt that with ChatGPT in Nov 2022, and then when I tried Cursor, and again when I built agents on top of llama3.1:8b which is a bad idea now but it felt so cool to even get a tool call out of something running fully locally. I knew a lot of these things were going to go far</p>
+<p><img src="/images/cursor.png" alt="Email from Cursor"></p>
+<center>An email from Cursor I found in my inbox from Oct '23</center>
 <p>In a way it felt like the playing field had evened out a bit. Especially if you got started early with trying out these tools. If you had done enough reps of actually learning programming and engineering, then AI was a tool which could change how you work. I’ve felt this change again more recently back in November 2025 when I was able to put agents in a loop to not just write code, but be able to verify correctness (a.k.a verification loops) of what you’re building. In my head a bunch of concepts like RL reward design, and verification loops collapse into one – where it’s about optimizing the model or an agent to achieve a certain task. Eno has a great talk on verification loops for agents. <u>[1]</u> This verification loop lets you build out more autonomous agents which can take a task closer to completion if not completion.</p>
 <p>Over the last few years, it seems that what’s remaining is either extremely deep engineering work - I’m talking low level, grinding kernels, multi-threading, distributed systems design, or work which just need to be done and doesn’t require deep technical expertise. Turns out, more often than not, you just need to get work done and someone needs to just orchestrate what that work is. Yes there is a quality bar stuff has to meet - but for the most part the newer models are able to be run in some form of a verification loop where they output results which are getting the job done.</p>
 <p>So given that my job seems to have significantly changed over just the last few months. Back in Sep/Oct, I was writing a bunch of code through more careful prompting, writing smaller bits with AI as the quality was just not up to my bar. Now, it feels like for the most part I am orchestrating work, with having to dive into the nitty gritty only at times to make better architectural decisions. An argument to be made is that the model is just missing some of the context that I possibly don’t even find worthwhile to write down, but use as an informing factor while coming up with certain abstractions.</p>
@@ -69,7 +95,7 @@ I had found some metrics from a product team on Supercharging data. For context 
     </main>
     <footer>
       <a href="https://github.com/parthsareen" class="icon">GitHub</a>
-      <a href="https://x.com/thanosthinking" class="icon">X</a>
+      <a href="https://x.com/parthsareen" class="icon">X</a>
       <a href="https://www.linkedin.com/in/parthsareen" class="icon">LinkedIn</a>
     </footer>
   </div>
