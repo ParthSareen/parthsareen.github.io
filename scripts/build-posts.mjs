@@ -186,7 +186,8 @@ async function renderPost(filename, isWip = false) {
     date,
     excerpt,
     html,
-    isProtected
+    isProtected,
+    math: data.math !== false  // defaults to true
   };
 }
 
@@ -210,7 +211,7 @@ async function removeStaleWritings(validSlugs) {
   );
 }
 
-const writingTemplate = ({ slug, title, date, html, excerpt }) => `<!DOCTYPE html>
+const writingTemplate = ({ slug, title, date, html, excerpt, math = true }) => `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -219,7 +220,7 @@ const writingTemplate = ({ slug, title, date, html, excerpt }) => `<!DOCTYPE htm
   <meta name="description" content="${escapeAttribute(excerpt)}" />
   <link rel="stylesheet" href="/style.css" />
   <script src="/theme.js"></script>
-  <script src="/vim-nav.js"></script>
+  <script src="/vim-nav.js"></script>${math ? `
   <script>
     window.MathJax = {
       tex: {
@@ -229,7 +230,7 @@ const writingTemplate = ({ slug, title, date, html, excerpt }) => `<!DOCTYPE htm
       svg: { fontCache: 'global' }
     };
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>` : ''}
 </head>
 <body>
   <div class="container">
@@ -283,7 +284,7 @@ ${html}
 </body>
 </html>`;
 
-const wipTemplate = ({ slug, title, date, html, excerpt }) => {
+const wipTemplate = ({ slug, title, date, html, excerpt, math = true }) => {
   // YOU FOUND ME AHHHHH!
   const password = process.env.WIP_PASSWORD || 'BleuSph!nxC0y234#';
   return `<!DOCTYPE html>
@@ -295,7 +296,7 @@ const wipTemplate = ({ slug, title, date, html, excerpt }) => {
   <meta name="description" content="${escapeAttribute(excerpt)}" />
   <link rel="stylesheet" href="/style.css" />
   <script src="/theme.js"></script>
-  <script src="/vim-nav.js"></script>
+  <script src="/vim-nav.js"></script>${math ? `
   <script>
     window.MathJax = {
       tex: {
@@ -305,7 +306,7 @@ const wipTemplate = ({ slug, title, date, html, excerpt }) => {
       svg: { fontCache: 'global' }
     };
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>` : ''}
   <style>
     .password-overlay {
       position: fixed;

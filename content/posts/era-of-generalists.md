@@ -1,18 +1,18 @@
 ---
-date: "2026-03-14"
+date: "2026-03-25"
+math: false
 ---
-# The era of generalists
+# Yet another generalist 
 
-Going to be a slightly different post today with me recounting some of my past experiences and analyzing some of my newer ones. It's going to be very casual and it might even leave you with nothing. This one is really just a brain dump of some of the thoughts I've been having recently. Every em-dash is written by yours truly. 
+ It's going to be very casual post today and it might even leave you with nothing. Just a brain dump of some of the thoughts I've been having recently. Every em-dash is written by yours truly. 
 
-I, myself, am a generalist. And I think I always have been.
-I've never been satisfied with doing the same thing for very long.
-I've also enjoyed coming up with fun ways of solving problems and don't really care for the tool I'm using as much.
-At some point I got really good at learning things quickly.
-Wonder if skipping all those classes and studying the night before had anything to do with it.
-And when you can learn anything pretty quick, (I'm talking getting 70-80% good at pretty much anything) you start to wonder why not keep doing new things.
+I, myself, am a generalist. And I think I always have been. I've never been satisfied with doing the same thing for very long. I've also enjoyed coming up with fun ways of solving problems and don't care as much for the tools I'm using. 
 
-I went to Waterloo for Mechatronics Engineering (fancy for robots). I find it funny that even my program was known for being jack of all trades and master of none. You got to learn a bunch from fluid mechanics, to power systems, to even machine learning. For those unfamiliar with waterloo – most students do 6 internships throughout their undergrad. 
+At some point I got really good at learning things quickly. I wonder if skipping all those classes and studying the night before had anything to do with it. And when you can learn anything pretty quick, (I'm talking getting 70-80% good at pretty much anything) you start to wonder why not keep doing new things.
+
+I went to Waterloo for Mechatronics Engineering (fancy for robots). I find it funny that even my program was known for being jack of all trades and master of none – because that's how I feel on a day-to-day basis now. You got to learn a bunch from fluid mechanics, to power systems, to even machine learning. 
+
+For those unfamiliar with waterloo – most students do 6 internships throughout their undergrad. 
 
 The 6 I did were:
 
@@ -25,41 +25,57 @@ The 6 I did were:
 
 I also did a bunch of stints while being in school; working part-time at various startups doing product, designing systems, or one-off ML projects.
 
-One of my mentors at Tesla during my last internship told me that I had two options:
+There were a few things which stood out to me at every internship. My final internship ended up being relatively breadth-first. I was coming off a product internship so it felt easy to tie together many concepts and ship something end-to-end. However, that usually doesn't show as much technical prowess (in the pre-LLM era). My mentor at Tesla at the end of my internship told me that I had two options:
 
-1. Go deep into a certain area, and compliment it with other skills which leans well to corporate culture
-
-> Actually, a quick side story. My mentor gave me a "Very Good" for my final review which I lokey raged at until I got it bumped to an Excellent (which is still bad in the eyes of a Waterloo student). Only people having gone through those (now insignificant) reviews will understand this pain. All of this feedback he gave me didn't actually get to my head until a year later when I re-read my evaluations. 
+1. Go deep into a certain area, and complement it with other skills which leans well to corporate culture
 
 2. Be good at doing many different things and work at a startup
 
-His points actually held a lot of merit. And still do to this day – to an extent. But just over my experience of first doing agentic coding, vibe coding, vibe engineering – whatever you wanna call it –  since ~ Oct 2023 which is when I started using Cursor (and also Ollama – which is crazy cause I work here now). Even back then I quickly found out that there was a stepwise change in how I'd be able to learn. I first felt that with ChatGPT in Nov 2022, and then when I tried Cursor, and again when I built agents on top of llama3.1:8b which is a bad idea now but it felt so cool to even get a tool call out of something running fully locally. I knew a lot of these things were going to go far 
+His points actually held a lot of merit. And still do to this day – to an extent. When I first started using Cursor (~ Oct 2023) I quickly realized that there was going to be a step-wise change in how I'd be able to learn and build anything.
+
+I first felt this feeling of "nothing will ever be the same again" with ChatGPT in Nov 2022, when I tried Cursor, and again when I built agents on top of llama3.1:8b (which is a bad idea now but it felt so cool to even get a tool call out of something running fully locally).
+
 
 ![Email from Cursor](/images/cursor.png)
 
 <center>An email from Cursor I found in my inbox from Oct '23</center>
 
-In a way it felt like the playing field had evened out a bit. Especially if you got started early with trying out these tools. If you had done enough reps of actually learning programming and engineering, then AI was a tool which could change how you work. I've felt this change again more recently back in November 2025 when I was able to put agents in a loop to not just write code, but be able to verify correctness (a.k.a verification loops) of what you're building. In my head a bunch of concepts like RL reward design, and verification loops collapse into one – where it's about optimizing the model or an agent to achieve a certain task. Eno has a great talk on verification loops for agents. <u>[1]</u> This verification loop lets you build out more autonomous agents which can take a task closer to completion if not completion.
+In a way it felt like the playing field had evened out a bit. Especially if you got started early with trying out these tools. If you had done enough reps of actually learning programming and engineering, then AI was a tool which could change how you work. 
 
-Over the last few years, it seems that what's remaining is either extremely deep engineering work - I'm talking low level, grinding kernels, multi-threading, distributed systems design, or work which just need to be done and doesn't require deep technical expertise. Turns out, more often than not, you just need to get work done and someone needs to just orchestrate what that work is. Yes there is a quality bar stuff has to meet - but for the most part the newer models are able to be run in some form of a verification loop where they output results which are getting the job done.
+Given this, the 1st point of "go deep and complement with other skills" seems less and less apparent for quite a lot of skills. I think it holds true for ones which evolve quickly, and there are a lot of new techniques or methods that you have to stay up-to-date for. But for a lot of existing technologies, this just doesn't apply anymore. 
 
-So given that my job seems to have significantly changed over just the last few months. Back in Sep/Oct, I was writing a bunch of code through more careful prompting, writing smaller bits with AI as the quality was just not up to my bar. Now, it feels like for the most part I am orchestrating work, with having to dive into the nitty gritty only at times to make better architectural decisions. An argument to be made is that the model is just missing some of the context that I possibly don't even find worthwhile to write down, but use as an informing factor while coming up with certain abstractions.
+Maybe you like databases? You can cover a surface level view in an hour, and as long as you describe your problems well to an agent, you'll get reasonable results. So the value in deep, tacit knowledge held by a few, is now a $20 subscription away. 
 
-I don't think I've ever had this much fun being able to work on so much stuff. If compared to any other time in history, we've never been able to create software this fast. In comparison, this is instant. Most of my day-to-day is not just writing software anymore (or even prompting it), it's become more around product planning, analyzing metrics, looking at grafana, or my 16 split terminals on my monitors.
+I've felt the step-wise change again more recently back in November 2025 when I was able to put agents in a loop to not just write code, but be able to verify correctness (a.k.a verification loops) of what you're building. 
 
-But not everyone sees the value in being able to connect different moving parts together, which I found out during my last internship at Tesla.
-I had found some metrics from a product team on Supercharging data. For context – I worked on distributed systems for the energy team where we built the cloud infrastructure to serve all energy products, and I was also just coming off a product internship at Apple. At this point, I had started to find my footing as being this weird person who fit somewhere between engineering and product and could lean either way. What I also learned was most people don't think like this LOL. So given the supercharging data I found, I thought it would be interesting to see if our downtime from cloud correlates with churn or complaints. To this, one of the staff engineers on the team told me "why would we need this dashboard? we have grafana". That was the day I realized that no matter your seniority, you can still be very wrong. I also think that it's just a mismatch in culture and lack of ownership over the product. Most people don't want this work of correlation and product decisions to be their problem. Which is kinda funny since it's probably some of the most important work to be done. Also found this at almost every place I work so I'm going to chalk it up to human nature, or more specifically the nature of most engineers. 
+In my head a bunch of concepts like RL reward design, and verification loops collapse into one – where it's about optimizing the model or an agent to achieve a certain task. Eno has a great talk on verification loops for agents. [[1]](https://www.youtube.com/watch?v=ShuJ_CN6zr4) This verification loop lets you build out more autonomous agents which can take a task closer to completion if not completion.
 
-My other experiences let me do a lot of deep work in various fields. Even my first internship was insightful as it taught me how to break software – which in turn taught me how to build it better doing QA at Ritual. At Deloitte, I worked on a prototyping lab focused on AI to improve internal workflows and products – I did a lot of Natural Language Processing (NLP) work here. The first Tesla internship I had was the same overall team I ended up at again, having really enjoyed working on large-scale distributed systems – both were definitely my grindiest internships, but also the most rewarding and I'm very thankful for that. My time at Apple for both my internships was pretty cool. The first time around I got to build a new mini-sdk to do speaker diarization on-device, and the other internship I did a lot of churn analysis for Siri as a product manager.
+Over the last few years, it seems that what's remaining is either extremely deep engineering work - I'm talking low level, grinding kernels, multi-threading, distributed systems design, AI-research engineering, or work which just need to be done and doesn't require deep technical expertise. Turns out, more often than not, you just need to get work done and someone needs to just orchestrate what that work is. And soon enough a quality bar is just going to be a matter of a ralph loop [[2]](https://x.com/iannuttall/status/2010617350207451382) or an autoresearch [[3]](https://github.com/karpathy/autoresearch) task.
 
-Somehow, through some luck, I use a good chunk of what I've done through my internships, part-time work, full-time work, and even my own startup, almost daily at Ollama. Part of it is the fact it's a startup and there is a lot of different work to be done. This would've not really been possible to the degree at which I'm able to do if these models weren't around. Especially contrasting this to just a few months ago, there used to be just too much to be done to even think about the higher-level bits to play with. 
+My job has significantly changed over just the last few months. Back in Sep/Oct, I was writing a bunch of code through more careful prompting, writing smaller bits with AI as the quality was just not up to my bar. Now, it feels like for the most part I am orchestrating work, with having to dive into the nitty-gritty only at times to make better architectural decisions. An argument to be made is that the model is just missing some of the context that I possibly don't even find worthwhile to write down, but use as an informing factor while coming up with certain abstractions. 
 
-It's going to take some time for most people to catch up to using these models, harnesses, and the bajillion tools which are spinning up. But the direction is pretty clear - generalists are going to start winning out in most settings. People who are adaptable, roll with the punches, can dive into different kind of work and are able to provide value and more interestingly – their opinion, will succeed in the coming few years. I think specialists are also going to do great in their own niche – there's just going to be a lot less of it. If you're a specialist, feel the grain of the times, pulse on the research, and make bets on what to get good at. The people who are just okay at this stuff are going to struggle the most, especially if they're not up-to-date with leveraging these tools, but are also prime candidates to become more generalist-leaning.  
+I'm fascinated by this where I don't fully think we've solved the necessary interfaces or architectures to effectively use LLMs – even with all the fancy harnesses and tools we have now. Something feels missing to be able to flow state, and feel the creativeness again. I often have compared my code to art – purely from the aspect of creative expression, but I do much less of that now. What gets generated doesn't really feel like mine unless I've made a significant stroke after the agent-generated code.
 
-If you are a generalist, I think we tend to get too fixated on just getting the thing done and be a bit hasty, instead of spending time in the weeds a bit more. This is usually where specialists are able to come up with better or more elegant solutions. We're also kinda one-shotted by AI, as we're able to get to the satisfactory 70-80% good enough with ease, but the rest is sometimes a struggle. At this point, I'd argue that the ability to go deep and learn whatever needed for the task to a greater degree (to the extent of doing whatever needs to be done) is what will set us apart. At least for the next 6 months to a year. Hard to know these days.
+I am somehow having the most amount of fun I've had building things, while also feeling sad about missing the process of creating. There has never existed the ability to create so much before. In comparison, this is instant. Most of my day-to-day is not just writing software anymore (or even prompting it), it's become more around product planning, analyzing metrics, looking at grafana, or my 16 split terminals to monitor my agents. Wile I miss creating certain things, I overall feel like I've gained superpowers as a generalist – now having the ability to go end-to-end from building a feature, shipping it, to the marketing around it.
+
+Somehow, through some luck, I use a good chunk of what I've done through my internships, part-time work, full-time work, and even my own startup, almost daily at Ollama. Part of it is the fact it's a startup and there is a lot of different work to be done. 
+
+Even my first internship was insightful as it taught me how to break software – which in turn taught me how to build it better doing QA at Ritual. At Deloitte, I worked on a prototyping lab focused on AI to improve internal workflows and products – I did a lot of Natural Language Processing (NLP) work here. The first Tesla internship I had was the same overall team I ended up at again for my last one, having really enjoyed working on large-scale distributed systems. Both were definitely my grindiest internships, but also the most rewarding and I'm very thankful for that. My time at Apple for both my internships was pretty cool. The first time around I got to build a new mini-sdk to do speaker diarization on-device, and the other internship I did a lot of churn analysis for Siri as a product manager.
+
+It's going to take some time for most people to catch up to using these models, harnesses, and the bajillion tools which are spinning up. But the direction is pretty clear - generalists are going to start winning out in most settings. People who are adaptable, roll with the punches, can dive into different kind of work and are able to provide value and more interestingly – their opinion, will succeed in the coming few years. 
+
+I think specialists are also going to do great in their own niche – there's just going to be a lot less of it. If you're a specialist, feel the grain of the times, keep a pulse on the research, and make bets on what to get good at. The people who are just okay at this stuff are going to struggle the most, especially if they're not up-to-date with leveraging these tools.
+
+If you are a generalist, I think we tend to get fixated on just getting the thing done and be a bit hasty, instead of spending time in the weeds a bit more. This is usually where specialists are able to come up with better or more elegant solutions. We're also kinda one-shotted by AI, as we're able to get to the satisfactory 70-80% good enough with ease, but the rest is sometimes a struggle. 
+
+At this point, I'd argue that the ability to go deep and learn whatever needed for the task to a greater degree (to the extent of doing whatever needs to be done) is what will set us apart. At least for the next 6 months to a year. Hard to know these days.
 
 ---
 
 **References**
 
-[1] Eno's talk on verification loops and RL reward design: https://www.youtube.com/watch?v=ShuJ_CN6zr4
+[1] [Eno's talk on verification loops and RL reward design](https://www.youtube.com/watch?v=ShuJ_CN6zr4)
+
+[2] [The Ralph Loop](https://x.com/iannuttall/status/2010617350207451382)
+
+[3] [Andrej Karpathy's Autoresearch](https://github.com/karpathy/autoresearch)
