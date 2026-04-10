@@ -235,7 +235,7 @@ const writingTemplate = ({ slug, title, date, html, excerpt, math = true }) => `
 <body>
   <div class="container">
     <header>
-      <h1><a href="/index.html">Writings</a></h1>
+      <h1><a href="/writings/">Writings</a></h1>
       ${date ? `<p class="post-meta"><time datetime="${date}">${date}</time></p>` : ''}
     </header>
     <main>
@@ -243,7 +243,7 @@ const writingTemplate = ({ slug, title, date, html, excerpt, math = true }) => `
 ${html}
       </article>
       <section class="post-navigation">
-        <a href="/index.html#writings">← All writings</a>
+        <a href="/writings/">← All writings</a>
       </section>
     </main>
     <footer>
@@ -362,7 +362,7 @@ const wipTemplate = ({ slug, title, date, html, excerpt, math = true }) => {
   <div id="content" class="content-hidden">
     <div class="container">
       <header>
-        <h1><a href="/index.html">Writings</a></h1>
+        <h1><a href="/writings/">Writings</a></h1>
         ${date ? `<p class="post-meta"><time datetime="${date}">${date}</time></p>` : ''}
       </header>
       <main>
@@ -370,7 +370,7 @@ const wipTemplate = ({ slug, title, date, html, excerpt, math = true }) => {
 ${html}
         </article>
         <section class="post-navigation">
-          <a href="/index.html#writings">← All writings</a>
+          <a href="/writings/">← All writings</a>
         </section>
       </main>
       <footer>
