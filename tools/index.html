@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Small tools · parth sareen</title>
+  <meta name="description" content="Command-line things I built for myself, mostly around making agents feel native to the terminal.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23ffffff'/><text x='16' y='23' font-family='Georgia,serif' font-style='italic' font-size='22' fill='%23000000' text-anchor='middle'>ps</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/theme-toggle.js"></script>
+</head>
+<body>
+  <main class="page page--prose">
+
+    <nav class="nav" aria-label="Primary">
+      <a href="/" class="nav-brand">parth sareen</a>
+      <span class="nav-links">
+        <a href="/writings/">writings</a>
+        <a href="/#work">work</a>
+        <a href="/#elsewhere">elsewhere</a>
+      </span>
+    </nav>
+
+    <p class="crumb"><a href="/#elsewhere">Elsewhere</a> · small tools</p>
+
+    <header class="page-masthead" style="max-width: 36ch;">
+      <h1 class="page-masthead-title">Small tools <em>nobody asked for</em></h1>
+      <p class="page-masthead-sub" style="max-width: 52ch;">
+        Tools I built for myself, which are probably not useful to most.  
+      </p>
+    </header>
+
+    <div class="tools-grid">
+
+      <a href="https://github.com/ParthSareen/ducky" class="tool-card">
+        <div class="tool-card-head">
+          <h3 class="tool-name">ducky</h3>
+          <span class="tool-meta">Python</span>
+        </div>
+        <p class="tool-desc">Natural language to bash commands, inline in the terminal. Paste a prompt, get a runnable command.</p>
+        <p class="tool-why">Don't want to type out worktree commands, or add files to git manually.</p>
+      </a>
+
+      <a href="https://github.com/ParthSareen/zuko" class="tool-card">
+        <div class="tool-card-head">
+          <h3 class="tool-name">zuko</h3>
+          <span class="tool-meta">Go</span>
+        </div>
+        <p class="tool-desc">Read-only CLI sandbox for agents. Wraps tools like <code>gh</code> and <code>git</code> behind an allowlist; destructive commands require Touch ID.</p>
+        <p class="tool-why">I like to live on the edge. Kinda.</p>
+      </a>
+
+      <a href="https://github.com/ParthSareen/watchy" class="tool-card">
+        <div class="tool-card-head">
+          <h3 class="tool-name">watchy</h3>
+          <span class="tool-meta">Go</span>
+        </div>
+        <p class="tool-desc">Mini agent that runs background tasks using Ollama. TUI for checking in on them and asking what's going on.</p>
+        <p class="tool-why">Prettier tailing. Hop around and yank like it's vim</p>
+      </a>
+
+      <a href="https://github.com/ParthSareen/vimollama" class="tool-card">
+        <div class="tool-card-head">
+          <h3 class="tool-name">vimollama</h3>
+          <span class="tool-meta">Lua</span>
+        </div>
+        <p class="tool-desc">Chat and edit with local or cloud models from inside nvim.</p>
+        <p class="tool-why">I wanted the Cursor-like experience but in nvim.</p>
+      </a>
+
+      <a href="https://github.com/ParthSareen/OllamaClaw" class="tool-card">
+        <div class="tool-card-head">
+          <h3 class="tool-name">ollamaclaw</h3>
+          <span class="tool-meta">Go</span>
+        </div>
+        <p class="tool-desc">A minimal take on OpenClaw using Ollama.</p>
+        <p class="tool-why">Wanted to understand how OpenClaw actually worked from first principles.</p>
+      </a>
+
+    </div>
+
+    <p class="tools-foot-note">
+      Older projects, abandoned experiments, and everything else on <a href="https://github.com/parthsareen">github.com/parthsareen</a>. The ones I still reach for live here.
+    </p>
+
+    <footer class="site-foot">
+      <span>© 2026 parth sareen · built slowly</span>
+      <span class="site-foot-right">
+        <a href="https://x.com/parthsareen">X</a>
+        <a href="https://github.com/parthsareen">GitHub</a>
+        <a href="https://www.linkedin.com/in/parthsareen">LinkedIn</a>
+      </span>
+    </footer>
+
+  </main>
+</body>
+</html>

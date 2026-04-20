@@ -1,38 +1,247 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Writings by Parth Sareen on AI agents, LLMs, systems engineering, and more.">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23f6f2e8'/><text x='16' y='22' font-family='serif' font-size='18' font-weight='700' fill='%232c2420' text-anchor='middle'>ps</text></svg>">
-    <title>Writings | parth sareen</title>
-    <link rel="stylesheet" href="/style.css">
-    <script src="/theme.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Writings · parth sareen</title>
+  <meta name="description" content="Long pieces, short pieces, brain dumps.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23ffffff'/><text x='16' y='23' font-family='Georgia,serif' font-style='italic' font-size='22' fill='%23000000' text-anchor='middle'>ps</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/theme-toggle.js"></script>
 </head>
-
 <body>
-    <div class="container">
-        <header>
-            <h1>Writings</h1>
-            <p>on AI, systems, and things I find interesting</p>
-        </header>
-        <main>
-            <section id="writings">
-                <ul>
-                    <li><a href="/writings/era-of-generalists/">Yet another generalist</a> <span class="date">2026-03-25</span></li>
-                    <li><a href="/writings/building-reliable-ai-agents/">Building Reliable AI Agents</a> <span class="date">2025-12-25</span></li>
-                    <li><a href="/writings/sampling/">Sampling and structured outputs in LLMs</a> <span class="date">2025-09-10</span></li>
-                </ul>
-            </section>
-        </main>
-        <footer>
-            <a href="/" class="icon">Home</a>
-            <a href="https://github.com/parthsareen" class="icon">GitHub</a>
-            <a href="https://x.com/parthsareen" class="icon">X</a>
-            <a href="https://www.linkedin.com/in/parthsareen" class="icon">LinkedIn</a>
-        </footer>
-    </div>
-</body>
+  <main class="page">
 
+    <nav class="nav" aria-label="Primary">
+      <a href="/" class="nav-brand">parth sareen</a>
+      <span class="nav-links">
+        <a href="/writings/" class="active">writings</a>
+        <a href="/#work">work</a>
+        <a href="/#elsewhere">elsewhere</a>
+      </span>
+    </nav>
+
+    <header class="page-masthead">
+      <h1 class="page-masthead-title"><em>Writings</em></h1>
+      <p class="page-masthead-sub">Long pieces, short pieces, brain dumps.</p>
+    </header>
+
+    <nav class="filter-pills" aria-label="Filter writings">
+      <button type="button" class="filter-pill active" data-filter="all">All <span class="count">11</span></button>
+      <button type="button" class="filter-pill" data-filter="essay">Essays <span class="count">1</span></button>
+      <button type="button" class="filter-pill" data-filter="deep-dive">Deep dives <span class="count">2</span></button>
+      <button type="button" class="filter-pill" data-filter="ollama">Ollama blog <span class="count">8</span></button>
+    </nav>
+
+    <section class="year-section" data-year="2026">
+      <h2 class="year-label">2026</h2>
+      <div class="writings-list">
+
+        <a href="/writings/era-of-generalists/" class="writings-item" data-kind="essay">
+          <span class="writings-item-meta-row">
+            <span class="writings-item-date">Mar 25</span>
+            <span class="writings-item-tag">Essay · 8 min</span>
+          </span>
+          <span class="writings-item-date">Mar 25</span>
+          <div class="writings-item-main">
+            <span class="writings-item-title">Yet another <em>generalist</em></span>
+            <p class="writings-item-dek">Getting 70–80% good at anything, and the strange grief of not-quite-writing code anymore.</p>
+          </div>
+          <span class="writings-item-read">8 min</span>
+          <span class="writings-item-tag">Essay</span>
+        </a>
+
+        <a href="https://ollama.com/blog/openclaw-tutorial" class="writings-item" data-kind="ollama">
+          <span class="writings-item-meta-row">
+            <span class="writings-item-date">Feb 23</span>
+            <span class="writings-item-tag">Ollama · 4 min</span>
+          </span>
+          <span class="writings-item-date">Feb 23</span>
+          <div class="writings-item-main">
+            <span class="writings-item-title">Setting up <em>OpenClaw</em></span>
+            <p class="writings-item-dek">OpenClaw in under two minutes with a single Ollama command.</p>
+          </div>
+          <span class="writings-item-read">4 min</span>
+          <span class="writings-item-tag">Ollama blog</span>
+        </a>
+
+        <a href="https://ollama.com/blog/web-search-subagents-claude-code" class="writings-item" data-kind="ollama">
+          <span class="writings-item-meta-row">
+            <span class="writings-item-date">Feb 16</span>
+            <span class="writings-item-tag">Ollama · 5 min</span>
+          </span>
+          <span class="writings-item-date">Feb 16</span>
+          <div class="writings-item-main">
+            <span class="writings-item-title">Subagents and web search in Claude Code</span>
+            <p class="writings-item-dek">Ollama now supports subagents and web search inside Claude Code.</p>
+          </div>
+          <span class="writings-item-read">5 min</span>
+          <span class="writings-item-tag">Ollama blog</span>
+        </a>
+
+        <a href="https://ollama.com/blog/openclaw" class="writings-item" data-kind="ollama">
+          <span class="writings-item-meta-row">
+            <span class="writings-item-date">Feb 01</span>
+            <span class="writings-item-tag">Ollama · 5 min</span>
+          </span>
+          <span class="writings-item-date">Feb 01</span>
+          <div class="writings-item-main">
+            <span class="writings-item-title"><em>OpenClaw</em></span>
+            <p class="writings-item-dek">A new open coding agent built around local and cloud models.</p>
+          </div>
+          <span class="writings-item-read">5 min</span>
+          <span class="writings-item-tag">Ollama blog</span>
+        </a>
+
+        <a href="https://ollama.com/blog/launch" class="writings-item" data-kind="ollama">
+          <span class="writings-item-meta-row">
+            <span class="writings-item-date">Jan 23</span>
+            <span class="writings-item-tag">Ollama · 6 min</span>
+          </span>
+          <span class="writings-item-date">Jan 23</span>
+          <div class="writings-item-main">
+            <span class="writings-item-title"><em>ollama launch</em></span>
+            <p class="writings-item-dek">A new command that sets up and runs coding tools with local or cloud models.</p>
+          </div>
+          <span class="writings-item-read">6 min</span>
+          <span class="writings-item-tag">Ollama blog</span>
+        </a>
+
+      </div>
+    </section>
+
+    <section class="year-section" data-year="2025">
+      <h2 class="year-label">2025</h2>
+      <div class="writings-list">
+
+        <a href="/writings/building-reliable-ai-agents/" class="writings-item" data-kind="deep-dive">
+          <span class="writings-item-meta-row">
+            <span class="writings-item-date">Dec 25</span>
+            <span class="writings-item-tag">Deep dive · 15 min</span>
+          </span>
+          <span class="writings-item-date">Dec 25</span>
+          <div class="writings-item-main">
+            <span class="writings-item-title">Building <em>reliable</em> AI agents</span>
+            <p class="writings-item-dek">Patterns that survived contact with production. Tool design, harnesses, and context engineering.</p>
+          </div>
+          <span class="writings-item-read">15 min</span>
+          <span class="writings-item-tag">Deep dive</span>
+        </a>
+
+        <a href="https://ollama.com/blog/web-search" class="writings-item" data-kind="ollama">
+          <span class="writings-item-meta-row">
+            <span class="writings-item-date">Sep 24</span>
+            <span class="writings-item-tag">Ollama · 5 min</span>
+          </span>
+          <span class="writings-item-date">Sep 24</span>
+          <div class="writings-item-main">
+            <span class="writings-item-title">Web search in ollama</span>
+            <p class="writings-item-dek">A new web search API with a generous free tier, available to every ollama user.</p>
+          </div>
+          <span class="writings-item-read">5 min</span>
+          <span class="writings-item-tag">Ollama blog</span>
+        </a>
+
+        <a href="/writings/sampling/" class="writings-item" data-kind="deep-dive">
+          <span class="writings-item-meta-row">
+            <span class="writings-item-date">Sep 10</span>
+            <span class="writings-item-tag">Deep dive · 10 min</span>
+          </span>
+          <span class="writings-item-date">Sep 10</span>
+          <div class="writings-item-main">
+            <span class="writings-item-title">Sampling and structured outputs in LLMs</span>
+            <p class="writings-item-dek">What sampling actually does, why temperature is a lie, and how structured outputs constrain the search.</p>
+          </div>
+          <span class="writings-item-read">10 min</span>
+          <span class="writings-item-tag">Deep dive</span>
+        </a>
+
+        <a href="https://ollama.com/blog/streaming-tool" class="writings-item" data-kind="ollama">
+          <span class="writings-item-meta-row">
+            <span class="writings-item-date">May 28</span>
+            <span class="writings-item-tag">Ollama · 6 min</span>
+          </span>
+          <span class="writings-item-date">May 28</span>
+          <div class="writings-item-main">
+            <span class="writings-item-title">Streaming responses <em>with</em> tool calling</span>
+            <p class="writings-item-dek">Chat applications can stream content and call tools in real time.</p>
+          </div>
+          <span class="writings-item-read">6 min</span>
+          <span class="writings-item-tag">Ollama blog</span>
+        </a>
+
+      </div>
+    </section>
+
+    <section class="year-section" data-year="2024">
+      <h2 class="year-label">2024</h2>
+      <div class="writings-list">
+
+        <a href="https://ollama.com/blog/structured-outputs" class="writings-item" data-kind="ollama">
+          <span class="writings-item-meta-row">
+            <span class="writings-item-date">Dec 06</span>
+            <span class="writings-item-tag">Ollama · 7 min</span>
+          </span>
+          <span class="writings-item-date">Dec 06</span>
+          <div class="writings-item-main">
+            <span class="writings-item-title">Structured outputs in ollama</span>
+            <p class="writings-item-dek">Constrain a model's output to a JSON schema, with Python and JavaScript libraries to match.</p>
+          </div>
+          <span class="writings-item-read">7 min</span>
+          <span class="writings-item-tag">Ollama blog</span>
+        </a>
+
+        <a href="https://ollama.com/blog/functions-as-tools" class="writings-item" data-kind="ollama">
+          <span class="writings-item-meta-row">
+            <span class="writings-item-date">Nov 25</span>
+            <span class="writings-item-tag">Ollama · 5 min</span>
+          </span>
+          <span class="writings-item-date">Nov 25</span>
+          <div class="writings-item-main">
+            <span class="writings-item-title">Functions as tools in ollama</span>
+            <p class="writings-item-dek">Pass Python functions directly as tools, with full typing support and new examples.</p>
+          </div>
+          <span class="writings-item-read">5 min</span>
+          <span class="writings-item-tag">Ollama blog</span>
+        </a>
+
+      </div>
+    </section>
+
+    <footer class="site-foot">
+      <span>© 2026 parth sareen · built slowly</span>
+      <span class="site-foot-right">
+        <a href="/">Home</a>
+        <a href="https://x.com/parthsareen">X</a>
+        <a href="https://github.com/parthsareen">GitHub</a>
+        <a href="https://www.linkedin.com/in/parthsareen">LinkedIn</a>
+      </span>
+    </footer>
+
+  </main>
+  <script>
+    (function () {
+      const pills = document.querySelectorAll('.filter-pill');
+      const items = document.querySelectorAll('.writings-item[data-kind]');
+      const sections = document.querySelectorAll('.year-section[data-year]');
+      pills.forEach(function (pill) {
+        pill.addEventListener('click', function () {
+          const filter = pill.dataset.filter;
+          pills.forEach(function (p) { p.classList.toggle('active', p === pill); });
+          items.forEach(function (item) {
+            item.style.display = (filter === 'all' || item.dataset.kind === filter) ? '' : 'none';
+          });
+          sections.forEach(function (section) {
+            const hasVisible = Array.from(section.querySelectorAll('.writings-item[data-kind]'))
+              .some(function (item) { return item.style.display !== 'none'; });
+            section.style.display = hasVisible ? '' : 'none';
+          });
+        });
+      });
+    })();
+  </script>
+</body>
 </html>

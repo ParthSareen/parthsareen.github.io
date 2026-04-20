@@ -3,147 +3,87 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Feeling of the Thing | Writings</title>
-  <meta name="description" content="It’s when you use something and it just works. You don’t have to think about it, you do something" />
+  <title>The feeling of the thing · parth sareen</title>
+  <meta name="description" content="When you use something and it just works." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23ffffff'/><text x='16' y='23' font-family='Georgia,serif' font-style='italic' font-size='22' fill='%23000000' text-anchor='middle'>ps</text></svg>" />
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css" />
-  <script src="/theme.js"></script>
-  <script src="/vim-nav.js"></script>
-  <script>
-    window.MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\(', '\)']],
-        displayMath: [['$$','$$'], ['\[','\]']]
-      },
-      svg: { fontCache: 'global' }
-    };
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
-  <style>
-    .password-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: var(--bg-color, #fff);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    }
-    .password-box {
-      text-align: center;
-      padding: 2rem;
-    }
-    .password-box input {
-      padding: 0.5rem;
-      font-size: 1rem;
-      margin: 1rem 0;
-      border: 1px solid var(--text-color, #333);
-      background: var(--bg-color, #fff);
-      color: var(--text-color, #333);
-    }
-    .password-box button {
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-      cursor: pointer;
-      background: var(--text-color, #333);
-      color: var(--bg-color, #fff);
-      border: none;
-    }
-    .error {
-      color: #e74c3c;
-      margin-top: 0.5rem;
-    }
-    .content-hidden {
-      display: none;
-    }
-  </style>
+  <script src="/theme-toggle.js"></script>
 </head>
 <body>
   <div id="password-overlay" class="password-overlay">
     <div class="password-box">
       <h2>This post is password protected</h2>
-      <input type="password" id="password-input" placeholder="Enter password" />
-      <br />
-      <button onclick="checkPassword()">Submit</button>
+      <input type="password" id="password-input" placeholder="Enter password" autofocus />
+      <button onclick="checkPassword()">Enter</button>
       <div id="error" class="error"></div>
     </div>
   </div>
   <div id="content" class="content-hidden">
-    <div class="container">
-      <header>
-        <h1><a href="/writings/">Writings</a></h1>
-        <p class="post-meta"><time datetime="2026-01-22">2026-01-22</time></p>
+    <main class="page page--prose">
+
+      <nav class="nav" aria-label="Primary">
+        <a href="/" class="nav-brand">parth sareen</a>
+        <span class="nav-links">
+          <a href="/writings/">writings</a>
+          <a href="/#work">work</a>
+          <a href="/#elsewhere">elsewhere</a>
+        </span>
+      </nav>
+
+      <p class="crumb"><a href="/writings/">Writings</a>  ·  2026</p>
+
+      <header class="essay-masthead">
+        <h1 class="essay-title">The feeling of <em>the thing</em></h1>
+        <div class="essay-meta">
+          <span>2026-01-22</span>
+          <span>Notes</span>
+        </div>
       </header>
-      <main>
-        <article class="post-content">
-<h1 id="the-feeling-of-the-thing" tabindex="-1">The Feeling of the Thing</h1>
+
+      <article class="post-content">
 <p>It’s when you use something and it just works. You don’t have to think about it, you do something</p>
 <p>That’s the feeling that I’m always trying to create</p>
+      </article>
 
-        </article>
-        <section class="post-navigation">
-          <a href="/writings/">← All writings</a>
-        </section>
-      </main>
-      <footer>
-        <a href="https://github.com/parthsareen" class="icon">GitHub</a>
-        <a href="https://x.com/thanosthinking" class="icon">X</a>
-        <a href="https://www.linkedin.com/in/parthsareen" class="icon">LinkedIn</a>
+      <section class="post-navigation">
+        <a href="/writings/">← All writings</a>
+      </section>
+
+      <footer class="site-foot">
+        <span>© 2026 parth sareen · built slowly</span>
+        <span class="site-foot-right">
+          <a href="/">Home</a>
+          <a href="https://x.com/parthsareen">X</a>
+          <a href="https://github.com/parthsareen">GitHub</a>
+        </span>
       </footer>
-    </div>
+
+    </main>
   </div>
-  <script type="module">
+  <script>
     const PASSWORD = 'wip2024';
-    
-    async function initMermaid() {
-      const mermaid = await import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs');
-      mermaid.default.initialize({ 
-        startOnLoad: false,
-        theme: 'base',
-        themeVariables: {
-          primaryColor: '#e2d9c9',
-          primaryTextColor: '#463a2e',
-          primaryBorderColor: '#744c24',
-          lineColor: '#463a2e',
-          secondaryColor: '#f6f2e8',
-          tertiaryColor: '#e2d9c9',
-          mainBkg: '#e2d9c9',
-          secondBkg: '#f6f2e8',
-          tertiaryBkg: '#e2d9c9',
-          nodeBorder: '#744c24',
-          clusterBkg: '#f6f2e8',
-          clusterBorder: '#744c24',
-          defaultLinkColor: '#463a2e',
-          titleColor: '#463a2e',
-          edgeLabelBackground: '#f6f2e8',
-          fontSize: '15px',
-          fontFamily: 'Spectral, serif'
-        }
-      });
-      await mermaid.default.run({nodes: [...document.querySelectorAll('pre[class~="mermaid"]')]});
-    }
-    
+
     function checkPassword() {
       const input = document.getElementById('password-input').value;
       if (input === PASSWORD) {
         document.getElementById('password-overlay').style.display = 'none';
         document.getElementById('content').classList.remove('content-hidden');
         localStorage.setItem('wip-auth', 'true');
-        setTimeout(initMermaid, 100);
       } else {
         document.getElementById('error').textContent = 'Incorrect password';
       }
     }
-    
+
     if (localStorage.getItem('wip-auth') === 'true') {
       document.getElementById('password-overlay').style.display = 'none';
       document.getElementById('content').classList.remove('content-hidden');
-      setTimeout(initMermaid, 100);
     }
-    
-    document.getElementById('password-input').addEventListener('keypress', function(e) {
+
+    document.getElementById('password-input').addEventListener('keypress', function (e) {
       if (e.key === 'Enter') {
         checkPassword();
       }

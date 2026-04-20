@@ -3,32 +3,50 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sampling and structured outputs in LLMs | Writings</title>
+  <title>Sampling and structured outputs in LLMs · parth sareen</title>
   <meta name="description" content="Sampling and structured outputs are tied together as they both determine the model’s next chosen token." />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23f6f2e8'/><text x='16' y='22' font-family='serif' font-size='18' font-weight='700' fill='%232c2420' text-anchor='middle'>ps</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23ffffff'/><text x='16' y='23' font-family='Georgia,serif' font-style='italic' font-size='22' fill='%23000000' text-anchor='middle'>ps</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css" />
-  <script src="/theme.js"></script>
-  <script src="/vim-nav.js"></script>
+  <script src="/theme-toggle.js"></script>
   <script>
     window.MathJax = {
       tex: {
-        inlineMath: [['$', '$'], ['\(', '\)']],
-        displayMath: [['$$','$$'], ['\[','\]']]
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']]
       },
       svg: { fontCache: 'global' }
     };
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+  <script src="/toc.js" defer></script>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1><a href="/index.html">Writings</a></h1>
-      <p class="post-meta"><time datetime="2025-10-28">2025-10-28</time></p>
+  <main class="page page--prose">
+
+    <nav class="nav" aria-label="Primary">
+      <a href="/" class="nav-brand">parth sareen</a>
+      <span class="nav-links">
+        <a href="/writings/">writings</a>
+        <a href="/#work">work</a>
+        <a href="/#elsewhere">elsewhere</a>
+      </span>
+    </nav>
+
+    <p class="crumb"><a href="/writings/">Writings</a>  ·  2025</p>
+
+    <header class="essay-masthead">
+      <h1 class="essay-title">Sampling and <em>structured outputs</em> in LLMs</h1>
+      <div class="essay-meta">
+        <span>2025-10-28</span>
+        <span>10 min read</span>
+        <span>Deep dive</span>
+      </div>
     </header>
-    <main>
-      <article class="post-content">
-<h1 id="sampling-and-structured-outputs-in-llms" tabindex="-1">Sampling and structured outputs in LLMs</h1>
+
+    <article class="post-content">
 <p>Sampling and structured outputs are tied together as they both determine the model’s next chosen token.</p>
 <p>Sampling is the process of selecting a token from the model’s vocabulary based on the probability distribution.</p>
 <p>I launched structured outputs in ollama last december, did a research project around on-the-fly structured outputs using finite state machines with pre-computed graphs, and am currently working on supporting structured outputs for thinking models. I also built the sampler for Ollama’s engine back in March 2025 to launch Gemma3. I wanted to write a bit about these as there weren’t a lot of resources around them.</p>
@@ -162,47 +180,22 @@ prefer plain text or a different format, just let me know and I’ll adjust!&quo
 <center>gpt-oss with structured outputs hallucinating that it has been given instructions to only output JSON</center>
 <h2 id="final-thoughts" tabindex="-1">Final thoughts</h2>
 <p>Sampling will continue to remain a critical step in the model’s output, but I think structured outputs and how we can have models which better output structured data without the need for constraining will continue to improve. I see formats evolve alongside model capabilities. I see structured outputs as a model capability and think that there will be improvements to how structured data can be outputted by the model without the need of masking tokens.</p>
-<p>I’m excited to share more of my work on structured outputs in Ollama soon!</p>
 
-      </article>
-      <section class="post-navigation">
-        <a href="/index.html#writings">← All writings</a>
-      </section>
-    </main>
-    <footer>
-      <a href="https://github.com/parthsareen" class="icon">GitHub</a>
-      <a href="https://x.com/thanosthinking" class="icon">X</a>
-      <a href="https://www.linkedin.com/in/parthsareen" class="icon">LinkedIn</a>
+    </article>
+
+    <section class="post-navigation">
+      <a href="/writings/">← All writings</a>
+    </section>
+
+    <footer class="site-foot">
+      <span>© 2026 parth sareen · built slowly</span>
+      <span class="site-foot-right">
+        <a href="/">Home</a>
+        <a href="https://x.com/parthsareen">X</a>
+        <a href="https://github.com/parthsareen">GitHub</a>
+      </span>
     </footer>
-  </div>
-  <script type="module">
-    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-    
-    mermaid.initialize({ 
-      startOnLoad: false,
-      theme: 'base',
-      themeVariables: {
-        primaryColor: '#e2d9c9',
-        primaryTextColor: '#463a2e',
-        primaryBorderColor: '#744c24',
-        lineColor: '#463a2e',
-        secondaryColor: '#f6f2e8',
-        tertiaryColor: '#e2d9c9',
-        mainBkg: '#e2d9c9',
-        secondBkg: '#f6f2e8',
-        tertiaryBkg: '#e2d9c9',
-        nodeBorder: '#744c24',
-        clusterBkg: '#f6f2e8',
-        clusterBorder: '#744c24',
-        defaultLinkColor: '#463a2e',
-        titleColor: '#463a2e',
-        edgeLabelBackground: '#f6f2e8',
-        fontSize: '15px',
-        fontFamily: 'Spectral, serif'
-      }
-    });
-    
-    await mermaid.run({nodes: [...document.querySelectorAll('pre[class~="mermaid"]')]});
-  </script>
+
+  </main>
 </body>
 </html>

@@ -1,127 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23f6f2e8'/><text x='16' y='22' font-family='serif' font-size='18' font-weight='700' fill='%232c2420' text-anchor='middle'>ps</text></svg>">
-    <title>parth sareen | ai & systems</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="theme.js"></script>
-    <script src="vim-nav.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>parth sareen</title>
+  <meta name="description" content="i work on ollama — mostly ollama launch and the agent tooling around it. on the side i ship small tools nobody asked for.">
+
+  <link rel="icon" href="/assets/favicon.ico" sizes="any">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+
+  <link rel="manifest" href="/assets/site.webmanifest">
+  <meta name="theme-color" content="#ffffff">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="parth sareen">
+  <meta property="og:title" content="parth sareen">
+  <meta property="og:description" content="i work on ollama — mostly ollama launch and the agent tooling around it. on the side i ship small tools nobody asked for.">
+  <meta property="og:url" content="https://parthsareen.com/">
+  <meta property="og:image" content="https://parthsareen.com/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="parth sareen — writings on AI, systems, and things I find interesting">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@parthsareen">
+  <meta name="twitter:creator" content="@parthsareen">
+  <meta name="twitter:title" content="parth sareen">
+  <meta name="twitter:description" content="i work on ollama. writings on AI, systems, and things I find interesting.">
+  <meta name="twitter:image" content="https://parthsareen.com/assets/og-image.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/theme-toggle.js"></script>
 </head>
-
 <body>
-    <div class="container">
-        <header>
-            <h1>parth sareen</h1>
-        </header>
-        <main>
-            <section id="about">
-                <p>working on <a href="https://ollama.com">ollama</a>, the easiest way to run LLMs with your favorite tools</p>
-                <p>my work at ollama bounces around the entire stack from inference to API. most of my time these days is spent around ai agents through ollama launch. i have also worked on model capabilities, function/tool calling, structured outputs, and
-                    general systems engineering.</p>
-                <p>if you find issues with anything ollama related, please reach out to me on <a href="https://x.com/parthsareen">x</a> or <a href="https://www.linkedin.com/in/parthsareen">linkedin</a></p>
-                <p>previously ran a startup called <a href="https://www.extensible.dev">extensible ai</a> where i worked
-                    on ai agent reliability, <a href="https://github.com/Extensible-AI/extensitrace">extensitrace</a> (a thread-safe tracing library for agents), <a href="https://github.com/Extensible-AI/DAGent">DAGent</a> (agents as directed acyclic graphs), and also
-                    online tool use for agents</p>
-                <p>used to work on distributed systems at tesla and autodesk with scala, go, and python. built on-device
-                    ml pipelines in c++ at apple. did some pm too at some point.</p>
-                <p>regularly make <a href="latte-art.html">latte art</a>, often do muay thai, and like to get good at new things
-                </p>
-                <p>recently also been making a ton of random but useful personal tools using ollama like <a href="https://github.com/parthsareen/watchy">watchy</a> (background task manager with TUI and a mini agent loop), <a href="https://github.com/parthsareen/ducky">ducky</a> (natural language to bash), and <a href="https://github.com/parthsareen/zuko">zuko</a> (prevent destructive actions by asking for Touch ID)
-                </p>
-            </section>
-            <section id="writings">
-                <h2><a href="/writings/">writings</a></h2>
-                <ul>
-                    <li><a href="/writings/era-of-generalists/" target="_blank">Yet another generalist</a> <span class="date">2026-03-25</span></li>
-                    <li><a href="/writings/building-reliable-ai-agents/" target="_blank">Building Reliable AI Agents</a> <span class="date">2025-12-25</span></li>
-                    <li><a href="/writings/sampling" target="_blank">Sampling and structured outputs in LLMs</a> <span class="date">2025-09-10</span></li>
-                </ul>
-            </section>
-            <section id="ollama-writings">
-                <h2>my work at ollama</h2>
-                <ul>
-                    <li><a href="https://ollama.com/blog/openclaw-tutorial target="_blank">The simplest and fastest way to setup OpenClaw</a>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline; margin-left: 4px; opacity: 0.6;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15,3 21,3 21,9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                        <span class="date">2026-02-23</span></li>
-                    <li><a href="https://ollama.com/blog/web-search-subagents-claude-code" target="_blank">Subagents and web search in Claude Code</a>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline; margin-left: 4px; opacity: 0.6;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15,3 21,3 21,9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                        <span class="date">2026-02-16</span></li>
-                    <li><a href="https://ollama.com/blog/openclaw" target="_blank">OpenClaw</a>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline; margin-left: 4px; opacity: 0.6;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15,3 21,3 21,9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                        <span class="date">2026-02-01</span></li>
-                    <li><a href="https://ollama.com/blog/launch" target="_blank">ollama launch</a>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline; margin-left: 4px; opacity: 0.6;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15,3 21,3 21,9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                        <span class="date">2026-01-23</span></li>
-                    <li><a href="https://ollama.com/blog/web-search" target="_blank">Web search in ollama</a>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline; margin-left: 4px; opacity: 0.6;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15,3 21,3 21,9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                        <span class="date">2025-09-24</span></li>
-                    <li><a href="https://ollama.com/blog/streaming-tool" target="_blank">Streaming responses with tool calling</a>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline; margin-left: 4px; opacity: 0.6;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15,3 21,3 21,9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                        <span class="date">2025-05-28</span></li>
-                    <li><a href="https://ollama.com/blog/structured-outputs">Structured outputs in ollama</a>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline; margin-left: 4px; opacity: 0.6;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15,3 21,3 21,9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                        <span class="date">2024-12-06</span></li>
-                    <li><a href="https://ollama.com/blog/functions-as-tools">Functions as tools in ollama</a>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline; margin-left: 4px; opacity: 0.6;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15,3 21,3 21,9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                        <span class="date">2024-11-25</span></li>
-                </ul>
-            </section>
-            <!-- <section id="reading">
-                <h2>what i'm reading</h2>
-                <ul>
-                    <li><a href="reading.html">Books, Papers & Articles</a></li>
-                </ul>
-            </section> -->
-            <section id="hobbies">
-                <h2>hobbies</h2>
-                <ul>
-                    <li><a href="latte-art.html">Latte Art</a></li>
-                    <li><a href="fragrances.html">Fragrance Collection</a></li>
-                </ul>
-            </section>
-            <!-- <section id="glossary">
-                <h2><a href="glossary.html">glossary</a></h2>
-            </section> -->
-        </main>
-        <footer>
-            <a href="https://github.com/parthsareen" class="icon">GitHub</a>
-            <a href="https://x.com/parthsareen" class="icon">X</a>
-            <a href="https://www.linkedin.com/in/parthsareen" class="icon">LinkedIn</a>
-            <a href="#" class="icon copy-notification" id="email-copy">Email</a>
-            <script>
-                document.getElementById('email-copy').addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const link = e.target;
-                    navigator.clipboard.writeText('me@parthsareen.com').then(function () {
-                        link.classList.add('show-notification');
-                        setTimeout(() => {
-                            link.classList.remove('show-notification');
-                        }, 2000);
-                    }, function (err) {
-                        console.error('Could not copy text: ', err);
-                    });
-                });
+  <main class="page">
 
-                document.getElementById('copy-command').addEventListener('click', function (e) {
-                    const button = e.target.closest('.copy-button');
-                    navigator.clipboard.writeText('ollama run parthsareen/me').then(function () {
-                        const originalSVG = button.innerHTML;
-                        button.classList.add('show-notification');
-                        button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>';
-                        setTimeout(() => {
-                            button.classList.remove('show-notification');
-                            button.innerHTML = originalSVG;
-                        }, 2000);
-                    }, function (err) {
-                        console.error('Could not copy text: ', err);
-                    });
-                });
-            </script>
-        </footer>
+    <nav class="nav" aria-label="Primary">
+      <a href="/" class="nav-brand">parth sareen</a>
+      <span class="nav-links">
+        <a href="/writings/">writings</a>
+        <a href="#work">work</a>
+        <a href="#elsewhere">elsewhere</a>
+      </span>
+    </nav>
+
+    <section class="masthead">
+      <h1 class="masthead-name">parth <em>sareen</em></h1>
+      <p class="masthead-bio">
+        i work on <a href="https://ollama.com">ollama.</a> mostly <em>ollama launch</em> and the agent tooling around it.
+      </p>
+      <p class="masthead-bio">
+        on the side i build <a href="/tools/">small tools</a> nobody asked for: <em>ducky</em>, <em>watchy</em>, <em>zuko</em>. before that: a startup on agent reliability, tesla, apple.
+      </p>
+      <p class="masthead-bio">
+        outside of that: <a href="/latte-art.html">latte art</a>, muay thai, and <a href="/writings/">writing</a> when it earns itself.
+      </p>
+    </section>
+
+    <div class="section-head" id="writings">
+      <p class="eyebrow">Latest writing</p>
+      <a href="/writings/" class="section-more">All writings →</a>
     </div>
-</body>
 
+    <article class="lead">
+      <p class="lead-meta">2026-03-25 · 8 min read</p>
+      <a href="/writings/era-of-generalists/" class="lead-title">Yet another <em>generalist</em></a>
+      <p class="lead-dek">Quick brain dump. Getting 70–80% good at anything, why specialists might still win, and the strange grief of <em>not-quite-writing code</em> anymore.</p>
+      <a href="/writings/era-of-generalists/" class="lead-cta">Read the essay →</a>
+    </article>
+
+    <div style="padding-top: 40px;">
+      <div class="writings-list">
+
+        <a href="/writings/building-reliable-ai-agents/" class="writings-item">
+          <span class="writings-item-meta-row">
+            <span class="writings-item-date">2025-12-25</span>
+            <span class="writings-item-tag">Deep dive</span>
+          </span>
+          <span class="writings-item-date">2025-12-25</span>
+          <div class="writings-item-main">
+            <span class="writings-item-title">Building <em>reliable</em> AI agents</span>
+          </div>
+          <span class="writings-item-read">15 min</span>
+          <span class="writings-item-tag">Deep dive</span>
+        </a>
+
+        <a href="/writings/sampling/" class="writings-item">
+          <span class="writings-item-meta-row">
+            <span class="writings-item-date">2025-09-10</span>
+            <span class="writings-item-tag">Deep dive</span>
+          </span>
+          <span class="writings-item-date">2025-09-10</span>
+          <div class="writings-item-main">
+            <span class="writings-item-title">Sampling and structured outputs in LLMs</span>
+          </div>
+          <span class="writings-item-read">10 min</span>
+          <span class="writings-item-tag">Deep dive</span>
+        </a>
+
+      </div>
+    </div>
+
+    <div class="section-head" id="work">
+      <p class="eyebrow">My Work at Ollama</p>
+      <a href="https://ollama.com/blog" class="section-more">ollama.com/blog →</a>
+    </div>
+
+    <div class="work-grid">
+      <a href="https://ollama.com/blog/openclaw-tutorial" class="work-card">
+        <p class="card-label">2026-02-23 · Tutorial</p>
+        <h3 class="work-card-title">Setting up <em>OpenClaw</em></h3>
+        <p class="work-card-dek">OpenClaw in under two minutes with a single Ollama command.</p>
+      </a>
+      <a href="https://ollama.com/blog/web-search-subagents-claude-code" class="work-card">
+        <p class="card-label">2026-02-16 · Feature</p>
+        <h3 class="work-card-title">Subagents and web search in Claude Code</h3>
+        <p class="work-card-dek">Ollama now supports subagents and web search inside Claude Code.</p>
+      </a>
+      <a href="https://ollama.com/blog/openclaw" class="work-card">
+        <p class="card-label">2026-02-01 · Launch</p>
+        <h3 class="work-card-title"><em>OpenClaw</em></h3>
+        <p class="work-card-dek">A new open coding agent built around local and cloud models.</p>
+      </a>
+      <a href="https://ollama.com/blog/launch" class="work-card">
+        <p class="card-label">2026-01-23 · Launch</p>
+        <h3 class="work-card-title"><em>ollama launch</em></h3>
+        <p class="work-card-dek">A new command that sets up and runs coding tools with local or cloud models.</p>
+      </a>
+      <a href="https://ollama.com/blog/web-search" class="work-card">
+        <p class="card-label">2025-09-24 · Feature</p>
+        <h3 class="work-card-title">Web search in ollama</h3>
+        <p class="work-card-dek">A new web search API with a generous free tier, available to every ollama user.</p>
+      </a>
+      <a href="https://ollama.com/blog/streaming-tool" class="work-card">
+        <p class="card-label">2025-05-28 · Engineering</p>
+        <h3 class="work-card-title">Streaming responses <em>with</em> tool calling</h3>
+        <p class="work-card-dek">Chat applications can stream content and call tools in real time.</p>
+      </a>
+      <a href="https://ollama.com/blog/structured-outputs" class="work-card">
+        <p class="card-label">2024-12-06 · Feature</p>
+        <h3 class="work-card-title">Structured outputs in ollama</h3>
+        <p class="work-card-dek">Constrain a model's output to a JSON schema, with Python and JavaScript libraries to match.</p>
+      </a>
+      <a href="https://ollama.com/blog/functions-as-tools" class="work-card">
+        <p class="card-label">2024-11-25 · Feature</p>
+        <h3 class="work-card-title">Functions as tools in ollama</h3>
+        <p class="work-card-dek">Pass Python functions directly as tools, with full typing support.</p>
+      </a>
+    </div>
+
+    <div class="section-head" id="elsewhere">
+      <p class="eyebrow">Elsewhere</p>
+    </div>
+
+    <div class="elsewhere-grid">
+      <a href="/tools/" class="elsewhere-card">
+        <p class="card-label">Small tools</p>
+        <p class="elsewhere-title"><em>watchy</em> · <em>ducky</em> · <em>zuko</em></p>
+      </a>
+      <a href="/latte-art.html" class="elsewhere-card">
+        <p class="card-label">Hobby</p>
+        <p class="elsewhere-title">Latte art</p>
+      </a>
+      <a href="/fragrances.html" class="elsewhere-card">
+        <p class="card-label">Hobby</p>
+        <p class="elsewhere-title">Fragrance collection</p>
+      </a>
+    </div>
+
+    <footer class="site-foot">
+      <span>© 2026 parth sareen · built slowly</span>
+      <span class="site-foot-right">
+        <a href="https://x.com/parthsareen">X</a>
+        <a href="https://github.com/parthsareen">GitHub</a>
+        <a href="https://www.linkedin.com/in/parthsareen">LinkedIn</a>
+      </span>
+    </footer>
+
+  </main>
+</body>
 </html>

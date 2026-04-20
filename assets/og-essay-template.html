@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!--
+  OG image template for individual essays.
+
+  USAGE:
+  1. Change the title and dek below.
+  2. Open in a browser at exactly 1200x630, or use a screenshot tool:
+     - In Chrome DevTools, set viewport to 1200x630 and capture full page
+     - Or use Playwright: page.screenshot({path: 'og-{slug}.png', clip: {x:0,y:0,width:1200,height:630}})
+  3. Save as /assets/og-{slug}.png
+  4. Reference in each essay's <head>:
+     <meta property="og:image" content="https://parthsareen.com/assets/og-{slug}.png">
+
+  This template is designed to match the site's typography (Instrument Serif + Fraunces).
+-->
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #ffffff; width: 1200px; height: 630px; overflow: hidden; }
+  .og {
+    width: 1200px; height: 630px;
+    padding: 72px 88px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: #ffffff;
+  }
+  .top {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .eyebrow {
+    font-family: -apple-system, 'SF Pro Rounded', system-ui, sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #999999;
+    font-weight: 500;
+  }
+  .byline {
+    font-family: -apple-system, system-ui, sans-serif;
+    font-size: 18px;
+    color: #737373;
+    letter-spacing: 0.02em;
+  }
+
+  .title {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-weight: 400;
+    font-size: 128px;
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    color: #000000;
+    max-width: 1024px;
+  }
+  .title em { font-style: italic; }
+
+  .dek {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 26px;
+    line-height: 1.4;
+    color: #2a2a2a;
+    max-width: 920px;
+    font-style: italic;
+  }
+
+  .foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: -apple-system, system-ui, sans-serif;
+    font-size: 18px;
+    color: #737373;
+    letter-spacing: 0.02em;
+    border-top: 1px solid #e5e5e5;
+    padding-top: 22px;
+  }
+  .foot-left { font-weight: 500; color: #1a1a1a; }
+</style>
+</head>
+<body>
+<div class="og">
+  <div class="top">
+    <span class="eyebrow">Essay · 2026</span>
+    <h1 class="title">Yet another <em>generalist</em></h1>
+  </div>
+
+  <!-- Optional dek — delete the <p> below if title is long enough on its own -->
+  <!-- <p class="dek">Getting 70–80% good at anything, and the strange grief of not-quite-writing code anymore.</p> -->
+
+  <div class="foot">
+    <span class="foot-left">parthsareen.com</span>
+    <span>@parthsareen</span>
+  </div>
+</div>
+</body>
+</html>

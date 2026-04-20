@@ -3,31 +3,50 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Building Reliable AI Agents | Writings</title>
-  <meta name="description" content="AI agents accomplish a task in a mostly unstructured manner – where they are able to reason and conduct actions to achieve a goal. The key is in providing just enough structure through tool design, harness design, and context engineering to guide the agent effectively." />
+  <title>Building reliable AI agents · parth sareen</title>
+  <meta name="description" content="Patterns that survived contact with production. Tool design, harness design, and context engineering for AI agents." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23ffffff'/><text x='16' y='23' font-family='Georgia,serif' font-style='italic' font-size='22' fill='%23000000' text-anchor='middle'>ps</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css" />
-  <script src="/theme.js"></script>
-  <script src="/vim-nav.js"></script>
+  <script src="/theme-toggle.js"></script>
   <script>
     window.MathJax = {
       tex: {
-        inlineMath: [['$', '$'], ['\(', '\)']],
-        displayMath: [['$$','$$'], ['\[','\]']]
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']]
       },
       svg: { fontCache: 'global' }
     };
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+  <script src="/toc.js" defer></script>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1><a href="/writings/">Writings</a></h1>
-      <p class="post-meta"><time datetime="2025-12-25">2025-12-25</time></p>
+  <main class="page page--prose">
+
+    <nav class="nav" aria-label="Primary">
+      <a href="/" class="nav-brand">parth sareen</a>
+      <span class="nav-links">
+        <a href="/writings/">writings</a>
+        <a href="/#work">work</a>
+        <a href="/#elsewhere">elsewhere</a>
+      </span>
+    </nav>
+
+    <p class="crumb"><a href="/writings/">Writings</a>  ·  2025</p>
+
+    <header class="essay-masthead">
+      <h1 class="essay-title">Building <em>reliable</em> AI agents</h1>
+      <div class="essay-meta">
+        <span>2025-12-25</span>
+        <span>15 min read</span>
+        <span>Deep dive</span>
+      </div>
     </header>
-    <main>
-      <article class="post-content">
-<h1 id="building-reliable-ai-agents" tabindex="-1">Building Reliable AI Agents</h1>
+
+    <article class="post-content">
 <p>AI agents accomplish a task in a mostly unstructured manner – where they are able to reason and conduct actions to achieve a goal. The key is in providing just enough structure through tool design, harness design, and context engineering to guide the agent effectively.</p>
 <p>I got interested in agents around September 2023 and started by prototyping with gpt-3.5 and gpt-4.
 We’ve come a long way since then, but the fundamentals remain the same.
@@ -58,13 +77,13 @@ Depending on your use case, some open source models might even be better picks t
     C -->|No| F[Reached goal. Print response]
     F --> G[End]
     
-    style A fill:#e2d9c9
-    style G fill:#e2d9c9
-    style B fill:#f6f2e8
-    style C fill:#f6f2e8
-    style D fill:#f6f2e8
-    style E fill:#f6f2e8
-    style F fill:#f6f2e8
+    style A fill:#e5e5e5,stroke:#d4d4d4,color:#1a1a1a
+    style G fill:#e5e5e5,stroke:#d4d4d4,color:#1a1a1a
+    style B fill:#fafafa,stroke:#d4d4d4,color:#1a1a1a
+    style C fill:#fafafa,stroke:#d4d4d4,color:#1a1a1a
+    style D fill:#fafafa,stroke:#d4d4d4,color:#1a1a1a
+    style E fill:#fafafa,stroke:#d4d4d4,color:#1a1a1a
+    style F fill:#fafafa,stroke:#d4d4d4,color:#1a1a1a
 </pre>
 <p><strong>Code: Minimal agent loop pseudocode</strong> - this shows the core pattern: generate response, check for tool calls, execute tools, repeat until done.</p>
 <pre class="hljs"><code class="language-python">goal = <span class="hljs-string">&quot;do x for me&quot;</span>
@@ -91,7 +110,7 @@ message_history = [goal]
 <ul>
 <li><strong>State</strong> (s): Current message history + goal</li>
 <li><strong>Action</strong> (a): Tool calls or final response</li>
-<li><strong>Policy</strong> (\pi): The LLM itself, generating actions given the state</li>
+<li><strong>Policy</strong> ($\pi$): The LLM itself, generating actions given the state</li>
 </ul>
 <p>The policy can be expressed as:</p>
 <p>$$\pi(a|s) = P(\text{action} \mid \text{state})$$</p>
@@ -383,45 +402,48 @@ E.g. GPT-5.2-Codex focusing on tools built around Codex CLI and Cursor, and Clau
 You can also see that harnesses impact overall model output quite a bit. See <a href="https://factory.ai/news/terminal-bench">Factory AI’s Droid</a>.</p>
 <p>I have some fun agent-heavy stuff in the works – both for Ollama and my own tools. Hope to share these soon :)</p>
 
-      </article>
-      <section class="post-navigation">
-        <a href="/writings/">← All writings</a>
-      </section>
-    </main>
-    <footer>
-      <a href="https://github.com/parthsareen" class="icon">GitHub</a>
-      <a href="https://x.com/thanosthinking" class="icon">X</a>
-      <a href="https://www.linkedin.com/in/parthsareen" class="icon">LinkedIn</a>
+    </article>
+
+    <section class="post-navigation">
+      <a href="/writings/">← All writings</a>
+    </section>
+
+    <footer class="site-foot">
+      <span>© 2026 parth sareen · built slowly</span>
+      <span class="site-foot-right">
+        <a href="/">Home</a>
+        <a href="https://x.com/parthsareen">X</a>
+        <a href="https://github.com/parthsareen">GitHub</a>
+      </span>
     </footer>
-  </div>
+
+  </main>
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-    
-    mermaid.initialize({ 
+    mermaid.initialize({
       startOnLoad: false,
       theme: 'base',
       themeVariables: {
-        primaryColor: '#e2d9c9',
-        primaryTextColor: '#463a2e',
-        primaryBorderColor: '#744c24',
-        lineColor: '#463a2e',
-        secondaryColor: '#f6f2e8',
-        tertiaryColor: '#e2d9c9',
-        mainBkg: '#e2d9c9',
-        secondBkg: '#f6f2e8',
-        tertiaryBkg: '#e2d9c9',
-        nodeBorder: '#744c24',
-        clusterBkg: '#f6f2e8',
-        clusterBorder: '#744c24',
-        defaultLinkColor: '#463a2e',
-        titleColor: '#463a2e',
-        edgeLabelBackground: '#f6f2e8',
-        fontSize: '15px',
-        fontFamily: 'Spectral, serif'
+        primaryColor: '#fafafa',
+        primaryTextColor: '#1a1a1a',
+        primaryBorderColor: '#d4d4d4',
+        lineColor: '#737373',
+        secondaryColor: '#ffffff',
+        tertiaryColor: '#f0f0f0',
+        mainBkg: '#fafafa',
+        secondBkg: '#ffffff',
+        tertiaryBkg: '#f0f0f0',
+        nodeBorder: '#d4d4d4',
+        clusterBkg: '#ffffff',
+        clusterBorder: '#e5e5e5',
+        defaultLinkColor: '#737373',
+        titleColor: '#1a1a1a',
+        edgeLabelBackground: '#ffffff',
+        fontSize: '14px',
+        fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace'
       }
     });
-    
-    await mermaid.run({nodes: [...document.querySelectorAll('pre[class~="mermaid"]')]});
+    await mermaid.run({ nodes: [...document.querySelectorAll('pre[class~="mermaid"]')] });
   </script>
 </body>
 </html>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#ffffff"/>
+  <text x="256" y="380"
+        font-family="'Instrument Serif', 'Instrument Serif Fallback', Georgia, serif"
+        font-size="440"
+        font-style="italic"
+        font-weight="400"
+        fill="#000000"
+        text-anchor="middle"
+        letter-spacing="-0.02em">p</text>
+</svg>

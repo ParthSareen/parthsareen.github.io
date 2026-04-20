@@ -3,22 +3,41 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yet another generalist | Writings</title>
-  <meta name="description" content="It’s going to be very casual post today and it might even leave you with nothing. Just a brain dump of some of the thoughts I’ve been having recently. Every em-dash is written by yours truly." />
+  <title>Yet another generalist · parth sareen</title>
+  <meta name="description" content="A brain dump. Getting 70–80% good at anything, and the strange grief of not-quite-writing code anymore. Every em-dash is written by yours truly." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23ffffff'/><text x='16' y='23' font-family='Georgia,serif' font-style='italic' font-size='22' fill='%23000000' text-anchor='middle'>ps</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css" />
-  <script src="/theme.js"></script>
-  <script src="/vim-nav.js"></script>
+  <script src="/theme-toggle.js"></script>
+  <script src="/toc.js" defer></script>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1><a href="/writings/">Writings</a></h1>
-      <p class="post-meta"><time datetime="2026-03-25">2026-03-25</time></p>
+  <main class="page page--prose">
+
+    <nav class="nav" aria-label="Primary">
+      <a href="/" class="nav-brand">parth sareen</a>
+      <span class="nav-links">
+        <a href="/writings/">writings</a>
+        <a href="/#work">work</a>
+        <a href="/#elsewhere">elsewhere</a>
+      </span>
+    </nav>
+
+    <p class="crumb"><a href="/writings/">Writings</a>  ·  2026</p>
+
+    <header class="essay-masthead">
+      <h1 class="essay-title">Yet another <em>generalist</em></h1>
+      <div class="essay-meta">
+        <span>2026-03-25</span>
+        <span>8 min read</span>
+        <span>Essay</span>
+      </div>
     </header>
-    <main>
-      <article class="post-content">
-<h1 id="yet-another-generalist" tabindex="-1">Yet another generalist</h1>
-<p>It’s going to be very casual post today and it might even leave you with nothing. Just a brain dump of some of the thoughts I’ve been having recently. Every em-dash is written by yours truly.</p>
+
+    <article class="post-content">
+<p class="first-paragraph">It’s going to be very casual post today and it might even leave you with nothing. Just a brain dump of some of the thoughts I’ve been having recently. Every em-dash is written by yours truly.</p>
 <p>I, myself, am a generalist. And I think I always have been. I’ve never been satisfied with doing the same thing for very long. I’ve also enjoyed coming up with fun ways of solving problems and don’t care as much for the tools I’m using.</p>
 <p>At some point I got really good at learning things quickly. I wonder if skipping all those classes and studying the night before had anything to do with it. And when you can learn anything pretty quick, (I’m talking getting 70-80% good at pretty much anything) you start to wonder why not keep doing new things.</p>
 <p>I went to Waterloo for Mechatronics Engineering (fancy for robots). I find it funny that even my program was known for being jack of all trades and master of none – because that’s how I feel on a day-to-day basis now. You got to learn a bunch from fluid mechanics, to power systems, to even machine learning.</p>
@@ -67,45 +86,21 @@
 <p>[2] <a href="https://x.com/iannuttall/status/2010617350207451382">The Ralph Loop</a></p>
 <p>[3] <a href="https://github.com/karpathy/autoresearch">Andrej Karpathy’s Autoresearch</a></p>
 
-      </article>
-      <section class="post-navigation">
-        <a href="/writings/">← All writings</a>
-      </section>
-    </main>
-    <footer>
-      <a href="https://github.com/parthsareen" class="icon">GitHub</a>
-      <a href="https://x.com/thanosthinking" class="icon">X</a>
-      <a href="https://www.linkedin.com/in/parthsareen" class="icon">LinkedIn</a>
+    </article>
+
+    <section class="post-navigation">
+      <a href="/writings/">← All writings</a>
+    </section>
+
+    <footer class="site-foot">
+      <span>© 2026 parth sareen · built slowly</span>
+      <span class="site-foot-right">
+        <a href="/">Home</a>
+        <a href="https://x.com/parthsareen">X</a>
+        <a href="https://github.com/parthsareen">GitHub</a>
+      </span>
     </footer>
-  </div>
-  <script type="module">
-    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-    
-    mermaid.initialize({ 
-      startOnLoad: false,
-      theme: 'base',
-      themeVariables: {
-        primaryColor: '#e2d9c9',
-        primaryTextColor: '#463a2e',
-        primaryBorderColor: '#744c24',
-        lineColor: '#463a2e',
-        secondaryColor: '#f6f2e8',
-        tertiaryColor: '#e2d9c9',
-        mainBkg: '#e2d9c9',
-        secondBkg: '#f6f2e8',
-        tertiaryBkg: '#e2d9c9',
-        nodeBorder: '#744c24',
-        clusterBkg: '#f6f2e8',
-        clusterBorder: '#744c24',
-        defaultLinkColor: '#463a2e',
-        titleColor: '#463a2e',
-        edgeLabelBackground: '#f6f2e8',
-        fontSize: '15px',
-        fontFamily: 'Spectral, serif'
-      }
-    });
-    
-    await mermaid.run({nodes: [...document.querySelectorAll('pre[class~="mermaid"]')]});
-  </script>
+
+  </main>
 </body>
 </html>

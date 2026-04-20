@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <style>
+    .bg { fill: #ffffff; }
+    .fg { fill: #000000; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #090909; }
+      .fg { fill: #ffffff; }
+    }
+  </style>
+  <rect class="bg" width="512" height="512"/>
+  <text x="256" y="380"
+        font-family="'Instrument Serif', 'Instrument Serif Fallback', Georgia, serif"
+        font-size="440"
+        font-style="italic"
+        font-weight="400"
+        class="fg"
+        text-anchor="middle"
+        letter-spacing="-0.02em">p</text>
+</svg>
