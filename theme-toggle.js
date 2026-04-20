@@ -1,17 +1,10 @@
 (function () {
   const root = document.documentElement;
-  const mq = window.matchMedia('(prefers-color-scheme: dark)');
 
   let stored = null;
   try { stored = localStorage.getItem('theme'); } catch (_) {}
 
-  root.dataset.theme = stored || (mq.matches ? 'dark' : 'light');
-
-  mq.addEventListener('change', function (e) {
-    let hasStored = false;
-    try { hasStored = !!localStorage.getItem('theme'); } catch (_) {}
-    if (!hasStored) root.dataset.theme = e.matches ? 'dark' : 'light';
-  });
+  root.dataset.theme = stored || 'light';
 
   function labelFor(current) {
     return current === 'dark' ? 'light' : 'dark';
