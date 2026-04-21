@@ -61,47 +61,48 @@
     </section>
 
     <div class="section-head" id="writings">
-      <p class="eyebrow">Latest writing</p>
+      <p class="eyebrow">Writings</p>
       <a href="/writings/" class="section-more">writings →</a>
     </div>
 
-    <article class="lead">
-      <p class="lead-meta">2026-03-25 · 8 min read</p>
-      <a href="/writings/era-of-generalists/" class="lead-title">Yet another <em>generalist</em></a>
-      <p class="lead-dek">Quick brain dump. Getting 70–80% good at anything, why specialists might still win, and the strange grief of <em>not-quite-writing code</em> anymore.</p>
-      <a href="/writings/era-of-generalists/" class="lead-cta">Read the essay →</a>
-    </article>
+    <div class="writings-magazine">
 
-    <div style="padding-top: 40px;">
-      <div class="writings-list">
+      <a href="/writings/era-of-generalists/" class="magazine-item is-open">
+        <div class="magazine-item-head">
+          <span class="magazine-item-meta">2026-03-25 · 8 min read</span>
+          <span class="magazine-item-tag">Essay</span>
+        </div>
+        <span class="magazine-item-title">Yet another <em>generalist</em></span>
+        <div class="magazine-item-body">
+          <p class="magazine-item-dek">Quick brain dump. Getting 70–80% good at anything, why specialists might still win, and the strange grief of <em>not-quite-writing code</em> anymore.</p>
+          <span class="magazine-item-cta">Read the essay →</span>
+        </div>
+      </a>
 
-        <a href="/writings/building-reliable-ai-agents/" class="writings-item">
-          <span class="writings-item-meta-row">
-            <span class="writings-item-date">2025-12-25</span>
-            <span class="writings-item-tag">Deep dive</span>
-          </span>
-          <span class="writings-item-date">2025-12-25</span>
-          <div class="writings-item-main">
-            <span class="writings-item-title">Building <em>reliable</em> AI agents</span>
-          </div>
-          <span class="writings-item-read">15 min</span>
-          <span class="writings-item-tag">Deep dive</span>
-        </a>
+      <a href="/writings/building-reliable-ai-agents/" class="magazine-item">
+        <div class="magazine-item-head">
+          <span class="magazine-item-meta">2025-12-25 · 15 min read</span>
+          <span class="magazine-item-tag">Deep dive</span>
+        </div>
+        <span class="magazine-item-title">Building <em>reliable</em> AI agents</span>
+        <div class="magazine-item-body">
+          <p class="magazine-item-dek">A first-principles breakdown of agent loops, tool design, and context engineering.</p>
+          <span class="magazine-item-cta">Read the essay →</span>
+        </div>
+      </a>
 
-        <a href="/writings/sampling/" class="writings-item">
-          <span class="writings-item-meta-row">
-            <span class="writings-item-date">2025-09-10</span>
-            <span class="writings-item-tag">Deep dive</span>
-          </span>
-          <span class="writings-item-date">2025-09-10</span>
-          <div class="writings-item-main">
-            <span class="writings-item-title">Sampling and <em>structured outputs</em> in LLMs</span>
-          </div>
-          <span class="writings-item-read">10 min</span>
-          <span class="writings-item-tag">Deep dive</span>
-        </a>
+      <a href="/writings/sampling/" class="magazine-item">
+        <div class="magazine-item-head">
+          <span class="magazine-item-meta">2025-09-10 · 10 min read</span>
+          <span class="magazine-item-tag">Deep dive</span>
+        </div>
+        <span class="magazine-item-title">Sampling and <em>structured outputs</em> in LLMs</span>
+        <div class="magazine-item-body">
+          <p class="magazine-item-dek">How sampling shapes token selection, and generating structured outputs in modern models.</p>
+          <span class="magazine-item-cta">Read the essay →</span>
+        </div>
+      </a>
 
-      </div>
     </div>
 
     <div class="section-head" id="work">
@@ -181,5 +182,21 @@
     </footer>
 
   </main>
+  <script>
+    (() => {
+      const items = document.querySelectorAll('.writings-magazine .magazine-item');
+      if (!items.length) return;
+      let active = document.querySelector('.writings-magazine .magazine-item.is-open') || items[0];
+      active.classList.add('is-open');
+      items.forEach((item) => {
+        item.addEventListener('mouseenter', () => {
+          if (item === active) return;
+          active.classList.remove('is-open');
+          item.classList.add('is-open');
+          active = item;
+        });
+      });
+    })();
+  </script>
 </body>
 </html>

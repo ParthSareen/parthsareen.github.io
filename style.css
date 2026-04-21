@@ -438,6 +438,118 @@ button { font: inherit; }
   .writings-item-dek { font-size: 14px; }
 }
 
+/* ----- Writings magazine (home) ---------------------------- */
+
+.writings-magazine {
+  border-top: 1px solid var(--color-border);
+}
+.magazine-item {
+  display: block;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--color-border);
+  text-decoration: none;
+  color: inherit;
+  transition: padding 0.35s ease;
+}
+.magazine-item-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  color: var(--color-text-faint);
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+}
+.magazine-item-meta {
+  font-variant-numeric: tabular-nums;
+}
+.magazine-item-tag {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.magazine-item-title {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: var(--color-ink-display);
+  transition: font-size 0.35s ease, letter-spacing 0.35s ease;
+}
+.magazine-item-title em { font-style: italic; }
+.magazine-item-body {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease, margin-top 0.35s ease;
+  margin-top: 0;
+}
+.magazine-item-dek {
+  font-family: var(--font-prose);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-text);
+  margin: 0 0 14px;
+  max-width: 50ch;
+}
+.magazine-item-dek em { font-style: italic; }
+.magazine-item-cta {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-text);
+  padding-bottom: 2px;
+  opacity: 0.85;
+}
+.magazine-item:hover .magazine-item-cta { opacity: 1; }
+
+/* Open state: JS moves .is-open to whichever item was hovered last */
+.magazine-item.is-open .magazine-item-body {
+  max-height: 600px;
+  opacity: 1;
+  margin-top: 18px;
+}
+.magazine-item.is-open .magazine-item-title {
+  font-size: 44px;
+  letter-spacing: -0.025em;
+  max-width: 14ch;
+}
+
+@media (min-width: 641px) {
+  .magazine-item { padding: 28px 0; }
+  .magazine-item-title { font-size: 34px; max-width: none; }
+  .magazine-item.is-open .magazine-item-title { font-size: 56px; max-width: 14ch; }
+  .magazine-item-dek { font-size: 18px; }
+}
+@media (min-width: 961px) {
+  .magazine-item { padding: 32px 0; }
+  .magazine-item-title { font-size: 38px; max-width: none; }
+  .magazine-item.is-open .magazine-item-title { font-size: 68px; max-width: 14ch; }
+  .magazine-item-dek { font-size: 19px; }
+}
+
+/* Touch devices: don't rely on hover — keep everything visible */
+@media (hover: none) {
+  .magazine-item .magazine-item-body {
+    max-height: 600px;
+    opacity: 1;
+    margin-top: 18px;
+  }
+  .magazine-item .magazine-item-title {
+    font-size: 34px;
+    letter-spacing: -0.02em;
+    max-width: none;
+  }
+  .magazine-item.is-open .magazine-item-title {
+    font-size: 44px;
+    max-width: 14ch;
+  }
+}
+
 /* ----- Work grid (home) ------------------------------------ */
 
 .work-grid {
