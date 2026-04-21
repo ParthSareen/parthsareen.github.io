@@ -128,6 +128,10 @@ function restoreMathSegments(html, placeholders) {
   return result;
 }
 
+function tagFirstParagraph(html) {
+  return html.replace(/<p>/, '<p class="first-paragraph">');
+}
+
 function convertMermaidBlocks(html) {
   // Convert <pre><code class="language-mermaid">...</code></pre> to <pre class="mermaid">...</pre>
   return html.replace(
@@ -163,6 +167,7 @@ async function renderPost(filename, isWip = false) {
   const htmlWithPlaceholders = md.render(protectedSource);
   let html = restoreMathSegments(htmlWithPlaceholders, placeholders);
   html = convertMermaidBlocks(html);
+  html = tagFirstParagraph(html);
 
   const stat = await fs.stat(sourcePath);
   const title = (typeof data.title === 'string' && data.title.trim())
@@ -243,7 +248,7 @@ const writingTemplate = ({ slug, title, date, html, excerpt, math = true }) => `
 ${html}
       </article>
       <section class="post-navigation">
-        <a href="/writings/">← All writings</a>
+        <a href="/writings/">← writings</a>
       </section>
     </main>
     <footer>
@@ -370,7 +375,7 @@ const wipTemplate = ({ slug, title, date, html, excerpt, math = true }) => {
 ${html}
         </article>
         <section class="post-navigation">
-          <a href="/writings/">← All writings</a>
+          <a href="/writings/">← writings</a>
         </section>
       </main>
       <footer>
