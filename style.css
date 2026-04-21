@@ -582,12 +582,12 @@ button { font: inherit; }
 /* ----- Essay masthead -------------------------------------- */
 
 .essay-masthead {
-  max-width: 28ch;
   padding-bottom: 36px;
   margin-bottom: 36px;
   border-bottom: 1px solid var(--color-border);
 }
 .essay-title {
+  max-width: 28ch;
   font-family: var(--font-display);
   font-weight: 400;
   font-size: 44px;
