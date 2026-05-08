@@ -51,6 +51,11 @@ const mathPattern = /(\$\$[\s\S]+?\$\$|\\\[[\s\S]+?\\\]|\\\([\s\S]+?\\\))/g;
 
 const stripTags = (html) => html.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
 
+const renderInlineMarkdown = (value = '') => md.renderInline(String(value));
+
+const stripLeadingH1 = (html) =>
+  html.replace(/^\s*<h1\b[^>]*>[\s\S]*?<\/h1>\s*/i, '');
+
 const escapeAttribute = (value = '') =>
   String(value)
     .replace(/&/g, '&amp;')
@@ -64,6 +69,46 @@ const toISODate = (value) => {
   if (Number.isNaN(date.getTime())) return null;
   return date.toISOString().slice(0, 10);
 };
+
+const siteHead = ({ title, excerpt, math = true }) => `  <title>${escapeAttribute(title)} | Writings</title>
+  <meta name="description" content="${escapeAttribute(excerpt)}" />
+  <link rel="icon" href="/assets/favicon.ico" sizes="any" />
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+  <script src="/theme-toggle.js"></script>${math ? `
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\\\(', '\\\\)']],
+        displayMath: [['$$','$$'], ['\\\\[','\\\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>` : ''}`;
+
+const navMarkup = `    <nav class="nav" aria-label="Primary">
+      <span class="nav-links">
+        <a href="/">home</a>
+        <a href="/writings/" class="active">writings</a>
+        <a href="/#work">work</a>
+        <a href="/#elsewhere">elsewhere</a>
+      </span>
+    </nav>`;
+
+const footerMarkup = `    <footer class="site-foot">
+      <span>© 2026 parth sareen</span>
+      <span class="site-foot-right">
+        <a href="/">Home</a>
+        <a href="https://x.com/parthsareen">X</a>
+        <a href="https://github.com/parthsareen">GitHub</a>
+        <a href="https://www.linkedin.com/in/parthsareen">LinkedIn</a>
+      </span>
+    </footer>`;
 
 const extractTitleFromContent = (content) => {
   const lines = content.split('\n');
@@ -79,6 +124,11 @@ const extractTitleFromContent = (content) => {
 const getExcerptFromHtml = (html) => {
   const match = html.match(/<p>([\s\S]*?)<\/p>/i);
   return match ? stripTags(match[0]) : '';
+};
+
+const getReadTime = (html) => {
+  const words = stripTags(html).match(/\S+/g) ?? [];
+  return Math.max(1, Math.ceil(words.length / 225));
 };
 
 async function ensureDirs() {
@@ -177,6 +227,7 @@ async function renderPost(filename, isWip = false) {
   const excerpt = (typeof data.excerpt === 'string' && data.excerpt.trim())
     ? data.excerpt.trim()
     : getExcerptFromHtml(html);
+  const readTime = getReadTime(html);
 
   // Only write to OUTPUT_DIR for non-protected posts
   if (!isProtected) {
@@ -192,6 +243,7 @@ async function renderPost(filename, isWip = false) {
     excerpt,
     html,
     isProtected,
+    readTime,
     math: data.math !== false  // defaults to true
   };
 }
@@ -216,47 +268,37 @@ async function removeStaleWritings(validSlugs) {
   );
 }
 
-const writingTemplate = ({ slug, title, date, html, excerpt, math = true }) => `<!DOCTYPE html>
+const writingTemplate = ({ slug, title, date, html, excerpt, readTime, math = true }) => `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${title} | Writings</title>
-  <meta name="description" content="${escapeAttribute(excerpt)}" />
-  <link rel="stylesheet" href="/style.css" />
-  <script src="/theme.js"></script>
-  <script src="/vim-nav.js"></script>${math ? `
-  <script>
-    window.MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']],
-        displayMath: [['$$','$$'], ['\\[','\\]']]
-      },
-      svg: { fontCache: 'global' }
-    };
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>` : ''}
+${siteHead({ title: stripTags(renderInlineMarkdown(title)), excerpt, math })}
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1><a href="/writings/">Writings</a></h1>
-      ${date ? `<p class="post-meta"><time datetime="${date}">${date}</time></p>` : ''}
+  <main class="page page--prose">
+${navMarkup}
+
+    <p class="crumb"><a href="/writings/">Writings</a>${date ? ` · ${date.slice(0, 4)}` : ''}</p>
+
+    <header class="essay-masthead">
+      <h1 class="essay-title">${renderInlineMarkdown(title)}</h1>
+      <div class="essay-meta">
+        ${date ? `<span><time datetime="${date}">${date}</time></span>` : ''}
+        ${readTime ? `<span>${readTime} min read</span>` : ''}
+      </div>
     </header>
-    <main>
-      <article class="post-content">
-${html}
-      </article>
-      <section class="post-navigation">
-        <a href="/writings/">← writings</a>
-      </section>
-    </main>
-    <footer>
-      <a href="https://github.com/parthsareen" class="icon">GitHub</a>
-      <a href="https://x.com/thanosthinking" class="icon">X</a>
-      <a href="https://www.linkedin.com/in/parthsareen" class="icon">LinkedIn</a>
-    </footer>
-  </div>
+
+    <article class="post-content">
+${stripLeadingH1(html)}
+    </article>
+
+    <section class="post-navigation">
+      <a href="/writings/">← writings</a>
+    </section>
+
+${footerMarkup}
+  </main>
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
     
@@ -289,7 +331,7 @@ ${html}
 </body>
 </html>`;
 
-const wipTemplate = ({ slug, title, date, html, excerpt, math = true }) => {
+const wipTemplate = ({ slug, title, date, html, excerpt, readTime, math = true }) => {
   // YOU FOUND ME AHHHHH!
   const password = process.env.WIP_PASSWORD || 'BleuSph!nxC0y234#';
   return `<!DOCTYPE html>
@@ -297,62 +339,7 @@ const wipTemplate = ({ slug, title, date, html, excerpt, math = true }) => {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${title} | Writings</title>
-  <meta name="description" content="${escapeAttribute(excerpt)}" />
-  <link rel="stylesheet" href="/style.css" />
-  <script src="/theme.js"></script>
-  <script src="/vim-nav.js"></script>${math ? `
-  <script>
-    window.MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']],
-        displayMath: [['$$','$$'], ['\\[','\\]']]
-      },
-      svg: { fontCache: 'global' }
-    };
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>` : ''}
-  <style>
-    .password-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: var(--bg-color, #fff);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    }
-    .password-box {
-      text-align: center;
-      padding: 2rem;
-    }
-    .password-box input {
-      padding: 0.5rem;
-      font-size: 1rem;
-      margin: 1rem 0;
-      border: 1px solid var(--text-color, #333);
-      background: var(--bg-color, #fff);
-      color: var(--text-color, #333);
-    }
-    .password-box button {
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-      cursor: pointer;
-      background: var(--text-color, #333);
-      color: var(--bg-color, #fff);
-      border: none;
-    }
-    .error {
-      color: #e74c3c;
-      margin-top: 0.5rem;
-    }
-    .content-hidden {
-      display: none;
-    }
-  </style>
+${siteHead({ title: stripTags(renderInlineMarkdown(title)), excerpt, math })}
 </head>
 <body>
   <div id="password-overlay" class="password-overlay">
@@ -360,30 +347,34 @@ const wipTemplate = ({ slug, title, date, html, excerpt, math = true }) => {
       <h2>This post is password protected</h2>
       <input type="password" id="password-input" placeholder="Enter password" />
       <br />
-      <button onclick="checkPassword()">Submit</button>
+      <button type="button" id="password-submit">Submit</button>
       <div id="error" class="error"></div>
     </div>
   </div>
   <div id="content" class="content-hidden">
-    <div class="container">
-      <header>
-        <h1><a href="/writings/">Writings</a></h1>
-        ${date ? `<p class="post-meta"><time datetime="${date}">${date}</time></p>` : ''}
+    <main class="page page--prose">
+${navMarkup}
+
+      <p class="crumb"><a href="/writings/">Writings</a>${date ? ` · ${date.slice(0, 4)}` : ''}</p>
+
+      <header class="essay-masthead">
+        <h1 class="essay-title">${renderInlineMarkdown(title)}</h1>
+        <div class="essay-meta">
+          ${date ? `<span><time datetime="${date}">${date}</time></span>` : ''}
+          ${readTime ? `<span>${readTime} min read</span>` : ''}
+        </div>
       </header>
-      <main>
-        <article class="post-content">
-${html}
-        </article>
-        <section class="post-navigation">
-          <a href="/writings/">← writings</a>
-        </section>
-      </main>
-      <footer>
-        <a href="https://github.com/parthsareen" class="icon">GitHub</a>
-        <a href="https://x.com/thanosthinking" class="icon">X</a>
-        <a href="https://www.linkedin.com/in/parthsareen" class="icon">LinkedIn</a>
-      </footer>
-    </div>
+
+      <article class="post-content">
+${stripLeadingH1(html)}
+      </article>
+
+      <section class="post-navigation">
+        <a href="/writings/">← writings</a>
+      </section>
+
+${footerMarkup}
+    </main>
   </div>
   <script type="module">
     const PASSWORD = '${password}';
@@ -427,6 +418,7 @@ ${html}
         document.getElementById('error').textContent = 'Incorrect password';
       }
     }
+    document.getElementById('password-submit').addEventListener('click', checkPassword);
     
     if (localStorage.getItem('wip-auth') === 'true') {
       document.getElementById('password-overlay').style.display = 'none';
