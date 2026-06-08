@@ -33,7 +33,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/style.css?v=readable">
   <script src="/theme-toggle.js"></script>
 </head>
 <body>
@@ -48,43 +48,54 @@
     </nav>
 
     <section class="masthead">
-      <h1 class="masthead-name">parth <em>sareen</em></h1>
+      <h1 class="masthead-name">parth sareen</h1>
       <p class="masthead-bio">
-        i work on <a href="https://ollama.com">ollama.</a> mostly <em>ollama launch</em> and the agent tooling around it.
+        i work on <a href="https://ollama.com">ollama.</a> mostly ollama launch and the agent tooling around it.
       </p>
       <p class="masthead-bio">
-        on the side i build <a href="/tools/">small tools</a> nobody asked for: <em>ducky</em>, <em>watchy</em>, <em>zuko</em>. before that: a startup on agent reliability, tesla, apple.
+        on the side i build <a href="/tools/">small tools</a> nobody asked for: ducky, watchy, zuko. before that: a startup on agent reliability, tesla, apple.
       </p>
       <p class="masthead-bio">
         outside of that: <a href="/latte-art.html">latte art</a>, muay thai, and <a href="/writings/">writing</a> down ideas as they form.
       </p>
     </section>
 
-    <div class="section-head" id="writings">
-      <p class="eyebrow">Writings</p>
-      <a href="/writings/" class="section-more">writings →</a>
-    </div>
+    <a href="/writings/" class="section-head section-head-link" id="writings" aria-label="View all writings">
+      <p class="eyebrow">writings</p>
+    </a>
 
     <div class="writings-magazine">
 
-      <a href="/writings/era-of-generalists/" class="magazine-item is-open">
+      <a href="/writings/ollama-launch-philosophy/" class="magazine-item is-open">
         <div class="magazine-item-head">
-          <span class="magazine-item-meta">2026-03-25 · 8 min read</span>
+          <span class="magazine-item-meta">May 06 · 6 min</span>
           <span class="magazine-item-tag">Essay</span>
         </div>
-        <span class="magazine-item-title">Yet another <em>generalist</em></span>
+        <span class="magazine-item-title">The philosophy of ollama launch</span>
         <div class="magazine-item-body">
-          <p class="magazine-item-dek">Quick brain dump. Getting 70–80% good at anything, why specialists might still win, and the strange grief of <em>not-quite-writing code</em> anymore.</p>
+          <p class="magazine-item-dek">On invisibility as a design discipline. Why ollama launch should feel like magic — and disappear from your mind once it works.</p>
+          <span class="magazine-item-cta">Read the essay →</span>
+        </div>
+      </a>
+
+      <a href="/writings/era-of-generalists/" class="magazine-item">
+        <div class="magazine-item-head">
+          <span class="magazine-item-meta">Mar 25 · 8 min</span>
+          <span class="magazine-item-tag">Essay</span>
+        </div>
+        <span class="magazine-item-title">Yet another generalist</span>
+        <div class="magazine-item-body">
+          <p class="magazine-item-dek">Quick brain dump. Getting 70–80% good at anything, why specialists might still win, and the strange grief of not-quite-writing code anymore.</p>
           <span class="magazine-item-cta">Read the essay →</span>
         </div>
       </a>
 
       <a href="/writings/building-reliable-ai-agents/" class="magazine-item">
         <div class="magazine-item-head">
-          <span class="magazine-item-meta">2025-12-25 · 15 min read</span>
+          <span class="magazine-item-meta">Dec 25 · 15 min</span>
           <span class="magazine-item-tag">Deep dive</span>
         </div>
-        <span class="magazine-item-title">Building <em>reliable</em> AI agents</span>
+        <span class="magazine-item-title">Building reliable AI agents</span>
         <div class="magazine-item-body">
           <p class="magazine-item-dek">A first-principles breakdown of agent loops, tool design, and context engineering.</p>
           <span class="magazine-item-cta">Read the deep dive →</span>
@@ -93,10 +104,10 @@
 
       <a href="/writings/sampling/" class="magazine-item">
         <div class="magazine-item-head">
-          <span class="magazine-item-meta">2025-09-10 · 10 min read</span>
+          <span class="magazine-item-meta">Sep 10 · 10 min</span>
           <span class="magazine-item-tag">Deep dive</span>
         </div>
-        <span class="magazine-item-title">Sampling and <em>structured outputs</em> in LLMs</span>
+        <span class="magazine-item-title">Sampling and structured outputs in LLMs</span>
         <div class="magazine-item-body">
           <p class="magazine-item-dek">How sampling shapes token selection, and generating structured outputs in modern models.</p>
           <span class="magazine-item-cta">Read the deep dive →</span>
@@ -106,14 +117,14 @@
     </div>
 
     <div class="section-head" id="work">
-      <p class="eyebrow">My Work at Ollama</p>
+      <p class="eyebrow">my work at ollama</p>
       <a href="https://ollama.com/blog" class="section-more">ollama.com/blog →</a>
     </div>
 
     <div class="work-grid">
       <a href="https://ollama.com/blog/openclaw-tutorial" class="work-card">
         <p class="card-label">2026-02-23 · Tutorial</p>
-        <h3 class="work-card-title">Setting up <em>OpenClaw</em></h3>
+        <h3 class="work-card-title">Setting up OpenClaw</h3>
         <p class="work-card-dek">OpenClaw in under two minutes with a single Ollama command.</p>
       </a>
       <a href="https://ollama.com/blog/web-search-subagents-claude-code" class="work-card">
@@ -123,44 +134,44 @@
       </a>
       <a href="https://ollama.com/blog/openclaw" class="work-card">
         <p class="card-label">2026-02-01 · Launch</p>
-        <h3 class="work-card-title"><em>OpenClaw</em></h3>
+        <h3 class="work-card-title">OpenClaw</h3>
         <p class="work-card-dek">A new open coding agent built around local and cloud models.</p>
       </a>
       <a href="https://ollama.com/blog/launch" class="work-card">
         <p class="card-label">2026-01-23 · Launch</p>
-        <h3 class="work-card-title"><em>ollama launch</em></h3>
+        <h3 class="work-card-title">ollama launch</h3>
         <p class="work-card-dek">A new command that sets up and runs coding tools with local or cloud models.</p>
       </a>
       <a href="https://ollama.com/blog/web-search" class="work-card">
         <p class="card-label">2025-09-24 · Feature</p>
-        <h3 class="work-card-title">Web search in ollama</h3>
+        <h3 class="work-card-title">Web search in Ollama</h3>
         <p class="work-card-dek">A new web search API with a generous free tier, available to every ollama user.</p>
       </a>
       <a href="https://ollama.com/blog/streaming-tool" class="work-card">
         <p class="card-label">2025-05-28 · Engineering</p>
-        <h3 class="work-card-title">Streaming responses <em>with</em> tool calling</h3>
+        <h3 class="work-card-title">Streaming responses with tool calling</h3>
         <p class="work-card-dek">Chat applications can stream content and call tools in real time.</p>
       </a>
       <a href="https://ollama.com/blog/structured-outputs" class="work-card">
         <p class="card-label">2024-12-06 · Feature</p>
-        <h3 class="work-card-title">Structured outputs in ollama</h3>
+        <h3 class="work-card-title">Structured outputs in Ollama</h3>
         <p class="work-card-dek">Constrain a model's output to a JSON schema, with Python and JavaScript libraries to match.</p>
       </a>
       <a href="https://ollama.com/blog/functions-as-tools" class="work-card">
         <p class="card-label">2024-11-25 · Feature</p>
-        <h3 class="work-card-title">Functions as tools in ollama</h3>
+        <h3 class="work-card-title">Functions as tools in Ollama</h3>
         <p class="work-card-dek">Pass Python functions directly as tools, with full typing support.</p>
       </a>
     </div>
 
     <div class="section-head" id="elsewhere">
-      <p class="eyebrow">Elsewhere</p>
+      <p class="eyebrow">elsewhere</p>
     </div>
 
     <div class="elsewhere-grid">
       <a href="/tools/" class="elsewhere-card">
         <p class="card-label">Small tools</p>
-        <p class="elsewhere-title"><em>watchy</em> · <em>ducky</em> · <em>zuko</em></p>
+        <p class="elsewhere-title">watchy · ducky · zuko</p>
       </a>
       <a href="/latte-art.html" class="elsewhere-card">
         <p class="card-label">Hobby</p>
