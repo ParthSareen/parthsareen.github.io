@@ -78,7 +78,7 @@ const siteHead = ({ title, excerpt, math = true }) => `  <title>${escapeAttribut
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/style.css?v=readable" />
+  <link rel="stylesheet" href="/style.css?v=media" />
   <script src="/theme-toggle.js"></script>${math ? `
   <script>
     window.MathJax = {
