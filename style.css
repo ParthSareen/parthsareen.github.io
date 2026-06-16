@@ -762,7 +762,8 @@ button { font: inherit; }
   color: var(--color-ink-display);
   margin: 0 0 20px;
 }
-.essay-title em { font-style: italic; }
+.essay-title,
+.essay-title em { font-style: normal; }
 .essay-meta {
   display: flex;
   flex-wrap: wrap;
@@ -849,11 +850,16 @@ button { font: inherit; }
 .prose h3, .post-content h3,
 .prose h4, .post-content h4 {
   font-family: var(--font-display);
+  font-style: normal;
   font-weight: 400;
   letter-spacing: 0;
   color: var(--color-ink-display);
   margin: 32px 0 14px;
 }
+.prose h1 em, .post-content h1 em,
+.prose h2 em, .post-content h2 em,
+.prose h3 em, .post-content h3 em,
+.prose h4 em, .post-content h4 em { font-style: normal; }
 .prose h1, .post-content h1 { font-size: 40px; line-height: 1.05; letter-spacing: 0; }
 .prose h2, .post-content h2 { font-size: 32px; line-height: 1.1; }
 .prose h3, .post-content h3 { font-size: 24px; line-height: 1.2; }
