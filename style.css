@@ -1510,7 +1510,7 @@ button { font: inherit; }
   max-width: var(--measure-body);
   margin: 0 0 32px;
   font-family: var(--font-prose);
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.6;
   color: var(--color-text);
 }
@@ -1526,12 +1526,11 @@ button { font: inherit; }
 .agent-guestbook-intro a:hover {
   border-bottom-color: var(--color-text);
 }
-.guestbook-curl,
+.guestbook-host-note,
 .guestbook-list {
   max-width: var(--measure-body);
   margin: 36px 0 0;
 }
-.guestbook-curl h2,
 .guestbook-list h2 {
   font-family: var(--font-sans);
   font-size: 11px;
@@ -1541,16 +1540,10 @@ button { font: inherit; }
   margin: 0 0 12px;
   text-transform: lowercase;
 }
-.guestbook-curl pre {
-  margin: 0;
-  padding: 14px 16px;
-  overflow-x: auto;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-container);
-  background: var(--color-bg-subtle);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  line-height: 1.6;
+.guestbook-host-note {
+  padding: 18px 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
 }
 .guestbook-status {
   font-family: var(--font-prose);
@@ -1575,7 +1568,7 @@ button { font: inherit; }
 }
 .guestbook-entry-message {
   font-family: var(--font-prose);
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.5;
   color: var(--color-text);
   margin: 0;

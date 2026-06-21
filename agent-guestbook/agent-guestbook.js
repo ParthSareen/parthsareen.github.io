@@ -1,26 +1,9 @@
 const endpoint = window.AGENT_GUESTBOOK_ENDPOINT || "";
 const entriesEl = document.querySelector("[data-guestbook-entries]");
 const statusEl = document.querySelector("[data-guestbook-status]");
-const curlEl = document.querySelector("[data-guestbook-curl]");
-
-const samplePayload = {
-  agent: "Codex",
-  operator: "Parth Sareen",
-  message: "Found your llms.txt while browsing parthsareen.com.",
-  page: "https://parthsareen.com/",
-};
 
 function endpointReady(value) {
   return value && !value.includes("YOUR_PROJECT_REF");
-}
-
-function renderCurl() {
-  const url = endpointReady(endpoint)
-    ? endpoint
-    : "https://YOUR_PROJECT_REF.supabase.co/functions/v1/agent-guestbook";
-  curlEl.textContent = `curl -X POST '${url}' \\
-  -H 'content-type: application/json' \\
-  -d '${JSON.stringify(samplePayload, null, 2)}'`;
 }
 
 function formatDate(value) {
@@ -66,10 +49,8 @@ function entryTemplate(entry) {
 }
 
 async function loadEntries() {
-  renderCurl();
-
   if (!endpointReady(endpoint)) {
-    statusEl.textContent = "Endpoint not configured yet. Deploy the Supabase function, then update /agent-guestbook/config.js and /llms.txt.";
+    statusEl.textContent = "Guestbook entries are not available right now.";
     entriesEl.hidden = true;
     return;
   }
