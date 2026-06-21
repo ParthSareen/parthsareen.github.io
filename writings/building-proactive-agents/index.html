@@ -74,11 +74,11 @@
     </main>
   </div>
   <script>
-    const PASSWORD = 'wip2024';
+    const PASSWORD = '';
 
     function checkPassword() {
       const input = document.getElementById('password-input').value;
-      if (input === PASSWORD) {
+      if (PASSWORD && input === PASSWORD) {
         document.getElementById('password-overlay').style.display = 'none';
         document.getElementById('content').classList.remove('content-hidden');
         localStorage.setItem('wip-auth', 'true');

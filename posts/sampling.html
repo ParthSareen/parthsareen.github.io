@@ -1,5 +1,5 @@
 <h1 id="sampling-and-structured-outputs-in-llms" tabindex="-1">Sampling and structured outputs in LLMs</h1>
-<p>Sampling and structured outputs are tied together as they both determine the model’s next chosen token.</p>
+<p class="first-paragraph">Sampling and structured outputs are tied together as they both determine the model’s next chosen token.</p>
 <p>Sampling is the process of selecting a token from the model’s vocabulary based on the probability distribution.</p>
 <p>I launched structured outputs in ollama last december, did a research project around on-the-fly structured outputs using finite state machines with pre-computed graphs, and am currently working on supporting structured outputs for thinking models. I also built the sampler for Ollama’s engine back in March 2025 to launch Gemma3. I wanted to write a bit about these as there weren’t a lot of resources around them.</p>
 <p>Structured outputs are extremely useful for models to output data in a specific format. They allow models to turn unstructured data into structured data. Think reading documents, scraping websites, or even just parsing through text.</p>

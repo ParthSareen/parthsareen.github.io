@@ -101,7 +101,7 @@ const navMarkup = `    <nav class="nav" aria-label="Primary">
     </nav>`;
 
 const footerMarkup = `    <footer class="site-foot">
-      <span>© 2026 parth sareen</span>
+      <span>© 2026 Parth Sareen. All rights reserved.</span>
       <span class="site-foot-right">
         <a href="/">Home</a>
         <a href="https://x.com/parthsareen">X</a>
@@ -333,7 +333,9 @@ ${footerMarkup}
 
 const wipTemplate = ({ slug, title, date, html, excerpt, readTime, math = true }) => {
   // YOU FOUND ME AHHHHH!
-  const password = process.env.WIP_PASSWORD || 'BleuSph!nxC0y234#';
+  const password = process.env.EMBED_WIP_PASSWORD === 'true'
+    ? process.env.WIP_PASSWORD || ''
+    : '';
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -409,7 +411,7 @@ ${footerMarkup}
     
     function checkPassword() {
       const input = document.getElementById('password-input').value;
-      if (input === PASSWORD) {
+      if (PASSWORD && input === PASSWORD) {
         document.getElementById('password-overlay').style.display = 'none';
         document.getElementById('content').classList.remove('content-hidden');
         localStorage.setItem('wip-auth', 'true');

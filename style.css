@@ -684,6 +684,22 @@ button { font: inherit; }
   margin: 0;
 }
 .elsewhere-title em { font-style: normal; }
+.elsewhere-note {
+  margin: 14px 0 0;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--color-text-faint);
+}
+.elsewhere-note a {
+  color: var(--color-text-muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-border-strong);
+  padding-bottom: 1px;
+}
+.elsewhere-note a:hover {
+  color: var(--color-text);
+  border-bottom-color: var(--color-text);
+}
 
 /* ----- Year sections --------------------------------------- */
 
@@ -1361,6 +1377,227 @@ button { font: inherit; }
   padding-bottom: 1px;
 }
 .tools-foot-note a:hover { border-bottom-color: var(--color-text); }
+
+/* ----- Talks archive --------------------------------------- */
+
+.talks-masthead {
+  max-width: 56ch;
+}
+.talks-note {
+  max-width: var(--measure-body);
+  margin: -12px 0 32px;
+  font-family: var(--font-prose);
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+.talks-note p {
+  margin: 0;
+}
+.talks-section {
+  padding: 24px 0 0;
+}
+.talks-list {
+  border-top: 1px solid var(--color-border);
+  margin-top: 10px;
+}
+.talk-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.talk-main {
+  grid-column: 1 / -1;
+  grid-row: 2;
+}
+.talk-date,
+.talk-kind {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  color: var(--color-text-faint);
+  letter-spacing: 0.04em;
+}
+.talk-date {
+  grid-column: 1;
+  grid-row: 1;
+  font-variant-numeric: tabular-nums;
+}
+.talk-kind {
+  grid-column: 2;
+  grid-row: 1;
+  text-align: right;
+}
+.talk-title {
+  font-family: var(--font-prose);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--color-text);
+  letter-spacing: 0;
+  margin: 0 0 6px;
+}
+.talk-dek {
+  max-width: 62ch;
+  font-family: var(--font-prose);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--color-text-muted);
+  margin: 0 0 10px;
+}
+.talk-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 12px;
+}
+.talk-links a {
+  color: var(--color-text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-border-strong);
+  padding-bottom: 1px;
+}
+.talk-links a:hover {
+  border-bottom-color: var(--color-text);
+}
+.talks-foot-note {
+  max-width: var(--measure-body);
+  margin: 32px 0 0;
+  font-family: var(--font-prose);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--color-text-muted);
+}
+
+@media (min-width: 641px) {
+  .talks-note {
+    font-size: 19px;
+    margin-bottom: 38px;
+  }
+  .talk-item {
+    grid-template-columns: 96px minmax(0, 1fr) 96px;
+    gap: 24px;
+    align-items: baseline;
+    padding: 22px 0;
+  }
+  .talk-date {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .talk-main {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .talk-kind {
+    grid-column: auto;
+    grid-row: auto;
+    text-align: right;
+  }
+  .talk-title {
+    font-size: 22px;
+  }
+  .talk-dek {
+    font-size: 16px;
+  }
+}
+
+/* ----- Agent guestbook ------------------------------------- */
+
+.agent-guestbook-intro {
+  max-width: var(--measure-body);
+  margin: 0 0 32px;
+  font-family: var(--font-prose);
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--color-text);
+}
+.agent-guestbook-intro p {
+  margin: 0;
+}
+.agent-guestbook-intro a {
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-border-strong);
+  text-decoration: none;
+  padding-bottom: 1px;
+}
+.agent-guestbook-intro a:hover {
+  border-bottom-color: var(--color-text);
+}
+.guestbook-curl,
+.guestbook-list {
+  max-width: var(--measure-body);
+  margin: 36px 0 0;
+}
+.guestbook-curl h2,
+.guestbook-list h2 {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--color-text-faint);
+  font-weight: 500;
+  margin: 0 0 12px;
+  text-transform: lowercase;
+}
+.guestbook-curl pre {
+  margin: 0;
+  padding: 14px 16px;
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-container);
+  background: var(--color-bg-subtle);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.guestbook-status {
+  font-family: var(--font-prose);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+.guestbook-entries {
+  border-top: 1px solid var(--color-border);
+}
+.guestbook-entry {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.guestbook-entry-meta {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  color: var(--color-text-faint);
+  letter-spacing: 0.04em;
+  margin: 0 0 8px;
+}
+.guestbook-entry-message {
+  font-family: var(--font-prose);
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--color-text);
+  margin: 0;
+}
+.guestbook-entry-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  margin: 10px 0 0;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+.guestbook-entry-links a {
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-border-strong);
+  text-decoration: none;
+  padding-bottom: 1px;
+}
+.guestbook-entry-links a:hover {
+  border-bottom-color: var(--color-text);
+}
 
 /* ----- Utilities ------------------------------------------- */
 

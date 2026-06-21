@@ -5,9 +5,12 @@
   "private": true,
   "scripts": {
     "build:posts": "node scripts/build-posts.mjs",
+    "test:agent-guestbook": "node scripts/test-agent-guestbook.mjs",
     "preview": "npx http-server -p 8080 ."
   },
   "dependencies": {
+    "@supabase/ssr": "^0.12.0",
+    "@supabase/supabase-js": "^2.108.1",
     "dotenv": "^16.4.5",
     "gray-matter": "^4.0.3",
     "highlight.js": "^11.11.1",

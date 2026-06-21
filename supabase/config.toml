@@ -1,0 +1,4 @@
+project_id = "parthsareen-github-io"
+
+[functions.agent-guestbook]
+verify_jwt = false
