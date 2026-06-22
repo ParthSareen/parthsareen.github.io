@@ -1,6 +1,6 @@
 ---
 title: "Creating the Ollama Agent Harness"
-date: "2026-06-22"
+date: "2026-07-01"
 excerpt: "Local models need a harness that treats context, tools, compaction, and runtime limits as the product surface."
 protected: true
 math: false
