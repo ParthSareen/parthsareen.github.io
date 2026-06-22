@@ -97,7 +97,7 @@
         </div>
       </a>
 
-      <a href="/writings/creating-the-ollama-agent-harness/" class="magazine-item is-hidden-draft" data-click-unlock="5" aria-label="Draft: Creating the Ollama Agent Harness. Click five times to open.">
+      <a href="/writings/creating-the-ollama-agent-harness/" class="magazine-item is-hidden-draft" data-click-unlock="5" aria-label="Draft: Creating the Ollama Agent Harness.">
         <div class="magazine-item-head">
           <span class="magazine-item-meta">Jun 22 · 20 min</span>
           <span class="magazine-item-tag">Draft</span>
@@ -105,7 +105,7 @@
         <span class="magazine-item-title">Creating the Ollama Agent Harness</span>
         <div class="magazine-item-body">
           <p class="magazine-item-dek">A working draft on local-agent harness design: context, tool output, compaction, runtime limits, and explicit failure.</p>
-          <span class="magazine-item-cta">Click 5 times to open</span>
+          <span class="magazine-item-cta">Draft in progress</span>
         </div>
       </a>
 
@@ -244,7 +244,6 @@
       document.querySelectorAll('[data-click-unlock]').forEach((item) => {
         const requiredClicks = Number(item.dataset.clickUnlock || '5');
         const target = item.getAttribute('href');
-        const cta = item.querySelector('.magazine-item-cta');
         let clicks = 0;
         item.addEventListener('click', (event) => {
           event.preventDefault();
@@ -253,9 +252,6 @@
           if (remaining <= 0) {
             window.location.href = target;
             return;
-          }
-          if (cta) {
-            cta.textContent = `${remaining} more click${remaining === 1 ? '' : 's'} to open`;
           }
         });
       });
