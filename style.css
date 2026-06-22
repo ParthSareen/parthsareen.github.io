@@ -160,7 +160,7 @@ button { font: inherit; }
 .masthead-bio {
   font-family: var(--font-prose);
   font-weight: 400;
-  font-size: 18px;
+  font-size: 17px;
   line-height: 1.55;
   color: #2a2a2a;
   margin: 0;
@@ -180,12 +180,12 @@ button { font: inherit; }
 @media (min-width: 641px) {
   .masthead { padding-bottom: 52px; }
   .masthead-name { font-size: 72px; margin-bottom: 26px; }
-  .masthead-bio { font-size: 20px; }
+  .masthead-bio { font-size: 18px; }
 }
 @media (min-width: 961px) {
   .masthead { padding-bottom: 56px; }
   .masthead-name { font-size: 88px; }
-  .masthead-bio { font-size: 21px; }
+  .masthead-bio { font-size: 19px; }
 }
 
 /* ----- Masthead (section pages) ---------------------------- */
