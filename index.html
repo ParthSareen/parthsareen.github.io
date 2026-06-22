@@ -35,6 +35,25 @@
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css?v=homepage-bio-smaller">
   <script src="/theme-toggle.js"></script>
+  <style>
+    .magazine-item.is-hidden-draft {
+      opacity: 0.42;
+      filter: grayscale(1);
+      cursor: pointer;
+    }
+    .magazine-item.is-hidden-draft:hover,
+    .magazine-item.is-hidden-draft.is-open {
+      opacity: 0.58;
+    }
+    .magazine-item.is-hidden-draft .magazine-item-title,
+    .magazine-item.is-hidden-draft .magazine-item-dek,
+    .magazine-item.is-hidden-draft .magazine-item-cta {
+      color: var(--color-text-muted);
+    }
+    .magazine-item.is-hidden-draft .magazine-item-cta {
+      border-bottom-color: var(--color-text-faint);
+    }
+  </style>
 </head>
 <body>
   <main class="page">
@@ -75,6 +94,18 @@
         <div class="magazine-item-body">
           <p class="magazine-item-dek">A design diary for Ollama Launch: simplicity, invisibility, and the small moments that make keeping up with AI easy.</p>
           <span class="magazine-item-cta">Read the essay →</span>
+        </div>
+      </a>
+
+      <a href="/writings/creating-the-ollama-agent-harness/" class="magazine-item is-hidden-draft" data-click-unlock="5" aria-label="Draft: Creating the Ollama Agent Harness. Click five times to open.">
+        <div class="magazine-item-head">
+          <span class="magazine-item-meta">Jun 22 · 20 min</span>
+          <span class="magazine-item-tag">Draft</span>
+        </div>
+        <span class="magazine-item-title">Creating the Ollama Agent Harness</span>
+        <div class="magazine-item-body">
+          <p class="magazine-item-dek">A working draft on local-agent harness design: context, tool output, compaction, runtime limits, and explicit failure.</p>
+          <span class="magazine-item-cta">Click 5 times to open</span>
         </div>
       </a>
 
@@ -208,6 +239,24 @@
           active.classList.remove('is-open');
           item.classList.add('is-open');
           active = item;
+        });
+      });
+      document.querySelectorAll('[data-click-unlock]').forEach((item) => {
+        const requiredClicks = Number(item.dataset.clickUnlock || '5');
+        const target = item.getAttribute('href');
+        const cta = item.querySelector('.magazine-item-cta');
+        let clicks = 0;
+        item.addEventListener('click', (event) => {
+          event.preventDefault();
+          clicks += 1;
+          const remaining = requiredClicks - clicks;
+          if (remaining <= 0) {
+            window.location.href = target;
+            return;
+          }
+          if (cta) {
+            cta.textContent = `${remaining} more click${remaining === 1 ? '' : 's'} to open`;
+          }
         });
       });
     })();

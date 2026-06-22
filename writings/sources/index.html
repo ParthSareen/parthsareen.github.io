@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sources: Creating the Ollama Agent Harness | Writings</title>
+  <meta name="description" content="Source notes and verification TODOs for the Ollama Agent Harness draft." />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="/assets/favicon.ico" sizes="any" />
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css?v=media" />
+  <script src="/theme-toggle.js"></script>
+  <script src="/toc.js?v=sections-2" defer></script>
+</head>
+<body>
+  <div id="password-overlay" class="password-overlay">
+    <div class="password-box">
+      <h2>This post is password protected</h2>
+      <input type="password" id="password-input" placeholder="Enter password" />
+      <br />
+      <button type="button" id="password-submit">Submit</button>
+      <div id="error" class="error"></div>
+    </div>
+  </div>
+  <div id="content" class="content-hidden">
+    <main class="page page--prose">
+    <nav class="nav" aria-label="Primary">
+      <span class="nav-links">
+        <a href="/">home</a>
+        <a href="/writings/" class="active">writings</a>
+        <a href="/#work">work</a>
+        <a href="/#elsewhere">elsewhere</a>
+      </span>
+    </nav>
+
+      <p class="crumb"><a href="/writings/">Writings</a> · 2026</p>
+
+      <header class="essay-masthead">
+        <h1 class="essay-title">Sources: Creating the Ollama Agent Harness</h1>
+        <div class="essay-meta">
+          <span><time datetime="2026-06-22">2026-06-22</time></span>
+          <span>3 min read</span>
+        </div>
+      </header>
+
+      <article class="post-content">
+<h2 id="source-threads-consulted" tabindex="-1">Source threads consulted</h2>
+<ul>
+<li>Chief of Staff handoff: <code>019e852c-7e8c-71d3-ba4b-62cc3df28771</code></li>
+<li>Compare agent loops: <code>019e9525-34be-7d52-89da-6299e1c7ce1a</code></li>
+<li>Agent-loop optimization inventory and messaging: <code>019edcdd-8d8d-74f2-91bd-9a690b61e6aa</code></li>
+<li>Agent-loop review threads: <code>019ed8fe-7bd8-77c1-8e42-48b3c47a94c0</code>, <code>019ed9c0-2ebb-7090-bad8-6ae786e94920</code></li>
+<li>Codex agent-loop changes research: <code>019ee1e5-31ce-77f1-92d0-921a8a6da280</code></li>
+<li>MLX structured outputs research: <code>019eda06-4f12-7a63-a3e8-9bfd88b93d79</code></li>
+<li>AI Engineer talk skeleton and deck work: <code>019ed248-3624-7a50-b6b4-83be7d44b948</code></li>
+</ul>
+<h2 id="local-context-consulted" tabindex="-1">Local context consulted</h2>
+<ul>
+<li><code>/Users/parth/Documents/repos/ollama-agent-loop/docs/agent-loop-design-decisions.md</code></li>
+<li><code>/Users/parth/Documents/repos/ollama-agent-loop/agent/session.go</code></li>
+<li><code>/Users/parth/Documents/repos/ollama-agent-loop/agent/compactor.go</code></li>
+<li><code>/Users/parth/Documents/repos/ollama-agent-loop/agent/events.go</code></li>
+<li><code>/Users/parth/Documents/repos/ollama-agent-loop/agent/trace.go</code></li>
+<li><code>/Users/parth/Documents/repos/ollama-agent-loop/agent/tools/bash.go</code></li>
+<li><code>/Users/parth/Documents/repos/ollama-agent-loop/agent/tools/file.go</code></li>
+<li><code>/Users/parth/Documents/repos/ollama-agent-loop/agent/tools/web.go</code></li>
+<li><code>/Users/parth/Documents/repos/ollama-agent-loop/agent/skills/skills.go</code></li>
+<li><code>/Users/parth/Documents/repos/ollama-agent-loop/agent/tools/skill.go</code></li>
+<li><code>/Users/parth/Documents/repos/ollama-agent-loop/docs/context-length.mdx</code></li>
+<li><code>/Users/parth/Documents/repos/ollama-agent-loop/envconfig/config.go</code></li>
+<li><code>/Users/parth/Documents/repos/ollama-agent-loop/server/routes.go</code></li>
+<li><code>/Users/parth/Documents/repos/ollama-agent-loop/cmd/cmd.go</code></li>
+<li><code>/Users/parth/Documents/repos/ollama-agent-loop/evals/agent-capability-report-2026-06-18-2219.md</code></li>
+<li><code>/Users/parth/Documents/repos/ollama-agent-loop/evals/agent-capability-report.md</code></li>
+<li><code>/Users/parth/Documents/presentations/ai-engineer-local-agents-harness-talk/research-notes.md</code></li>
+<li><code>/Users/parth/Documents/presentations/ai-engineer-local-agents-harness-talk/presentation-skeleton.md</code></li>
+</ul>
+<h2 id="public-content-and-voice-pass" tabindex="-1">Public content and voice pass</h2>
+<ul>
+<li>Personal site and talks page: agent tooling at Ollama, small tools, local AI, open agents, structured outputs, and writing ideas while they are still forming.</li>
+<li>“The philosophy of Ollama Launch”: simplicity, invisibility, delightful discovery, “Oh it actually works,” model choice as product surface, and legible failure when invisibility breaks.</li>
+<li>“Building reliable AI agents”: first-principles agent loops, tool design, context engineering, prompt rendering, evals, and the idea that the harness shapes model behavior.</li>
+<li>“The Era of Generalists”: breadth, taste, orchestration, verification loops, and the feeling of using agents to move across an end-to-end workflow.</li>
+<li>“Demystifying how models pick their next token”: practical attention to sampling, templates, structured outputs, and the sensitivity of model behavior to seemingly small runtime choices.</li>
+<li>Tools page: small terminal-native experiments like <code>zuko</code>, <code>ducky</code>, <code>watchy</code>, <code>vimollama</code>, and OllamaClaw; useful context for the “build the small thing to understand the system” posture.</li>
+<li>Ollama blog posts on Launch, OpenClaw, web search/subagents, streaming tool calling, and structured outputs: one-command setup, local/cloud model choice, context recommendations, tool-oriented model workflows, and no-config defaults.</li>
+<li>ODSC / Generative AI Fundamentalz interview materials: local-first AI, open models, agent harnesses as tools plus loop plus memory plus environment, verification loops, context engineering, and the move from model experimentation toward system design.</li>
+</ul>
+<p class="first-paragraph">Recurring focal points to keep in this draft:</p>
+<ul>
+<li>Usefulness over spectacle.</li>
+<li>Local-first, not local maximalist.</li>
+<li>Simplicity that hides setup but exposes failure.</li>
+<li>The harness as product surface.</li>
+<li>What the model actually sees: tools, output, context, schemas, summaries, and runtime limits.</li>
+<li>Small tools and first-principles experiments as a way to understand larger systems.</li>
+<li>Engineering taste as curation: good defaults, bounded surfaces, and fewer ways for the user to fall into incidental complexity.</li>
+</ul>
+<h2 id="claims-to-verify-before-publishing" tabindex="-1">Claims to verify before publishing</h2>
+<ul>
+<li>Whether to call this “Ollama Agent Harness,” “Ollama agent loop,” or another final product name.</li>
+<li>The current public/default status of the agent harness work. The inspected local worktree was on <code>parth-input-style-experiment</code>, with lineage from the <code>parth-agent-loop</code> work.</li>
+<li>Exact current <code>OLLAMA_CONTEXT_LENGTH</code> behavior and docs wording at publish time.</li>
+<li>Whether to include the specific Gemma/Qwen eval counts, or keep them as private design evidence.</li>
+<li>Whether synthetic compaction as <code>compact_conversation</code> is final enough to describe as current behavior.</li>
+<li>Whether trace env naming should be <code>OLLAMA_AGENT_TRACE</code> or another final variable if trace UI is mentioned publicly.</li>
+<li>Which comparisons to Codex, Pi, Hermes Agent, or OpenClaw can be named publicly.</li>
+<li>Whether the Pi comparison should stay as a named callout or be generalized to “minimal harnesses” before publishing.</li>
+</ul>
+<h2 id="diagrams-or-examples" tabindex="-1">Diagrams or examples</h2>
+<ul>
+<li>Added: a “what the model sees” context budget diagram.</li>
+<li>Added: a runtime-aware budgeting diagram from model metadata/request/env/VRAM to harness policy.</li>
+<li>Added: a tool-output artifact flow from raw output to preview, artifact, range read, and search.</li>
+<li>Added: a synthetic compaction transcript showing success and empty-summary paths.</li>
+<li>Possible still: a before/after trace table from a small local-agent task, showing prompt eval duration, prompt estimate, tool output share, and compaction events.</li>
+</ul>
+
+      </article>
+
+      <section class="post-navigation">
+        <a href="/writings/">← writings</a>
+      </section>
+
+    <footer class="site-foot">
+      <span>© 2026 Parth Sareen. All rights reserved.</span>
+      <span class="site-foot-right">
+        <a href="/">Home</a>
+        <a href="https://x.com/parthsareen">X</a>
+        <a href="https://github.com/parthsareen">GitHub</a>
+        <a href="https://www.linkedin.com/in/parthsareen">LinkedIn</a>
+      </span>
+    </footer>
+    </main>
+  </div>
+  <script type="module">
+    const PASSWORD = 'draft';
+    
+    async function initMermaid() {
+      const mermaid = await import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs');
+      mermaid.default.initialize({ 
+        startOnLoad: false,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: '#e2d9c9',
+          primaryTextColor: '#463a2e',
+          primaryBorderColor: '#744c24',
+          lineColor: '#463a2e',
+          secondaryColor: '#f6f2e8',
+          tertiaryColor: '#e2d9c9',
+          mainBkg: '#e2d9c9',
+          secondBkg: '#f6f2e8',
+          tertiaryBkg: '#e2d9c9',
+          nodeBorder: '#744c24',
+          clusterBkg: '#f6f2e8',
+          clusterBorder: '#744c24',
+          defaultLinkColor: '#463a2e',
+          titleColor: '#463a2e',
+          edgeLabelBackground: '#f6f2e8',
+          fontSize: '15px',
+          fontFamily: 'Spectral, serif'
+        }
+      });
+      await mermaid.default.run({nodes: [...document.querySelectorAll('pre[class~="mermaid"]')]});
+    }
+    
+    function checkPassword() {
+      const input = document.getElementById('password-input').value;
+      if (PASSWORD && input === PASSWORD) {
+        document.getElementById('password-overlay').style.display = 'none';
+        document.getElementById('content').classList.remove('content-hidden');
+        localStorage.setItem('wip-auth', 'true');
+        setTimeout(initMermaid, 100);
+      } else {
+        document.getElementById('error').textContent = 'Incorrect password';
+      }
+    }
+    document.getElementById('password-submit').addEventListener('click', checkPassword);
+    
+    if (localStorage.getItem('wip-auth') === 'true') {
+      document.getElementById('password-overlay').style.display = 'none';
+      document.getElementById('content').classList.remove('content-hidden');
+      setTimeout(initMermaid, 100);
+    }
+    
+    document.getElementById('password-input').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        checkPassword();
+      }
+    });
+  </script>
+</body>
+</html>
