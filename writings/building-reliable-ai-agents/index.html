@@ -13,6 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/style.css?v=media" />
   <script src="/theme-toggle.js"></script>
+  <script src="/toc.js?v=sections-2" defer></script>
   <script>
     window.MathJax = {
       tex: {
@@ -75,14 +76,6 @@ Depending on your use case, some open source models might even be better picks t
     E --> B
     C -->|No| F[Reached goal. Print response]
     F --> G[End]
-    
-    style A fill:#e2d9c9
-    style G fill:#e2d9c9
-    style B fill:#f6f2e8
-    style C fill:#f6f2e8
-    style D fill:#f6f2e8
-    style E fill:#f6f2e8
-    style F fill:#f6f2e8
 </pre>
 <p><strong>Code: Minimal agent loop pseudocode</strong> - this shows the core pattern: generate response, check for tool calls, execute tools, repeat until done.</p>
 <pre class="hljs"><code class="language-python">goal = <span class="hljs-string">&quot;do x for me&quot;</span>
@@ -419,31 +412,31 @@ You can also see that harnesses impact overall model output quite a bit. See <a 
   </main>
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-    
-    mermaid.initialize({ 
+
+    mermaid.initialize({
       startOnLoad: false,
       theme: 'base',
       themeVariables: {
-        primaryColor: '#e2d9c9',
-        primaryTextColor: '#463a2e',
-        primaryBorderColor: '#744c24',
-        lineColor: '#463a2e',
-        secondaryColor: '#f6f2e8',
-        tertiaryColor: '#e2d9c9',
-        mainBkg: '#e2d9c9',
-        secondBkg: '#f6f2e8',
-        tertiaryBkg: '#e2d9c9',
-        nodeBorder: '#744c24',
-        clusterBkg: '#f6f2e8',
-        clusterBorder: '#744c24',
-        defaultLinkColor: '#463a2e',
-        titleColor: '#463a2e',
-        edgeLabelBackground: '#f6f2e8',
+        primaryColor: '#f7f7f7',
+        primaryTextColor: '#1a1a1a',
+        primaryBorderColor: '#d4d4d4',
+        lineColor: '#737373',
+        secondaryColor: '#fafafa',
+        tertiaryColor: '#ffffff',
+        mainBkg: '#ffffff',
+        secondBkg: '#fafafa',
+        tertiaryBkg: '#f7f7f7',
+        nodeBorder: '#d4d4d4',
+        clusterBkg: '#fafafa',
+        clusterBorder: '#d4d4d4',
+        defaultLinkColor: '#737373',
+        titleColor: '#1a1a1a',
+        edgeLabelBackground: '#ffffff',
         fontSize: '15px',
-        fontFamily: 'Spectral, serif'
+        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Rounded", system-ui, sans-serif'
       }
     });
-    
+
     await mermaid.run({nodes: [...document.querySelectorAll('pre[class~="mermaid"]')]});
   </script>
 </body>

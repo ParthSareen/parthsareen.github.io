@@ -272,6 +272,14 @@ This is also why the work feels continuous with Launch, OpenClaw, web search, su
 
 That does not mean pretending local models are always the right answer. Local-first is different from local-only. Some tasks should use a bigger context, a stronger cloud model, or a faster remote runtime. The harness should make that choice easier to reason about, not turn model selection into ideology.
 
+This is also where the same harness starts to matter in the other direction. A good local harness should not trap the user locally. It should let a run move from local to cloud without changing the shape of the work.
+
+The reason that can work is that the harness has already done the discipline. Tool results are bounded. Compaction events are explicit. Approvals, failures, skipped tools, and command results are represented in the transcript. The model is not being handed a giant terminal log and asked to reconstruct intent. If a task reaches the edge of the local model's context, or needs a model that is better at planning, or would benefit from faster inference, the cloud model can pick up a cleaner state.
+
+That is different from treating cloud as a panic button. The goal is not "local until it breaks, then start over somewhere else." The goal is a continuous loop where the runtime can change but the contract stays stable: same tools, same evidence, same bounded history, same user-visible failures. The cloud model still benefits from the local-model constraints because those constraints removed accidental context before the handoff.
+
+In a weird way, designing for local makes the cloud path better too. It forces the harness to ask what must survive a model switch. If the answer depends on hidden process state, invisible prompt mutation, or unbounded tool output, then the handoff is brittle. If the answer is in the transcript and trace, the work can travel.
+
 That is the Ollama-native advantage. The harness does not have to be a framework floating above inference. It can become runtime-aware.
 
 For local models, that matters more than another abstraction layer. A local-first harness should be able to answer:
@@ -283,6 +291,7 @@ For local models, that matters more than another abstraction layer. A local-firs
 - Did the server truncate anything?
 - Did the last turn hit cache or rebuild the prompt?
 - Is this model likely to survive another tool round, or should the harness stop?
+- If the run moves to cloud, what state and evidence should move with it?
 
 These are product questions. They are also runtime questions.
 
@@ -301,6 +310,7 @@ Instead, it tries to be careful by default:
 - Keep compaction inspectable.
 - Keep failures explicit.
 - Keep runtime budgeting close to the server.
+- Keep local-to-cloud handoff as a model switch, not a task restart.
 - Keep enough trace data to debug the loop.
 
 The thread through those choices is simple: do not let the model or the user pay for invisible harness decisions. Bound the thing before it enters history. Make lossy transformations explicit. Keep the runtime truth close. Preserve enough structure that a failed run can be understood instead of merely abandoned.

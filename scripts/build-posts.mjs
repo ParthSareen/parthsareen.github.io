@@ -70,8 +70,9 @@ const toISODate = (value) => {
   return date.toISOString().slice(0, 10);
 };
 
-const siteHead = ({ title, excerpt, math = true }) => `  <title>${escapeAttribute(title)} | Writings</title>
-  <meta name="description" content="${escapeAttribute(excerpt)}" />
+const siteHead = ({ title, excerpt, math = true, noindex = false }) => `  <title>${escapeAttribute(title)} | Writings</title>
+  <meta name="description" content="${escapeAttribute(excerpt)}" />${noindex ? `
+  <meta name="robots" content="noindex" />` : ''}
   <link rel="icon" href="/assets/favicon.ico" sizes="any" />
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
@@ -79,7 +80,8 @@ const siteHead = ({ title, excerpt, math = true }) => `  <title>${escapeAttribut
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/style.css?v=media" />
-  <script src="/theme-toggle.js"></script>${math ? `
+  <script src="/theme-toggle.js"></script>
+  <script src="/toc.js?v=sections-2" defer></script>${math ? `
   <script>
     window.MathJax = {
       tex: {
@@ -301,8 +303,8 @@ ${footerMarkup}
   </main>
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-    
-    mermaid.initialize({ 
+
+    mermaid.initialize({
       startOnLoad: false,
       theme: 'base',
       themeVariables: {
@@ -325,7 +327,7 @@ ${footerMarkup}
         fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Rounded", system-ui, sans-serif'
       }
     });
-    
+
     await mermaid.run({nodes: [...document.querySelectorAll('pre[class~="mermaid"]')]});
   </script>
 </body>
@@ -341,7 +343,7 @@ const wipTemplate = ({ slug, title, date, html, excerpt, readTime, math = true }
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-${siteHead({ title: stripTags(renderInlineMarkdown(title)), excerpt, math })}
+${siteHead({ title: stripTags(renderInlineMarkdown(title)), excerpt, math, noindex: true })}
 </head>
 <body>
   <div id="password-overlay" class="password-overlay">
@@ -380,10 +382,10 @@ ${footerMarkup}
   </div>
   <script type="module">
     const PASSWORD = '${password}';
-    
+
     async function initMermaid() {
       const mermaid = await import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs');
-      mermaid.default.initialize({ 
+      mermaid.default.initialize({
         startOnLoad: false,
         theme: 'base',
         themeVariables: {
@@ -408,7 +410,7 @@ ${footerMarkup}
       });
       await mermaid.default.run({nodes: [...document.querySelectorAll('pre[class~="mermaid"]')]});
     }
-    
+
     function checkPassword() {
       const input = document.getElementById('password-input').value;
       if (PASSWORD && input === PASSWORD) {
@@ -421,13 +423,13 @@ ${footerMarkup}
       }
     }
     document.getElementById('password-submit').addEventListener('click', checkPassword);
-    
+
     if (localStorage.getItem('wip-auth') === 'true') {
       document.getElementById('password-overlay').style.display = 'none';
       document.getElementById('content').classList.remove('content-hidden');
       setTimeout(initMermaid, 100);
     }
-    
+
     document.getElementById('password-input').addEventListener('keypress', function(e) {
       if (e.key === 'Enter') {
         checkPassword();

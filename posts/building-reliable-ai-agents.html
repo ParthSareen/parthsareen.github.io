@@ -28,14 +28,6 @@ Depending on your use case, some open source models might even be better picks t
     E --> B
     C -->|No| F[Reached goal. Print response]
     F --> G[End]
-    
-    style A fill:#e2d9c9
-    style G fill:#e2d9c9
-    style B fill:#f6f2e8
-    style C fill:#f6f2e8
-    style D fill:#f6f2e8
-    style E fill:#f6f2e8
-    style F fill:#f6f2e8
 </pre>
 <p><strong>Code: Minimal agent loop pseudocode</strong> - this shows the core pattern: generate response, check for tool calls, execute tools, repeat until done.</p>
 <pre class="hljs"><code class="language-python">goal = <span class="hljs-string">&quot;do x for me&quot;</span>

@@ -43,7 +43,7 @@
         <h1 class="essay-title">Creating the Ollama Agent Harness</h1>
         <div class="essay-meta">
           <span><time datetime="2026-07-01">2026-07-01</time></span>
-          <span>17 min read</span>
+          <span>18 min read</span>
         </div>
       </header>
 
@@ -228,6 +228,10 @@ Use read_output(id, range) or search_output(id, query) for more.
 <p>It knows whether a model is local or cloud. It knows the loaded runner’s effective context. It has model metadata, templates, tool rendering, structured output behavior, server metrics, prompt eval counts, cache behavior, and eventually tokenizer-level accounting. It can connect local and cloud models through the same user-facing tool surface without pretending they have the same constraints.</p>
 <p>This is also why the work feels continuous with Launch, OpenClaw, web search, subagents, and structured outputs. Ollama started as the simplest way to run a model, but the interesting product question keeps moving outward: how do you connect that model to real work without making the user carry all the incidental complexity?</p>
 <p>That does not mean pretending local models are always the right answer. Local-first is different from local-only. Some tasks should use a bigger context, a stronger cloud model, or a faster remote runtime. The harness should make that choice easier to reason about, not turn model selection into ideology.</p>
+<p>This is also where the same harness starts to matter in the other direction. A good local harness should not trap the user locally. It should let a run move from local to cloud without changing the shape of the work.</p>
+<p>The reason that can work is that the harness has already done the discipline. Tool results are bounded. Compaction events are explicit. Approvals, failures, skipped tools, and command results are represented in the transcript. The model is not being handed a giant terminal log and asked to reconstruct intent. If a task reaches the edge of the local model’s context, or needs a model that is better at planning, or would benefit from faster inference, the cloud model can pick up a cleaner state.</p>
+<p>That is different from treating cloud as a panic button. The goal is not “local until it breaks, then start over somewhere else.” The goal is a continuous loop where the runtime can change but the contract stays stable: same tools, same evidence, same bounded history, same user-visible failures. The cloud model still benefits from the local-model constraints because those constraints removed accidental context before the handoff.</p>
+<p>In a weird way, designing for local makes the cloud path better too. It forces the harness to ask what must survive a model switch. If the answer depends on hidden process state, invisible prompt mutation, or unbounded tool output, then the handoff is brittle. If the answer is in the transcript and trace, the work can travel.</p>
 <p>That is the Ollama-native advantage. The harness does not have to be a framework floating above inference. It can become runtime-aware.</p>
 <p>For local models, that matters more than another abstraction layer. A local-first harness should be able to answer:</p>
 <ul>
@@ -238,6 +242,7 @@ Use read_output(id, range) or search_output(id, query) for more.
 <li>Did the server truncate anything?</li>
 <li>Did the last turn hit cache or rebuild the prompt?</li>
 <li>Is this model likely to survive another tool round, or should the harness stop?</li>
+<li>If the run moves to cloud, what state and evidence should move with it?</li>
 </ul>
 <p>These are product questions. They are also runtime questions.</p>
 <h2 id="the-shape-i-want" tabindex="-1">The Shape I Want</h2>
@@ -252,6 +257,7 @@ Use read_output(id, range) or search_output(id, query) for more.
 <li>Keep compaction inspectable.</li>
 <li>Keep failures explicit.</li>
 <li>Keep runtime budgeting close to the server.</li>
+<li>Keep local-to-cloud handoff as a model switch, not a task restart.</li>
 <li>Keep enough trace data to debug the loop.</li>
 </ul>
 <p>The thread through those choices is simple: do not let the model or the user pay for invisible harness decisions. Bound the thing before it enters history. Make lossy transformations explicit. Keep the runtime truth close. Preserve enough structure that a failed run can be understood instead of merely abandoned.</p>
@@ -280,10 +286,10 @@ Use read_output(id, range) or search_output(id, query) for more.
   </div>
   <script type="module">
     const PASSWORD = 'draft';
-    
+
     async function initMermaid() {
       const mermaid = await import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs');
-      mermaid.default.initialize({ 
+      mermaid.default.initialize({
         startOnLoad: false,
         theme: 'base',
         themeVariables: {
@@ -308,7 +314,7 @@ Use read_output(id, range) or search_output(id, query) for more.
       });
       await mermaid.default.run({nodes: [...document.querySelectorAll('pre[class~="mermaid"]')]});
     }
-    
+
     function checkPassword() {
       const input = document.getElementById('password-input').value;
       if (PASSWORD && input === PASSWORD) {
@@ -321,13 +327,13 @@ Use read_output(id, range) or search_output(id, query) for more.
       }
     }
     document.getElementById('password-submit').addEventListener('click', checkPassword);
-    
+
     if (localStorage.getItem('wip-auth') === 'true') {
       document.getElementById('password-overlay').style.display = 'none';
       document.getElementById('content').classList.remove('content-hidden');
       setTimeout(initMermaid, 100);
     }
-    
+
     document.getElementById('password-input').addEventListener('keypress', function(e) {
       if (e.key === 'Enter') {
         checkPassword();

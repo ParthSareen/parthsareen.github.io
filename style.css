@@ -144,8 +144,7 @@ button { font: inherit; }
 /* ----- Masthead (home) ------------------------------------- */
 
 .masthead {
-  padding-bottom: 48px;
-  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 36px;
 }
 .masthead-name {
   font-family: var(--font-display);
@@ -178,12 +177,12 @@ button { font: inherit; }
 .masthead-bio em { font-style: normal; }
 
 @media (min-width: 641px) {
-  .masthead { padding-bottom: 52px; }
+  .masthead { padding-bottom: 39px; }
   .masthead-name { font-size: 72px; margin-bottom: 26px; }
   .masthead-bio { font-size: 18px; }
 }
 @media (min-width: 961px) {
-  .masthead { padding-bottom: 56px; }
+  .masthead { padding-bottom: 42px; }
   .masthead-name { font-size: 88px; }
   .masthead-bio { font-size: 19px; }
 }

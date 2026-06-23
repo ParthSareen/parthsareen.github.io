@@ -139,10 +139,10 @@
   </div>
   <script type="module">
     const PASSWORD = 'draft';
-    
+
     async function initMermaid() {
       const mermaid = await import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs');
-      mermaid.default.initialize({ 
+      mermaid.default.initialize({
         startOnLoad: false,
         theme: 'base',
         themeVariables: {
@@ -167,7 +167,7 @@
       });
       await mermaid.default.run({nodes: [...document.querySelectorAll('pre[class~="mermaid"]')]});
     }
-    
+
     function checkPassword() {
       const input = document.getElementById('password-input').value;
       if (PASSWORD && input === PASSWORD) {
@@ -180,13 +180,13 @@
       }
     }
     document.getElementById('password-submit').addEventListener('click', checkPassword);
-    
+
     if (localStorage.getItem('wip-auth') === 'true') {
       document.getElementById('password-overlay').style.display = 'none';
       document.getElementById('content').classList.remove('content-hidden');
       setTimeout(initMermaid, 100);
     }
-    
+
     document.getElementById('password-input').addEventListener('keypress', function(e) {
       if (e.key === 'Enter') {
         checkPassword();

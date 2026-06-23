@@ -47,14 +47,6 @@ graph TD
     E --> B
     C -->|No| F[Reached goal. Print response]
     F --> G[End]
-    
-    style A fill:#e2d9c9
-    style G fill:#e2d9c9
-    style B fill:#f6f2e8
-    style C fill:#f6f2e8
-    style D fill:#f6f2e8
-    style E fill:#f6f2e8
-    style F fill:#f6f2e8
 ```
 
 **Code: Minimal agent loop pseudocode** - this shows the core pattern: generate response, check for tool calls, execute tools, repeat until done.
@@ -447,4 +439,3 @@ I think we'll see a rise in specialized models for specific harnesses, as well a
 You can also see that harnesses impact overall model output quite a bit. See [Factory AI's Droid](https://factory.ai/news/terminal-bench).
 
 I have some fun agent-heavy stuff in the works – both for Ollama and my own tools. Hope to share these soon :) 
-

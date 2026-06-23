@@ -3,15 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Subagents and web search in Claude Code · parth sareen</title>
-  <meta name="description" content="Ollama now supports subagents and web search inside Claude Code — no MCP servers or API keys needed." />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23ffffff'/><text x='16' y='23' font-family='Georgia,serif' font-style='italic' font-size='22' fill='%23000000' text-anchor='middle'>ps</text></svg>" />
+  <title>Subagents and web search in Claude Code | Writings</title>
+  <meta name="description" content="tl;dr:" />
   <meta name="robots" content="noindex" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css" />
+  <link rel="icon" href="/assets/favicon.ico" sizes="any" />
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css?v=media" />
   <script src="/theme-toggle.js"></script>
+  <script src="/toc.js?v=sections-2" defer></script>
   <script>
     window.MathJax = {
       tex: {
@@ -22,42 +25,40 @@
     };
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
-  <script src="/toc.js" defer></script>
 </head>
 <body>
   <div id="password-overlay" class="password-overlay">
     <div class="password-box">
       <h2>This post is password protected</h2>
-      <input type="password" id="password-input" placeholder="Enter password" autofocus />
-      <button onclick="checkPassword()">Enter</button>
+      <input type="password" id="password-input" placeholder="Enter password" />
+      <br />
+      <button type="button" id="password-submit">Submit</button>
       <div id="error" class="error"></div>
     </div>
   </div>
   <div id="content" class="content-hidden">
     <main class="page page--prose">
+    <nav class="nav" aria-label="Primary">
+      <span class="nav-links">
+        <a href="/">home</a>
+        <a href="/writings/" class="active">writings</a>
+        <a href="/#work">work</a>
+        <a href="/#elsewhere">elsewhere</a>
+      </span>
+    </nav>
 
-      <nav class="nav" aria-label="Primary">
-        <span class="nav-links">
-          <a href="/">home</a>
-          <a href="/writings/">writings</a>
-          <a href="/#work">work</a>
-          <a href="/#elsewhere">elsewhere</a>
-        </span>
-      </nav>
-
-      <p class="crumb"><a href="/writings/">Writings</a>  ·  2026</p>
+      <p class="crumb"><a href="/writings/">Writings</a> · 2026</p>
 
       <header class="essay-masthead">
-        <h1 class="essay-title">Subagents and web search <em>in Claude Code</em></h1>
+        <h1 class="essay-title">Subagents and web search in Claude Code</h1>
         <div class="essay-meta">
-          <span>2026-02-17</span>
-          <span>5 min read</span>
-          <span>Notes</span>
+          <span><time datetime="2026-02-17">2026-02-17</time></span>
+          <span>3 min read</span>
         </div>
       </header>
 
       <article class="post-content">
-<p>I recently built out ollama launch to make it easier to use Ollama with different integrations like Claude Code, OpenClaw, OpenCode, and more. I also just released subagents and web search support for Ollama’s Claude Code integration. Both now work out of the box – no MCP servers or API keys needed.</p>
+<p class="first-paragraph">I recently built out ollama launch to make it easier to use Ollama with different integrations like Claude Code, OpenClaw, OpenCode, and more. I also just released subagents and web search support for Ollama’s Claude Code integration. Both now work out of the box – no MCP servers or API keys needed.</p>
 <p>tl;dr:</p>
 <pre class="hljs"><code class="language-bash">ollama launch claude --model minimax-m2.5:cloud
 </code></pre>
@@ -106,19 +107,19 @@ Instead of one agent accumulating everything in a single context, subagents let 
         <a href="/writings/">← writings</a>
       </section>
 
-      <footer class="site-foot">
-        <span>© 2026 parth sareen</span>
-        <span class="site-foot-right">
-          <a href="/">Home</a>
-          <a href="https://x.com/parthsareen">X</a>
-          <a href="https://github.com/parthsareen">GitHub</a>
-        </span>
-      </footer>
-
+    <footer class="site-foot">
+      <span>© 2026 Parth Sareen. All rights reserved.</span>
+      <span class="site-foot-right">
+        <a href="/">Home</a>
+        <a href="https://x.com/parthsareen">X</a>
+        <a href="https://github.com/parthsareen">GitHub</a>
+        <a href="https://www.linkedin.com/in/parthsareen">LinkedIn</a>
+      </span>
+    </footer>
     </main>
   </div>
-  <script>
-    const PASSWORD = '';
+  <script type="module">
+    const PASSWORD = 'draft';
 
     async function initMermaid() {
       const mermaid = await import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs');
@@ -126,26 +127,26 @@ Instead of one agent accumulating everything in a single context, subagents let 
         startOnLoad: false,
         theme: 'base',
         themeVariables: {
-          primaryColor: '#fafafa',
+          primaryColor: '#f7f7f7',
           primaryTextColor: '#1a1a1a',
           primaryBorderColor: '#d4d4d4',
           lineColor: '#737373',
-          secondaryColor: '#ffffff',
-          tertiaryColor: '#f0f0f0',
-          mainBkg: '#fafafa',
-          secondBkg: '#ffffff',
-          tertiaryBkg: '#f0f0f0',
+          secondaryColor: '#fafafa',
+          tertiaryColor: '#ffffff',
+          mainBkg: '#ffffff',
+          secondBkg: '#fafafa',
+          tertiaryBkg: '#f7f7f7',
           nodeBorder: '#d4d4d4',
-          clusterBkg: '#ffffff',
-          clusterBorder: '#e5e5e5',
+          clusterBkg: '#fafafa',
+          clusterBorder: '#d4d4d4',
           defaultLinkColor: '#737373',
           titleColor: '#1a1a1a',
           edgeLabelBackground: '#ffffff',
-          fontSize: '14px',
-          fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace'
+          fontSize: '15px',
+          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Rounded", system-ui, sans-serif'
         }
       });
-      await mermaid.default.run({ nodes: [...document.querySelectorAll('pre[class~="mermaid"]')] });
+      await mermaid.default.run({nodes: [...document.querySelectorAll('pre[class~="mermaid"]')]});
     }
 
     function checkPassword() {
@@ -159,6 +160,7 @@ Instead of one agent accumulating everything in a single context, subagents let 
         document.getElementById('error').textContent = 'Incorrect password';
       }
     }
+    document.getElementById('password-submit').addEventListener('click', checkPassword);
 
     if (localStorage.getItem('wip-auth') === 'true') {
       document.getElementById('password-overlay').style.display = 'none';
@@ -166,7 +168,7 @@ Instead of one agent accumulating everything in a single context, subagents let 
       setTimeout(initMermaid, 100);
     }
 
-    document.getElementById('password-input').addEventListener('keypress', function (e) {
+    document.getElementById('password-input').addEventListener('keypress', function(e) {
       if (e.key === 'Enter') {
         checkPassword();
       }
