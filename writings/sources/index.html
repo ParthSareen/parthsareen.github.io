@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sources: Creating the Ollama Agent Harness | Writings</title>
+  <title>Sources: Creating the Ollama Agent Harness | writings</title>
   <meta name="description" content="Source notes and verification TODOs for the Ollama Agent Harness draft." />
   <meta name="robots" content="noindex" />
   <link rel="icon" href="/assets/favicon.ico" sizes="any" />
@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/style.css?v=media" />
+  <link rel="stylesheet" href="/style.css?v=toc-boundary" />
   <script src="/theme-toggle.js"></script>
   <script src="/toc.js?v=sections-2" defer></script>
 </head>
@@ -37,7 +37,7 @@
       </span>
     </nav>
 
-      <p class="crumb"><a href="/writings/">Writings</a> · 2026</p>
+      <p class="crumb"><a href="/writings/">writings</a> · 2026</p>
 
       <header class="essay-masthead">
         <h1 class="essay-title">Sources: Creating the Ollama Agent Harness</h1>
@@ -52,6 +52,7 @@
 <ul>
 <li>Chief of Staff handoff: <code>019e852c-7e8c-71d3-ba4b-62cc3df28771</code></li>
 <li>Compare agent loops: <code>019e9525-34be-7d52-89da-6299e1c7ce1a</code></li>
+<li>Extract simplification discussion / review follow-up: <code>019ef622-1cf5-7c42-b489-d36113ae3863</code></li>
 <li>Agent-loop optimization inventory and messaging: <code>019edcdd-8d8d-74f2-91bd-9a690b61e6aa</code></li>
 <li>Agent-loop review threads: <code>019ed8fe-7bd8-77c1-8e42-48b3c47a94c0</code>, <code>019ed9c0-2ebb-7090-bad8-6ae786e94920</code></li>
 <li>Codex agent-loop changes research: <code>019ee1e5-31ce-77f1-92d0-921a8a6da280</code></li>
@@ -110,13 +111,17 @@
 <li>Whether trace env naming should be <code>OLLAMA_AGENT_TRACE</code> or another final variable if trace UI is mentioned publicly.</li>
 <li>Which comparisons to Codex, Pi, Hermes Agent, or OpenClaw can be named publicly.</li>
 <li>Whether the Pi comparison should stay as a named callout or be generalized to “minimal harnesses” before publishing.</li>
+<li>Whether the final policy type/name is <code>RunPolicy</code>, another agent package name, or too implementation-specific to name publicly.</li>
+<li>Whether local-to-cloud handoff behavior is implemented enough to describe as current behavior, or should stay framed as the desired design shape.</li>
 </ul>
 <h2 id="diagrams-or-examples" tabindex="-1">Diagrams or examples</h2>
 <ul>
 <li>Added: a “what the model sees” context budget diagram.</li>
 <li>Added: a runtime-aware budgeting diagram from model metadata/request/env/VRAM to harness policy.</li>
+<li>Added: a run-policy procedural contract diagram shared by request building, approvals, session behavior, footer/status, and raw preview.</li>
 <li>Added: a tool-output artifact flow from raw output to preview, artifact, range read, and search.</li>
 <li>Added: a synthetic compaction transcript showing success and empty-summary paths.</li>
+<li>Added: a local-to-cloud stable contract diagram showing transcript, policy state, evidence, compaction events, and failures traveling across runtimes.</li>
 <li>Possible still: a before/after trace table from a small local-agent task, showing prompt eval duration, prompt estimate, tool output share, and compaction events.</li>
 </ul>
 

@@ -12,6 +12,7 @@ math: false
 
 - Chief of Staff handoff: `019e852c-7e8c-71d3-ba4b-62cc3df28771`
 - Compare agent loops: `019e9525-34be-7d52-89da-6299e1c7ce1a`
+- Extract simplification discussion / review follow-up: `019ef622-1cf5-7c42-b489-d36113ae3863`
 - Agent-loop optimization inventory and messaging: `019edcdd-8d8d-74f2-91bd-9a690b61e6aa`
 - Agent-loop review threads: `019ed8fe-7bd8-77c1-8e42-48b3c47a94c0`, `019ed9c0-2ebb-7090-bad8-6ae786e94920`
 - Codex agent-loop changes research: `019ee1e5-31ce-77f1-92d0-921a8a6da280`
@@ -70,11 +71,15 @@ Recurring focal points to keep in this draft:
 - Whether trace env naming should be `OLLAMA_AGENT_TRACE` or another final variable if trace UI is mentioned publicly.
 - Which comparisons to Codex, Pi, Hermes Agent, or OpenClaw can be named publicly.
 - Whether the Pi comparison should stay as a named callout or be generalized to "minimal harnesses" before publishing.
+- Whether the final policy type/name is `RunPolicy`, another agent package name, or too implementation-specific to name publicly.
+- Whether local-to-cloud handoff behavior is implemented enough to describe as current behavior, or should stay framed as the desired design shape.
 
 ## Diagrams or examples
 
 - Added: a "what the model sees" context budget diagram.
 - Added: a runtime-aware budgeting diagram from model metadata/request/env/VRAM to harness policy.
+- Added: a run-policy procedural contract diagram shared by request building, approvals, session behavior, footer/status, and raw preview.
 - Added: a tool-output artifact flow from raw output to preview, artifact, range read, and search.
 - Added: a synthetic compaction transcript showing success and empty-summary paths.
+- Added: a local-to-cloud stable contract diagram showing transcript, policy state, evidence, compaction events, and failures traveling across runtimes.
 - Possible still: a before/after trace table from a small local-agent task, showing prompt eval duration, prompt estimate, tool output share, and compaction events.

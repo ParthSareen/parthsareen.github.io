@@ -1139,7 +1139,7 @@ button { font: inherit; }
   font-size: 12px;
   line-height: 1.5;
   color: var(--color-text-muted);
-  display: block;
+  display: none;
   z-index: 10;
 }
 .toc-title {
@@ -1172,8 +1172,8 @@ button { font: inherit; }
   border-left-color: var(--color-text);
 }
 
-@media (max-width: 900px) {
-  .toc { display: none; }
+@media (min-width: 1180px) {
+  .toc { display: block; }
 }
 
 /* ----- Image gallery --------------------------------------- */

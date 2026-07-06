@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Creating the Ollama Agent Harness | Writings</title>
-  <meta name="description" content="Local models need a harness that treats context, tools, compaction, and runtime limits as the product surface." />
+  <title>Creating the Ollama Agent Harness | writings</title>
+  <meta name="description" content="Local models need a harness that treats context, tools, policies, compaction, and runtime limits as the product surface." />
   <meta name="robots" content="noindex" />
   <link rel="icon" href="/assets/favicon.ico" sizes="any" />
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/style.css?v=media" />
+  <link rel="stylesheet" href="/style.css?v=toc-boundary" />
   <script src="/theme-toggle.js"></script>
   <script src="/toc.js?v=sections-2" defer></script>
 </head>
@@ -37,13 +37,13 @@
       </span>
     </nav>
 
-      <p class="crumb"><a href="/writings/">Writings</a> · 2026</p>
+      <p class="crumb"><a href="/writings/">writings</a></p>
 
       <header class="essay-masthead">
         <h1 class="essay-title">Creating the Ollama Agent Harness</h1>
         <div class="essay-meta">
-          <span><time datetime="2026-07-01">2026-07-01</time></span>
-          <span>18 min read</span>
+          
+          <span>24 min read</span>
         </div>
       </header>
 
@@ -57,6 +57,7 @@
 <p>That has been the most useful part of working on the Ollama agent harness. The failures are less mysterious once you look at the trace. A model that “forgot” the task might have been shown mostly stdout. A model that “cannot code” might have spent its first turn inside a prompt that was already too large for the runner that actually loaded. A model that “cannot use tools” might have been handed a transcript where compaction rewrote the task into something vague, or where a skill catalog took a chunk of the context before the user had asked for anything.</p>
 <p>Most harness bugs look like model-quality bugs until you inspect what the model actually saw.</p>
 <p>That is the thesis I keep coming back to: for agents, context is not an implementation detail. It is the product surface. Tool schemas, tool output, message order, compaction, cache locality, approval results, runtime options, and failure messages are all part of the interface the model uses. The harness is the thing that decides what the model can perceive.</p>
+<p>It is also the thing that decides what the user feels. A lot of agent UX is not downstream from the visual interface. It is downstream from the loop. If the loop hides the reason a tool was skipped, the UI cannot make the experience feel trustworthy. If the harness stores a bad turn, the resume screen inherits that confusion. If a model switch loses the evidence trail, the model picker becomes a cliff instead of a choice.</p>
 <pre class="mermaid">flowchart LR
     Goal["User goal"] --> Harness["Harness choices"]
     Harness --> Prompt["Prompt the model sees"]
@@ -85,6 +86,7 @@
 <p>Ollama Launch was one version of that. The point was not to make setup more impressive. It was to make the first useful moment arrive faster: no scavenger hunt through environment variables, no pile of incidental configuration before the model can help, no feeling that the user has to become an infrastructure engineer just to try an idea. When it works, the feeling is simple: “Oh, it actually works.”</p>
 <p>The agent harness is a stricter version of the same idea. Simplicity is not the absence of machinery. It is machinery that has spent enough time deciding what can disappear, what must stay visible, and what needs to become understandable the moment it breaks.</p>
 <p>For agents, that last part matters more. A chat UI can hide a lot. A local agent loop cannot. If a tool result eats the context, or compaction erases the goal, or the runtime allocated 4k when the harness budgeted for 128k, the abstraction has to become legible. The best harness should feel invisible when the loop is healthy and very explicit when it is not.</p>
+<p>That is why I think about UX here as a property of the whole loop, not just the screen around it. The terminal view, the footer, the approval prompt, and the model picker are renderers over decisions the harness already made. The real UX work is often earlier: deciding what counts as state, what counts as evidence, what can be retried, and what must be surfaced before the user loses trust.</p>
 <h2 id="the-harness-is-what-holds-the-agent" tabindex="-1">The Harness Is What Holds The Agent</h2>
 <p>An agent loop looks simple from far away:</p>
 <ol>
@@ -96,11 +98,35 @@
 </ol>
 <p>That is the easy diagram. The hard part is everything that happens around it.</p>
 <p>The harness decides which tools exist, how their schemas are rendered, what the model sees from each call, how much old conversation stays in history, when to compact, what compaction means, how approvals are represented, where errors go, and how the runtime’s actual context window is discovered. A lot of “agent intelligence” is really the result of those choices.</p>
+<p>One review comment exposed a small version of this. Modelfile <code>SYSTEM</code> belonged in the agent’s stable prompt. Modelfile <code>MESSAGE</code> did not belong in agent history as if the user had just said it, because the chat path already knows how to apply those messages. That distinction sounds fussy until it breaks. Inherited model state is not all the same kind of memory. Some of it should shape behavior. Some of it should not be replayed into the transcript.</p>
 <p>This matters more for local models because they are less forgiving. They may have smaller effective context windows, less reliable tool planning, slower prompt evaluation, weaker summarization, and more sensitivity to noisy transcripts. That does not make them useless for agents. It means the harness has to stop wasting the context they have.</p>
 <p>The goal is not to build a clever wrapper that pretends every local model is a frontier model. The goal is to build a loop that behaves well at 4k and 32k, not only in the fantasy case where the model has a huge context and uses all of it perfectly.</p>
+<h2 id="policies-are-procedural-contracts" tabindex="-1">Policies Are Procedural Contracts</h2>
+<p>One design pattern that became clearer during the work was policy.</p>
+<p>Policy sounds bureaucratic, but in an agent loop it is the opposite. It is how the harness turns scattered procedural decisions into something the system can read. Are tools available? Are they in review mode or full access mode? How is an individual tool call judged? How many tool rounds can happen before the loop stops? Should a headless run be allowed to call tools by default? Should the raw request preview show tools or not?</p>
+<p>Those questions are UX questions as much as architecture questions. If the footer says one thing, the approval prompt does another, and the request builder sends something else, the user experiences that as flakiness. The model experiences it as an inconsistent world.</p>
+<p>The code had the usual drift you get before a concept has a home: an auto-approve flag in one option struct, another on the approval manager, a mutable permission mode in the TUI, a separate max-tool-rounds value, and helper code that had to inspect handler types to rediscover whether the run was in full-access mode. None of those pieces were strange on their own. Together, they meant the harness could not answer a simple question from one place: what contract is this run operating under?</p>
+<p>The better shape was to make policy plain data. A run policy can say: tool mode, approval policy, max tool rounds. The surface can update it: TUI defaults to review, headless defaults to no tools, <code>--yolo</code> means full access. The session can consume it. The approval prompt can consume it. The footer can consume it. The raw request preview can consume it. No part of the harness has to reverse-engineer behavior from a concrete handler type.</p>
+<pre class="mermaid">flowchart LR
+    Surface["Surface choice"] --> Policy["Run policy"]
+    Flags["Flags and user toggles"] --> Policy
+
+    Policy --> ToolMode["Tool mode"]
+    Policy --> Approval["Approval policy"]
+    Policy --> RoundGuard["Tool-round guard"]
+
+    ToolMode --> Request["Request builder"]
+    Approval --> Prompt["Approval prompt"]
+    RoundGuard --> Session["Agent session"]
+    Policy --> Footer["Footer and status"]
+    Policy --> Raw["Raw request preview"]
+</pre>
+<p>That kind of policy is a procedural contract. It does not just configure the loop. It makes the harness’s promises inspectable. It tells every surface what kind of loop the user is in. It also gives the harness a place to express constraints without sprinkling them across the UI: local review mode, headless no-tools mode, cloud model availability, plan checks, context limits, or future runtime-specific defaults.</p>
+<p>I like this pattern because it keeps the loop honest. The harness can still adapt to the surface, but the adaptation is explicit. A local run and a cloud run may have different runtime constraints. A TUI run and a headless run may have different defaults. But those differences should be represented as a contract the rest of the system can inspect, not as a pile of hidden branches.</p>
 <h2 id="what-the-evals-taught-me" tabindex="-1">What The Evals Taught Me</h2>
 <p>I started treating the eval logs less like pass/fail scores and more like a set of small design interviews with the harness.</p>
 <p>In the early Gemma and Qwen runs, the failures were not dramatic. They were ordinary, which made them more useful. Some tasks succeeded with one web search. Some code tasks wandered. One Gemma run made repeated tool calls and compactions, then effectively asked to be reminded of the goal. Several Qwen runs hit compaction attempts where the summary came back empty. Another run read only one file for a multi-file task, then responded as if it had not understood what it was supposed to do.</p>
+<p>TODO: Pull the exact trace snippets before publishing. This section should feel like it came from staring at real runs, not from summarizing a benchmark table.</p>
 <p>Those are easy to write off as “the model is weak.” Sometimes that is true. But the harness has to answer a better question first:</p>
 <p>What did we ask the model to recover from?</p>
 <p>If the model returns an empty compaction summary, the harness should not pretend memory was preserved. If a tool result would consume most of a 4k prompt, the harness should not dutifully store the whole thing and hope summarization saves it later. If a first request is already too large, the harness should fail before it stores bad state. If a tool loop is making no progress, the harness should stop clearly instead of letting the transcript become a pile of repeated actions.</p>
@@ -144,6 +170,7 @@
 <li>Small context windows get smaller tool-result caps.</li>
 <li>When a tool result would push the next prompt beyond the compaction threshold, the harness shrinks it before continuing.</li>
 </ul>
+<p>Frontier-agent harnesses already know not to dump infinite output into the model. The local version has a harder constraint: the cap cannot just be a generic number. It has to make sense against the runtime that actually loaded. A 4k run and a 32k run should not be asked to survive the same accidental wall of stdout.</p>
 <p>The marker matters. Silent truncation teaches the model the wrong thing. A model-facing result should say, in plain text, what happened:</p>
 <pre class="hljs"><code class="language-text">[tool output truncated: showing first ... and last ...; omitted ... tokens.
 Use a narrower command, line range, or search query if more detail is needed.]
@@ -197,11 +224,14 @@ Use read_output(id, range) or search_output(id, query) for more.
 <p>The local-model posture is metadata first. Load the list of skills and their descriptions up front. Load the full <code>SKILL.md</code> only when the model calls the skill tool, or when the user explicitly asks for it. Manual skill invocation can also be represented as a synthetic tool call and tool result rather than mutating the system prompt.</p>
 <p>That keeps the base prompt smaller and more stable. It also turns skills into normal transcript events instead of invisible prompt changes. The decision is not only about saving tokens. It is about avoiding a harness that spends the user’s context before the task has even started.</p>
 <p>This pattern shows up everywhere once you start looking for it: do not put the biggest version of the thing into the prompt by default. Put a small index in context, then let the model ask for the exact part it needs.</p>
+<p>It also shows up in slash commands. <code>/history</code> and <code>/raw</code> are control-plane actions; they should happen immediately, even if a tool call is running. A skill-style slash invocation is different. That is really a task-plane prompt with a particular skill attached, so it can queue behind the current turn. The same syntax can mean two different things, and the harness has to know which world it is in.</p>
 <h2 id="failure-should-be-recoverable" tabindex="-1">Failure Should Be Recoverable</h2>
 <p>I care a lot about explicit failure in this loop.</p>
 <p>Not because error messages are glamorous. They are not. But local models need the harness to be honest. If context is full, say so. If compaction failed, say so. If the tool-round limit was reached, return matching skipped tool results and tell the user they can continue with another message. If an approval is denied, preserve transcript invariants instead of leaving dangling tool calls that break resume.</p>
 <p>This shaped a lot of small behavior: approvals, cancellations, tool-round caps, and failed compactions all have to leave the conversation in a state that can be inspected or resumed. The same core loop should hold in both the TUI and headless modes. The interface can decide how to render events like <code>request built</code>, <code>tool started</code>, <code>tool finished</code>, <code>compaction skipped</code>, or <code>error</code>, but the agent behavior should not fork just because one path has a screen and the other is running in a script.</p>
 <p>That kind of work is boring, and it is also the difference between a demo and a tool someone can actually use.</p>
+<p>Some of the UX work was deleting true statements. The UI did not need to say <code>input cleared</code> after a clear. It did not need to say <code>pasted text</code> after paste. It did not need a transient <code>model qwen...</code> line when the footer already showed the active model. It did not need <code>tool output shown</code> or <code>tool output hidden</code> if that extra line could steal space from the prompt and make the input feel like it disappeared.</p>
+<p>Those are small examples, but they changed how the loop felt. A harness can be honest without narrating every state transition. The important question is whether a message helps the user or the model take the next step. If it only proves that an internal event happened, it may be noise.</p>
 <p>The harness should fail in a way that gives the user a next move:</p>
 <ul>
 <li>Start a fresh chat.</li>
@@ -232,6 +262,27 @@ Use read_output(id, range) or search_output(id, query) for more.
 <p>The reason that can work is that the harness has already done the discipline. Tool results are bounded. Compaction events are explicit. Approvals, failures, skipped tools, and command results are represented in the transcript. The model is not being handed a giant terminal log and asked to reconstruct intent. If a task reaches the edge of the local model’s context, or needs a model that is better at planning, or would benefit from faster inference, the cloud model can pick up a cleaner state.</p>
 <p>That is different from treating cloud as a panic button. The goal is not “local until it breaks, then start over somewhere else.” The goal is a continuous loop where the runtime can change but the contract stays stable: same tools, same evidence, same bounded history, same user-visible failures. The cloud model still benefits from the local-model constraints because those constraints removed accidental context before the handoff.</p>
 <p>In a weird way, designing for local makes the cloud path better too. It forces the harness to ask what must survive a model switch. If the answer depends on hidden process state, invisible prompt mutation, or unbounded tool output, then the handoff is brittle. If the answer is in the transcript and trace, the work can travel.</p>
+<p>The more I worked through the loop, the more I wanted local-to-cloud to feel like changing runtime, not changing reality. The user should not have to restart the task just because the next turn needs a larger context window or a stronger model. The model should not have to infer the task from a flattened summary. The harness should carry the procedural contract: which tools were available, which calls were approved or denied, which outputs were truncated, what was compacted, what failed, and what evidence is still reachable outside the prompt.</p>
+<p>Auth and plan checks belong around that contract, not inside the model’s memory of the task. If the user chooses a cloud model and needs to sign in or upgrade, that is surface state. It should not mutate the transcript into something the next model has to reason about. The work should still be the work.</p>
+<pre class="mermaid">flowchart LR
+    Local["Local run"] --> Contract["Stable run contract"]
+    Contract --> Cloud["Cloud run"]
+
+    subgraph ContractParts["What travels"]
+        Transcript["Bounded transcript"]
+        PolicyState["Policy state"]
+        Evidence["Tool evidence and artifacts"]
+        CompactionState["Compaction events"]
+        Failures["Approvals and failures"]
+    end
+
+    Contract --> Transcript
+    Contract --> PolicyState
+    Contract --> Evidence
+    Contract --> CompactionState
+    Contract --> Failures
+</pre>
+<p>There is a product decision hiding inside that technical one. Local-first should mean the local path is excellent, not that the user is punished for needing cloud. If the harness can keep the contract stable, model choice becomes a continuation of the workflow instead of an escape hatch. The UX is calmer because the loop does not ask the user to remember what the system forgot.</p>
 <p>That is the Ollama-native advantage. The harness does not have to be a framework floating above inference. It can become runtime-aware.</p>
 <p>For local models, that matters more than another abstraction layer. A local-first harness should be able to answer:</p>
 <ul>
@@ -257,6 +308,8 @@ Use read_output(id, range) or search_output(id, query) for more.
 <li>Keep compaction inspectable.</li>
 <li>Keep failures explicit.</li>
 <li>Keep runtime budgeting close to the server.</li>
+<li>Keep policy as a procedural contract, not scattered flags.</li>
+<li>Keep UX state derived from loop state.</li>
 <li>Keep local-to-cloud handoff as a model switch, not a task restart.</li>
 <li>Keep enough trace data to debug the loop.</li>
 </ul>

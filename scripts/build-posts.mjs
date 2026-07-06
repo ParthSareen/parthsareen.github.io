@@ -70,7 +70,7 @@ const toISODate = (value) => {
   return date.toISOString().slice(0, 10);
 };
 
-const siteHead = ({ title, excerpt, math = true, noindex = false }) => `  <title>${escapeAttribute(title)} | Writings</title>
+const siteHead = ({ title, excerpt, math = true, noindex = false }) => `  <title>${escapeAttribute(title)} | writings</title>
   <meta name="description" content="${escapeAttribute(excerpt)}" />${noindex ? `
   <meta name="robots" content="noindex" />` : ''}
   <link rel="icon" href="/assets/favicon.ico" sizes="any" />
@@ -79,7 +79,7 @@ const siteHead = ({ title, excerpt, math = true, noindex = false }) => `  <title
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/style.css?v=media" />
+  <link rel="stylesheet" href="/style.css?v=toc-boundary" />
   <script src="/theme-toggle.js"></script>
   <script src="/toc.js?v=sections-2" defer></script>${math ? `
   <script>
@@ -225,7 +225,8 @@ async function renderPost(filename, isWip = false) {
   const title = (typeof data.title === 'string' && data.title.trim())
     ? data.title.trim()
     : extractTitleFromContent(content) ?? slug;
-  const date = toISODate(data.date) ?? toISODate(stat.mtime);
+  const hideDate = data.hideDate === true;
+  const date = hideDate ? null : toISODate(data.date) ?? toISODate(stat.mtime);
   const excerpt = (typeof data.excerpt === 'string' && data.excerpt.trim())
     ? data.excerpt.trim()
     : getExcerptFromHtml(html);
@@ -281,7 +282,7 @@ ${siteHead({ title: stripTags(renderInlineMarkdown(title)), excerpt, math })}
   <main class="page page--prose">
 ${navMarkup}
 
-    <p class="crumb"><a href="/writings/">Writings</a>${date ? ` · ${date.slice(0, 4)}` : ''}</p>
+    <p class="crumb"><a href="/writings/">writings</a>${date ? ` · ${date.slice(0, 4)}` : ''}</p>
 
     <header class="essay-masthead">
       <h1 class="essay-title">${renderInlineMarkdown(title)}</h1>
@@ -359,7 +360,7 @@ ${siteHead({ title: stripTags(renderInlineMarkdown(title)), excerpt, math, noind
     <main class="page page--prose">
 ${navMarkup}
 
-      <p class="crumb"><a href="/writings/">Writings</a>${date ? ` · ${date.slice(0, 4)}` : ''}</p>
+      <p class="crumb"><a href="/writings/">writings</a>${date ? ` · ${date.slice(0, 4)}` : ''}</p>
 
       <header class="essay-masthead">
         <h1 class="essay-title">${renderInlineMarkdown(title)}</h1>
