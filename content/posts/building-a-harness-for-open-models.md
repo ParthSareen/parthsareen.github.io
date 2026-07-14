@@ -121,9 +121,9 @@ Tool execution interrupted before a result was recorded.
 
 I do not think of this as faking activity. I see it closer to speaking the model's language through tool calls (which has a high emphasis from training for agentic use cases).
 
-I did a small 4k-context experiment with Gemma 4 and Llama 3.2 (a model I no longer reach for) around compaction. In that experiment, I added a fake user message saying `compact history` before the synthetic call/result pair to see if the model would prefer to have more context on what happened. It did not help Gemma, and made Llama 3.2 behave worse: it emitted JSON instead of continuing the task and started inventing statistics. The synthetic tool call and result were enough.
-
 > An informal 4k-context check, not a benchmark: adding `user: compact history` before the synthetic pair cost seven tokens and did nothing for Gemma 4. Llama 3.2 started emitting JSON and inventing statistics. The synthetic tool call/result pair alone was enough.
+
+I did a small 4k-context experiment with Gemma 4 and Llama 3.2 (a model I no longer reach for) around compaction. In that experiment, I added a fake user message saying `compact history` before the synthetic call/result pair to see if the model would prefer to have more context on what happened. It did not help Gemma, and made Llama 3.2 behave worse: it emitted JSON instead of continuing the task and started inventing statistics. The synthetic tool call and result were enough.
 
 The extra user message turned something meant to fade into the background into something the model treated like a fresh instruction.
 

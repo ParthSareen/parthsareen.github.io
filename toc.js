@@ -29,6 +29,15 @@
     title.textContent = 'sections';
     toc.appendChild(title);
 
+    const articleTitle = document.querySelector('.essay-title')?.textContent.trim();
+    if (articleTitle) {
+      const postTitle = document.createElement('a');
+      postTitle.className = 'toc-post-title';
+      postTitle.href = '#';
+      postTitle.textContent = articleTitle;
+      toc.appendChild(postTitle);
+    }
+
     const list = document.createElement('ul');
     list.className = 'toc-list';
     const linkMap = new Map();
