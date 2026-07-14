@@ -1,5 +1,12 @@
 [
   {
+    "slug": "building-a-harness-for-open-models",
+    "filename": "building-a-harness-for-open-models.html",
+    "title": "Building a harness for open models",
+    "date": "2026-07-14",
+    "excerpt": "What open models expose about context, tools, policy, and the agent loop around them."
+  },
+  {
     "slug": "ollama-launch-philosophy",
     "filename": "ollama-launch-philosophy.html",
     "title": "The philosophy of Ollama Launch",

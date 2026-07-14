@@ -28,7 +28,7 @@
   --radius-pill: 9999px;
   --radius-inline: 4px;
 
-  --measure-body: 60ch;
+  --measure-body: 64ch;
   --measure-prose-wide: 68ch;
   --measure-bio: 56ch;
   --measure-lead: 52ch;
@@ -889,6 +889,20 @@ button { font: inherit; }
 .prose blockquote p, .post-content blockquote p { margin: 0 0 12px; }
 .prose blockquote p:last-child, .post-content blockquote p:last-child { margin-bottom: 0; }
 
+/* Treat authored Markdown blockquotes as editorial margin notes on wide screens. */
+@media (min-width: 1440px) {
+  .post-content blockquote {
+    float: right;
+    width: 15rem;
+    margin: 0.5rem -18rem 1.5rem 2rem;
+    padding: 0 0 0 14px;
+    border-left-width: 1px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+}
+
 .prose hr, .post-content hr {
   border: 0;
   border-top: 1px solid var(--color-border);
@@ -1129,10 +1143,12 @@ button { font: inherit; }
 /* ----- TOC sidebar ----------------------------------------- */
 
 .toc {
+  --toc-width: 180px;
   position: fixed;
-  left: 20px;
+  /* Center the TOC in the gutter between the viewport and prose column. */
+  left: max(20px, calc((100vw - var(--measure-prose-wide)) / 4 - var(--toc-width) / 2 - 16px));
   top: 120px;
-  width: 180px;
+  width: var(--toc-width);
   max-height: calc(100vh - 160px);
   overflow-y: auto;
   font-family: var(--font-sans);
