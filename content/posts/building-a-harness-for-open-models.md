@@ -9,7 +9,7 @@ math: false
 
 # Building a harness for open models
 
-A model that "forgot" the task may have been shown mostly stdout. A model that "cannot use tools" may have been given a transcript where compaction rewrote the goal into something vague. And a model that seems "slow" may be running in a harness that adds the current time to the system prompt on every turn, breaking cache reuse.
+A model that "forgot" the task may have been shown mostly stdout. A model that uses the wrong tools may have been given a transcript where compaction rewrote the goal into something vague. And a model that seems "slow" may be running in a harness that adds the current time to the system prompt on every turn, breaking cache reuse.
 
 I know that last one a little too well.
 
