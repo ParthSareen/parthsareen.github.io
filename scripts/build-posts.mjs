@@ -97,7 +97,6 @@ const navMarkup = `    <nav class="nav" aria-label="Primary">
       <span class="nav-links">
         <a href="/">home</a>
         <a href="/writings/" class="active">writings</a>
-        <a href="/#work">work</a>
         <a href="/#elsewhere">elsewhere</a>
       </span>
     </nav>`;

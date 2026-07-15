@@ -2,3 +2,6 @@ project_id = "parthsareen-github-io"
 
 [functions.agent-guestbook]
 verify_jwt = false
+
+[functions.recommended-readings]
+verify_jwt = false

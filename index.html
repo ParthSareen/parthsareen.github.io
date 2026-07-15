@@ -33,7 +33,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css?v=homepage-no-writings-rule-tight">
+  <link rel="stylesheet" href="/style.css?v=homepage-readings-compact">
   <script src="/theme-toggle.js"></script>
   <style>
     .magazine-item.is-hidden-draft {
@@ -61,7 +61,6 @@
     <nav class="nav" aria-label="Primary">
       <span class="nav-links">
         <a href="/writings/">writings</a>
-        <a href="#work">work</a>
         <a href="#elsewhere">elsewhere</a>
       </span>
     </nav>
@@ -83,7 +82,7 @@
       <p class="eyebrow">writings</p>
     </a>
 
-    <div class="writings-magazine">
+    <div class="writings-magazine writings-magazine--posts">
 
       <a href="/writings/building-a-harness-for-open-models/" class="magazine-item is-open">
         <div class="magazine-item-head">
@@ -147,51 +146,12 @@
 
     </div>
 
-    <a href="https://ollama.com/blog" class="section-head section-head-link" id="work" aria-label="View Ollama blog">
-      <p class="eyebrow">my work at ollama</p>
+    <a href="/readings/" class="section-head section-head-link" id="readings" aria-label="View recommended readings">
+      <p class="eyebrow">recommended readings</p>
     </a>
 
-    <div class="work-grid">
-      <a href="https://ollama.com/blog/openclaw-tutorial" class="work-card">
-        <p class="card-label">2026-02-23 · Tutorial</p>
-        <h3 class="work-card-title">Setting up OpenClaw</h3>
-        <p class="work-card-dek">OpenClaw in under two minutes with a single Ollama command.</p>
-      </a>
-      <a href="https://ollama.com/blog/web-search-subagents-claude-code" class="work-card">
-        <p class="card-label">2026-02-16 · Feature</p>
-        <h3 class="work-card-title">Subagents and web search in Claude Code</h3>
-        <p class="work-card-dek">Ollama now supports subagents and web search inside Claude Code.</p>
-      </a>
-      <a href="https://ollama.com/blog/openclaw" class="work-card">
-        <p class="card-label">2026-02-01 · Launch</p>
-        <h3 class="work-card-title">OpenClaw</h3>
-        <p class="work-card-dek">A new open coding agent built around local and cloud models.</p>
-      </a>
-      <a href="https://ollama.com/blog/launch" class="work-card">
-        <p class="card-label">2026-01-23 · Launch</p>
-        <h3 class="work-card-title">ollama launch</h3>
-        <p class="work-card-dek">A new command that sets up and runs coding tools with local or cloud models.</p>
-      </a>
-      <a href="https://ollama.com/blog/web-search" class="work-card">
-        <p class="card-label">2025-09-24 · Feature</p>
-        <h3 class="work-card-title">Web search in Ollama</h3>
-        <p class="work-card-dek">A new web search API with a generous free tier, available to every ollama user.</p>
-      </a>
-      <a href="https://ollama.com/blog/streaming-tool" class="work-card">
-        <p class="card-label">2025-05-28 · Engineering</p>
-        <h3 class="work-card-title">Streaming responses with tool calling</h3>
-        <p class="work-card-dek">Chat applications can stream content and call tools in real time.</p>
-      </a>
-      <a href="https://ollama.com/blog/structured-outputs" class="work-card">
-        <p class="card-label">2024-12-06 · Feature</p>
-        <h3 class="work-card-title">Structured outputs in Ollama</h3>
-        <p class="work-card-dek">Constrain a model's output to a JSON schema, with Python and JavaScript libraries to match.</p>
-      </a>
-      <a href="https://ollama.com/blog/functions-as-tools" class="work-card">
-        <p class="card-label">2024-11-25 · Feature</p>
-        <h3 class="work-card-title">Functions as tools in Ollama</h3>
-        <p class="work-card-dek">Pass Python functions directly as tools, with full typing support.</p>
-      </a>
+    <div class="writings-magazine reading-magazine" data-home-readings>
+      <p class="home-readings-status" data-home-readings-status>Loading readings…</p>
     </div>
 
     <div class="section-head" id="elsewhere">
@@ -227,6 +187,8 @@
     </footer>
 
   </main>
+  <script src="/readings/config.js?v=home-readings"></script>
+  <script type="module" src="/readings/home-readings.js?v=home-readings"></script>
   <script>
     (() => {
       const items = document.querySelectorAll('.writings-magazine .magazine-item');

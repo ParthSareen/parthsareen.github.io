@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "build:posts": "node scripts/build-posts.mjs",
-    "test:agent-guestbook": "node scripts/test-agent-guestbook.mjs",
+    "test:recommended-readings": "node scripts/test-recommended-readings.mjs",
     "preview": "npx http-server -p 8080 ."
   },
   "dependencies": {

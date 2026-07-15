@@ -42,3 +42,22 @@ with the deployed function URL.
 ```bash
 npm run test:agent-guestbook
 ```
+
+## Recommended readings
+
+`recommended_readings` is publicly readable, but browser roles cannot insert, update, or delete rows. `/readings/` uses the read-only `recommended-readings` Edge Function; `/rec-reading` inserts with a local Supabase secret key and verifies the row.
+
+```bash
+npx supabase link --project-ref dvmvstugrnxzumzvjgem
+npx supabase db push
+npx supabase functions deploy recommended-readings --use-api
+npx supabase secrets set RECOMMENDED_READINGS_ALLOWED_ORIGINS="https://parthsareen.com,https://parthsareen.github.io"
+```
+
+Keep `SUPABASE_URL` and either `SUPABASE_SECRET_KEY` or `SUPABASE_SERVICE_ROLE_KEY` only in an untracked local `.env`; never put them in `readings/config.js`.
+
+Invoke `/rec-reading <link>` in Codex to add a reading. The skill stores a homepage `--one-liner` alongside its fuller `--summary` and verifies the write. Add `--dry-run` to inspect an entry without writing.
+
+```bash
+npm run test:recommended-readings
+```
