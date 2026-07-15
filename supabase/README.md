@@ -60,5 +60,4 @@ Invoke `/rec-reading <link>` in Codex to add a reading. The skill stores a homep
 
 ```bash
 npm run test:recommended-readings
-node skills/rec-reading/scripts/add-reading.mjs https://example.com --dry-run
 ```

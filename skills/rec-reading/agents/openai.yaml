@@ -1,4 +1,0 @@
-interface:
-  display_name: "Recommended Reading"
-  short_description: "Add a curated reading to Parth’s site"
-  default_prompt: "Use $rec-reading to add this link to Parth’s recommended readings: <link>"
