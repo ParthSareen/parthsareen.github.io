@@ -28,7 +28,10 @@ export async function handleRecommendedReadingsRequest(request, { supabase, getE
       .limit(limit);
 
     if (result.error) return json({ error: "list_failed" }, { status: 500, headers });
-    return json({ readings: result.data || [] }, { status: 200, headers });
+    return json({ readings: result.data || [] }, {
+      status: 200,
+      headers: { ...headers, "Cache-Control": "public, max-age=3600, s-maxage=86400" },
+    });
   } catch {
     return json({ error: "server_error" }, { status: 500, headers });
   }
