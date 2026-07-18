@@ -1707,7 +1707,6 @@ button { font: inherit; }
   color: var(--color-text-muted);
   margin: 0;
 }
-.reading-entries { border-top: 1px solid var(--color-border); }
 .reading-entry {
   padding: 24px 0 22px;
   border-bottom: 1px solid var(--color-border);
