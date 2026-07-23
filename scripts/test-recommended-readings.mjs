@@ -24,6 +24,7 @@ const getEnv = () => undefined;
   }), { supabase, getEnv });
   assert.equal(response.status, 200);
   assert.equal(response.headers.get("Access-Control-Allow-Origin"), "https://parthsareen.com");
+  assert.equal(response.headers.get("Cache-Control"), "public, max-age=3600, s-maxage=86400");
   const body = await response.json();
   assert.equal(body.readings.length, 1);
   assert.equal(body.readings[0].one_liner, "A short preview.");
