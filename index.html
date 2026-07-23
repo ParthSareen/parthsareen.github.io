@@ -33,7 +33,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css?v=homepage-readings-compact">
+  <link rel="stylesheet" href="/style.css?v=homepage-writings-hierarchy">
   <script src="/theme-toggle.js"></script>
   <style>
     .magazine-item.is-hidden-draft {
@@ -80,11 +80,24 @@
 
     <a href="/writings/" class="section-head section-head-link" id="writings" aria-label="View all writings">
       <p class="eyebrow">writings</p>
+      <span class="section-head-action" aria-hidden="true">all writings <span>→</span></span>
     </a>
 
     <div class="writings-magazine writings-magazine--posts">
 
-      <a href="/writings/building-a-harness-for-open-models/" class="magazine-item is-open">
+      <a href="/writings/your-agent-graph-is-often-software-you-chose-not-to-test/" class="magazine-item is-open">
+        <div class="magazine-item-head">
+          <span class="magazine-item-meta">Jul 20 · 2 min</span>
+          <span class="magazine-item-tag">Essay</span>
+        </div>
+        <span class="magazine-item-title">Your loops and graphs are stupid</span>
+        <div class="magazine-item-body">
+          <p class="magazine-item-dek">Why durable scripts and skills are often a better answer than bespoke agent graphs.</p>
+          <span class="magazine-item-cta">Read the essay →</span>
+        </div>
+      </a>
+
+      <a href="/writings/building-a-harness-for-open-models/" class="magazine-item">
         <div class="magazine-item-head">
           <span class="magazine-item-meta">Jul 14 · 16 min</span>
           <span class="magazine-item-tag">Deep dive</span>
@@ -108,46 +121,11 @@
         </div>
       </a>
 
-      <a href="/writings/era-of-generalists/" class="magazine-item">
-        <div class="magazine-item-head">
-          <span class="magazine-item-meta">Mar 25 · 8 min</span>
-          <span class="magazine-item-tag">Essay</span>
-        </div>
-        <span class="magazine-item-title">Yet another generalist</span>
-        <div class="magazine-item-body">
-          <p class="magazine-item-dek">Quick brain dump. Getting 70–80% good at anything, why specialists might still win, and the strange grief of not-quite-writing code anymore.</p>
-          <span class="magazine-item-cta">Read the essay →</span>
-        </div>
-      </a>
-
-      <a href="/writings/building-reliable-ai-agents/" class="magazine-item">
-        <div class="magazine-item-head">
-          <span class="magazine-item-meta">Dec 25 · 15 min</span>
-          <span class="magazine-item-tag">Deep dive</span>
-        </div>
-        <span class="magazine-item-title">Building reliable AI agents</span>
-        <div class="magazine-item-body">
-          <p class="magazine-item-dek">A first-principles breakdown of agent loops, tool design, and context engineering.</p>
-          <span class="magazine-item-cta">Read the deep dive →</span>
-        </div>
-      </a>
-
-      <a href="/writings/sampling/" class="magazine-item">
-        <div class="magazine-item-head">
-          <span class="magazine-item-meta">Sep 10 · 10 min</span>
-          <span class="magazine-item-tag">Deep dive</span>
-        </div>
-        <span class="magazine-item-title">Sampling and structured outputs in LLMs</span>
-        <div class="magazine-item-body">
-          <p class="magazine-item-dek">How sampling shapes token selection, and generating structured outputs in modern models.</p>
-          <span class="magazine-item-cta">Read the deep dive →</span>
-        </div>
-      </a>
-
     </div>
 
-    <a href="/readings/" class="section-head section-head-link" id="readings" aria-label="View recommended readings">
+    <a href="/readings/" class="section-head section-head-link home-readings-section" id="readings" aria-label="View recommended readings">
       <p class="eyebrow">recommended readings</p>
+      <span class="section-head-action" aria-hidden="true">all readings <span>→</span></span>
     </a>
 
     <div class="writings-magazine reading-magazine" data-home-readings>
