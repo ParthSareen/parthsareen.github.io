@@ -1023,6 +1023,23 @@ button { font: inherit; }
   text-align: center;
   color: var(--color-text-faint);
 }
+.post-media--screenshot {
+  max-width: 34rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.post-media--screenshot .post-media-link {
+  display: block;
+}
+.post-media--screenshot .post-media-link img {
+  cursor: zoom-in;
+}
+.post-media--housing-search {
+  max-width: 400px;
+}
+.post-media--drift-check {
+  max-width: 460px;
+}
 
 .post-content center {
   font-family: var(--font-sans);

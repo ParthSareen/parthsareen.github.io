@@ -1,5 +1,12 @@
 [
   {
+    "slug": "your-agent-graph-is-often-software-you-chose-not-to-test",
+    "filename": "your-agent-graph-is-often-software-you-chose-not-to-test.html",
+    "title": "Your loops and graphs are stupid",
+    "date": "2026-07-20",
+    "excerpt": "My entire TL is full of people talking about how they've moved from using loops to loops with graphs or state machines."
+  },
+  {
     "slug": "building-a-harness-for-open-models",
     "filename": "building-a-harness-for-open-models.html",
     "title": "Building a harness for open models",
