@@ -19,15 +19,15 @@ At the same time, open-weight models have gotten much better at coding and agent
 
 I don't think the point is that every capable open model needs to run locally. The more interesting thing is that more people will put both large and small open models into the same harnesses they already use.
 
-Sometimes that works. Sometimes the model completely loses the plot, fails tool calls, or cannot continue after compaction (if even compact at all). It is tempting to call that a model problem.
+Sometimes that works. Sometimes the model completely loses the plot, fails tool calls, or cannot continue after compaction (if it compacts at all). It is tempting to call that a model problem.
 
-However, a lot of the time the harness is making the task much harder than it needs to be for the model. This issue is exacerbated in harnesses that were tuned around a frontier model. I've personally seen this with Claude Code and open models (especially local ones).
+But a lot of the time, the harness is making the task much harder than it needs to be for the model. This issue is exacerbated in harnesses that were tuned around a frontier model. I've personally seen this with Claude Code and open models (especially local ones).
 
 I have been building agent loops around open models for a while now, and each model seems to have its own way of exploring, using tools, and getting unstuck. I call it the model's essence. I see this as the model's working style. It can usually be observed in the traces of a harness. You get to see what the model is fighting and what it enjoys doing.
 
 My general take is to start simple and get out of the way. Then watch where the model struggles and improve the environment around it. I just released the new Ollama harness which is meant to be a simple way to experiment with models and get some quick work done while you're at it. I'll share my learnings from building this (and many others before).
 
-This post is not a recipe for one canonical harness (although I wish such a thing existed). It is a few things that have been easy to get wrong: tool design, context, compaction, synthetic tool calls, the prefix cache, and the loop itself. A lot of it is informed over the last year of building harnesses as well as a lot of the lessons I had building the new Ollama harness (which you can run by typing `ollama`).
+This post is not a recipe for one canonical harness (although I wish such a thing existed). It is about a few things that are easy to get wrong: tool design, context, compaction, synthetic tool calls, the prefix cache, and the loop itself. It draws on the last year of building harnesses, especially the lessons from the new Ollama harness (which you can run by typing `ollama`).
 
 ## The harness is the environment
 
@@ -81,24 +81,25 @@ The exact state machine does not need to be this one. Keeping the core loop smal
 
 I tend to start with fewer tools than I think I need.
 
-The first iteration of the harness had just `Bash`. I tested both local and cloud models to push them to their limits. Queries like "who is parth sareen", "edit this file", "review the changes on this branch," and "when did drake release the motto?". I then added `read`, `edit`, and some web search tools.
+The first iteration of the harness had just `Bash`. I tested both local and cloud models to push them to their limits with queries like "who is parth sareen", "edit this file", "review the changes on this branch," and "when did drake release the motto?" I then added `read`, `edit`, and some web search tools.
 
 There are some efficiencies to find through the tools for sure, or pushing the tool definition a bit more for certain models, but this requires art, vibes, and a nice, vibed benchmark. From my goal of just getting the user started with open models, I leave the exercise and proof to the reader.
 
-Every tool definition is more tokens. But it is also about observing what a model reaches for. Some models will prefer structured edits. Some will use shell commands even when a bespoke tool exists. Some get stuck when the tool surface is too large. The model's voice is hidden in its actions and traces. Observe them and you too will develop the right intuition to write great tool definitions.
+Every tool definition costs tokens. The more important question is what a model reaches for. Some models will prefer structured edits. Some will use shell commands even when a bespoke tool exists. Some get stuck when the tool surface is too large. The model's voice is hidden in its actions and traces. Observe them and you too will develop the right intuition to write great tool definitions.
 
 Bash is useful as an escape valve here. If the structured tools are too restrictive, a model can still inspect a repository or make progress. You see this in frontier agents too: when a file tool fails or feels awkward, they often fall back to `cat`, `sed`, or a narrower shell command.
 
 Start with a small surface, watch the traces, and let the repeated model friction and frustration suggest the next correct primitive. If a model repeatedly makes awkward batched edits, it may want a multi-edit tool. If it spends calls locating code, it may want better search or ranged reads.
 
-Evals are how I dream of verifying these changes. Watching a model work is often how I find the question worth evaluating in the first place. There are some basic evals I did for the Ollama harness, but more than evals using and feeling out a harness is much, much more important.
+Evals are how I dream of verifying these changes. Watching a model work is often how I find the question worth evaluating in the first place. I did some basic evals for the Ollama harness, but using and feeling out a harness is much, much more important.
 
 
-## Synthetic Tool Calls
+## Synthetic tool calls
 
 One thing I kept running into was that the shape of history matters as much as the content.
 
 I first loaded a manually selected skill by inserting its instructions as a user message, which is very common for most harnesses. However, I found that local models would sometimes change tone or treat the skill as a new request.
+
 The better shape was to represent it as the same interaction the model would have produced itself:
 
 ```text
@@ -109,7 +110,7 @@ model response
 ```
 
 
-I call this synthetic tool calls.
+I call these synthetic tool calls.
 
 Nothing actually invoked the tool in that moment. But the model already understood what that transcript shape meant: something happened, and here is the result to work from. That felt much more natural than trying to sneak the same information into a user message or system prompt (cache breakage!).
 
@@ -128,13 +129,13 @@ The extra user message turned something meant to fade into the background into s
 
 ## Tool output is the next prompt
 
-This is the easiest thing to forget: tool output is not a terminal log after the call finishes. It is the next model input. I have had to remind myself of this more than once. It takes a lot of effort and design, and is just as important as the tool input itself.
+This is the easiest thing to forget: tool output is not a terminal log after the call finishes. It is the next model input. I have had to remind myself of this more than once. It takes real design work and is just as important as the tool input itself.
 
 While trying coding tasks with Gemma 4 at 4k, one large tool result could consume enough context to force compaction immediately. The summary was then asked to recover exact code state, partial exploration, and the original task all at once.
 
 A simple approach is to bound the tool result before it enters history.
 
-A shell command can print thousands of lines. A web page can contain ten useful paragraphs and a city of markup. A file read can pull a whole file when the model needed twenty lines. Selectivity of information is needed here as we should only present the most important bits to the model (especially local ones).
+A shell command can print thousands of lines. A web page can contain ten useful paragraphs and a city of markup. A file read can pull a whole file when the model needed twenty lines. The model should only see the most important bits, especially local ones.
 
 The caps will depend on the product and runtime, but the pattern repeats:
 
@@ -166,7 +167,7 @@ A useful result tells it what happened and what to do next:
 Use a narrower command, line range, or search query if more detail is needed.]
 ```
 
-I found this to be especially helpful for local models (and even GLM-5.2 with vs. without) where the models had a hard time re-grepping or re-reading the file after doing a bare read which was defaulting to the first 100 or so lines.
+I found this especially helpful for local models, and even GLM-5.2 when comparing the two approaches. After a bare read that defaulted to the first hundred or so lines, models had a hard time re-grepping or re-reading the file.
 
 In an ideal world you'd have an artifact-based output: keep the full result outside the prompt, show the model a preview, and give it handles for range reads or search later. You do not need that system on day one. You do need to resist dumping everything into the model's prompt and hoping it will save you.
 
@@ -191,7 +192,7 @@ The result the model finally sees may still be truncated, but it is truncated to
 
 ## Compaction is a safety valve
 
-Compaction is a useful tool, but it is neither a replacement for more context or a memory structure.
+Compaction is a useful tool, but it is neither a replacement for more context nor a memory structure.
 
 It is a lossy transformation performed under pressure.
 
@@ -206,7 +207,7 @@ kept recent messages
 
 The ordering matters. The summary stands in for older context, while the latest concrete turns remain closest to the next model response. The synthetic tool result also includes a continuation instruction, "continue the task in progress, the history has been compacted, do not mention compaction to the user", so the model knows what to do next without a separate user message telling it.
 
-I'm not going to pretend to be an expert in compaction. I think the above is relatively generally accepted as a decent compaction strategy. I will say that I think things like compaction and harness-related tooling might become model behavior. You can imagine that the model can update its own prompt and then do the next round of turn even through tool calls. Or having bespoke, trained summarizers.
+I'm not going to pretend to be an expert in compaction. I think the above is a decent, relatively common compaction strategy. I will say that I think things like compaction and harness-related tooling might become model behavior. You can imagine that the model can update its own prompt and then do the next round of turn even through tool calls. Or having bespoke, trained summarizers.
 
 > Rajan wrote a great piece on [LLM compression](https://www.rajan.sh/llm-compression).
 
@@ -229,7 +230,7 @@ Everything I have described so far interacts with the prefix cache:
 
 > This was the culprit: [one commit](https://github.com/ParthSareen/OllamaClaw/commit/2bb2038a5d58f19c599aacbfe8c9f44fa2a8717f) added fresh Pacific and UTC timestamps to every system prompt.
 
-- **Tool definitions** are part of the prefix on many inference backends. Reordering tools, adding one mid-conversation, or changing a description busts the cache even if the model never uses that tool. In the Ollama harness, tools are sorted alphabetically by name before every request so the order is deterministic. That said, not every inference engine renders tool definitions into the prompt the same way and YMMV with not thinking about this.
+- **Tool definitions** are part of the prefix on many inference backends. Reordering tools, adding one mid-conversation, or changing a description busts the cache even if the model never uses that tool. In the Ollama harness, tools are sorted alphabetically by name before every request so the order is deterministic. Not every inference engine renders tool definitions into the prompt the same way, but it is worth thinking about.
 
 
 - **Message history** extends the prefix. Each new turn appends to the end, so the cache grows naturally. But compaction rewrites the middle of history. The summary replaces the archived messages, which means the first request after compaction pays full price for the entire prompt. That is a cost of compaction, not just an information loss. That's also okay. Part of harness design is knowing when to take that cache hit to keep a task going correctly.
@@ -242,7 +243,7 @@ The general principle: put stable things first, volatile things last. If somethi
 
 The cache bug above took me too long to find because I was looking at the model, not the request. Once I instrumented the actual requests across runs (what changed between turns, what stayed stable, how much context was spent on tools versus history, and what the runtime actually loaded), the answer was obvious.
 
-I want to be able to inspect the request shape across turns at any point. Ollama is unique because I was able to instrument the entire process from harness to inference, up and down the stack. I hope to make some of this more accessible to make building your own harnesses easier.
+I want to be able to inspect the request shape across turns at any point. With Ollama, I could instrument the entire process from harness to inference, up and down the stack. I hope to make some of this more accessible to make building your own harnesses easier.
 
 
 ## Local to cloud should change the runtime, not the run
@@ -282,6 +283,12 @@ Some guiding questions for your next harness design:
 - If the run moves from local to cloud, what state and evidence survive?
 
 
-The point is not to wrap open models in a framework so large that the model disappears. A loop that spends context deliberately, shows failure clearly, and gives the model a world it can be itself in is the most important.
+## Final thoughts
+
+The point is not to wrap open models in a framework so large that the model disappears. What matters most is a loop that spends context deliberately, shows failure clearly, and gives the model a world it can be itself in.
+
+Open models being viable in both the cloud and locally is going to put more emphasis on the harness and its design. There are so many gotchas in building any harness, but once you learn to design from first principles and follow the model's behavior to get the most out of it, they can be on par with, or even better than, closed models.
+
+It's going to be an exciting second half of the year. Open models are only a few weeks behind the closed ones now.
 
 If you're building a harness and want to ever talk shop, [dm me on x](https://x.com/parthsareen)!
