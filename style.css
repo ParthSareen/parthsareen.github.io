@@ -270,13 +270,15 @@ button { font: inherit; }
   font-weight: 500;
   margin: 0;
 }
-/* The writings archive is the homepage's primary section destination. */
-#writings .eyebrow {
+/* The homepage archive destinations should read as clear entry points. */
+#writings .eyebrow,
+#readings .eyebrow {
   font-size: 14px;
   letter-spacing: 0.1em;
   color: var(--color-text-muted);
 }
-#writings .section-head-action {
+#writings .section-head-action,
+#readings .section-head-action {
   flex: 0 0 auto;
   font-size: 14px;
   font-weight: 500;
@@ -284,7 +286,8 @@ button { font: inherit; }
   opacity: 0.78;
   white-space: nowrap;
 }
-#writings .section-head-action span { font-size: 16px; }
+#writings .section-head-action span,
+#readings .section-head-action span { font-size: 16px; }
 .section-more {
   font-family: var(--font-sans);
   font-size: 13px;
