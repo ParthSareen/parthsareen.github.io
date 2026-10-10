@@ -25,7 +25,7 @@ But a lot of the time, the harness is making the task much harder than it needs 
 
 I have been building agent loops around open models for a while now, and each model seems to have its own way of exploring, using tools, and getting unstuck. I call it the model's essence. I see this as the model's working style. It can usually be observed in the traces of a harness. You get to see what the model is fighting and what it enjoys doing.
 
-My general take is to start simple and get out of the way. Then watch where the model struggles and improve the environment around it. I just released the new Ollama harness which is meant to be a simple way to experiment with models and get some quick work done while you're at it. I'll share my learnings from building this (and many others before).
+My general take is to start simple and get out of the way. Then watch where the model struggles and improve the environment around it. I just released the new Ollama harness which is meant to be a simple way to experiment with models and get some quick work done while you're at it. (Edit 2026-10-10: the agent harness in Ollama has since moved to the [o repo](https://github.com/ParthSareen/o) on my account.) I'll share my learnings from building this (and many others before).
 
 This post is not a recipe for one canonical harness (although I wish such a thing existed). It is about a few things that are easy to get wrong: tool design, context, compaction, synthetic tool calls, the prefix cache, and the loop itself. It draws on the last year of building harnesses, especially the lessons from the new Ollama harness (which you can run by typing `ollama`).
 
