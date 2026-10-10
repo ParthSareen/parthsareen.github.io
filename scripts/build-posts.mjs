@@ -1,4 +1,5 @@
 import { promises as fs } from 'fs';
+import { execFileSync } from 'child_process';
 import { dirname, extname, join, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import matter from 'gray-matter';
@@ -68,6 +69,33 @@ const toISODate = (value) => {
   const date = typeof value === 'string' ? new Date(value) : value;
   if (Number.isNaN(date.getTime())) return null;
   return date.toISOString().slice(0, 10);
+};
+
+// Deterministic date fallback for undated posts: last commit that touched the
+// source file (author date, stable across rebases). mtime is a last resort for
+// files that have never been committed.
+const gitLastEditDate = (filePath) => {
+  try {
+    const out = execFileSync('git', ['log', '-1', '--format=%aI', '--', filePath], {
+      cwd: ROOT
+    });
+    return toISODate(out.toString().trim());
+  } catch (err) {
+    return null;
+  }
+};
+
+// Skip writes when the generated output is unchanged, so rebuilds are
+// idempotent and don't churn committed files.
+const writeIfChanged = async (path, content) => {
+  try {
+    const existing = await fs.readFile(path, 'utf8');
+    if (existing === content) return false;
+  } catch (err) {
+    if (err.code !== 'ENOENT') throw err;
+  }
+  await fs.writeFile(path, content, 'utf8');
+  return true;
 };
 
 const siteHead = ({ title, excerpt, math = true, noindex = false }) => `  <title>${escapeAttribute(title)} | writings</title>
@@ -225,7 +253,9 @@ async function renderPost(filename, isWip = false) {
     ? data.title.trim()
     : extractTitleFromContent(content) ?? slug;
   const hideDate = data.hideDate === true;
-  const date = hideDate ? null : toISODate(data.date) ?? toISODate(stat.mtime);
+  const date = hideDate
+    ? null
+    : toISODate(data.date) ?? gitLastEditDate(sourcePath) ?? toISODate(stat.mtime);
   const excerpt = (typeof data.excerpt === 'string' && data.excerpt.trim())
     ? data.excerpt.trim()
     : getExcerptFromHtml(html);
@@ -234,7 +264,7 @@ async function renderPost(filename, isWip = false) {
   // Only write to OUTPUT_DIR for non-protected posts
   if (!isProtected) {
     const outputPath = join(OUTPUT_DIR, `${slug}.html`);
-    await fs.writeFile(outputPath, html, 'utf8');
+    await writeIfChanged(outputPath, html);
   }
 
   return {
@@ -331,13 +361,15 @@ ${footerMarkup}
     await mermaid.run({nodes: [...document.querySelectorAll('pre[class~="mermaid"]')]});
   </script>
 </body>
-</html>`;
+</html>\n`;
 
 const wipTemplate = ({ slug, title, date, html, excerpt, readTime, math = true }) => {
   // YOU FOUND ME AHHHHH!
+  // Default to 'draft' so local builds without a .env reproduce the committed
+  // pages; set EMBED_WIP_PASSWORD=true with WIP_PASSWORD to override.
   const password = process.env.EMBED_WIP_PASSWORD === 'true'
-    ? process.env.WIP_PASSWORD || ''
-    : '';
+    ? process.env.WIP_PASSWORD || 'draft'
+    : 'draft';
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -437,14 +469,14 @@ ${footerMarkup}
     });
   </script>
 </body>
-</html>`;
+</html>\n`;
 };
 
 async function writeWritingsPage(entry) {
   const dir = join(WRITINGS_DIR, entry.slug);
   await fs.mkdir(dir, { recursive: true });
   const page = entry.isProtected ? wipTemplate(entry) : writingTemplate(entry);
-  await fs.writeFile(join(dir, 'index.html'), page, 'utf8');
+  await writeIfChanged(join(dir, 'index.html'), page);
 }
 
 async function writeIndex(entries) {
@@ -456,7 +488,8 @@ async function writeIndex(entries) {
       return new Date(b.date) - new Date(a.date);
     })
     .map(({ slug, filename, title, date, excerpt }) => ({ slug, filename, title, date, excerpt }));
-  await fs.writeFile(INDEX_PATH, `${JSON.stringify(sorted, null, 2)}\n`, 'utf8');
+  const index = `${JSON.stringify(sorted, null, 2)}\n`;
+  await writeIfChanged(INDEX_PATH, index);
   return sorted.map((entry) => entry.filename);
 }
 
