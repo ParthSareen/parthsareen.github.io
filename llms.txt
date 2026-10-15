@@ -2,7 +2,7 @@
 
 This is Parth Sareen's personal website.
 
-Parth works on Ollama, mostly Ollama Launch and the agent tooling around it. He builds small tools for himself on the side, experiments with local models and agent workflows, and writes about AI systems, tool design, product feel, and the shape of useful software.
+Parth works on Ollama on agents and the distributed systems underneath them. On the side he builds small tools for himself, most notably o (https://github.com/ParthSareen/o), a coding agent for Ollama built for open models, including local ones. He writes about AI systems, tool design, product feel, and the shape of useful software.
 
 Before Ollama, Parth built a startup around agent reliability and worked at Apple and Tesla. Outside of work, he likes latte art, Muay Thai, and writing down ideas while they are still forming.
 
