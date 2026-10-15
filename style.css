@@ -160,13 +160,13 @@ button { font: inherit; }
   font-family: var(--font-prose);
   font-weight: 400;
   font-size: 17px;
-  line-height: 1.55;
+  line-height: 1.62;
   color: #2a2a2a;
   margin: 0;
   max-width: var(--measure-bio);
 }
 :root[data-theme="dark"] .masthead-bio { color: var(--color-text); }
-.masthead-bio + .masthead-bio { margin-top: 14px; }
+.masthead-bio + .masthead-bio { margin-top: 22px; }
 .masthead-bio a {
   color: var(--color-text);
   border-bottom: 1px solid var(--color-border-strong);
